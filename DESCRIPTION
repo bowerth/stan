@@ -1,0 +1,20 @@
+Package: stan
+Type: Package
+Title: Structural Analysis
+Author: OECD STAN <stan.contact@oecd.org>
+Maintainer: OECD STAN <stan.contact@oecd.org>
+Depends:
+    R (>= 2.10.0)
+Description: Provides functions to work with the OECD Structural Analysis
+    Database
+License: GPL (>= 3)
+Encoding: UTF-8
+LazyLoad: yes
+URL: http://www.oecd.org/sti/stan
+Authors@R: c(person(given="STAN", family="OECD", email="stan.contact@oecd.org",
+    role=c("aut", "cre")))
+Version: 0.1
+Date: 2013-09-30
+Collate:
+    'aggregate_ind.R'
+    'stan-package.R'

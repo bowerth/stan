@@ -1,0 +1,30 @@
+\name{FAMEtransform}
+\alias{FAMEtransform}
+\title{FAME transform}
+\usage{
+  FAMEtransform(cou = stop("'cou' must be specified"),
+    isic = 4, append = FALSE)
+}
+\arguments{
+  \item{cou}{a 3-digit country ISO code character string.}
+
+  \item{isic}{an integer to specify the version of STAN.}
+}
+\description{
+  Transform FAME output
+}
+\details{
+  Transform the resulting [cou].dat file to Excel standard
+  format for loading in SAS using \code{\link{ANA2XLS}}.
+}
+\examples{
+FAMEloadGES(cou="ITA")
+}
+\author{
+  OECD STAN
+}
+\seealso{
+  \code{\link{FAMEall}}, \code{\link{ANA2XLS}}
+}
+\keyword{FAME}
+

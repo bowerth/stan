@@ -1,0 +1,38 @@
+\name{ANA2XLS}
+\alias{ANA2XLS}
+\title{ANA2XLS}
+\usage{
+  ANA2XLS(data = stop("'data' must be specified"),
+    cou = stop("'data' must be specified"), isic = 4,
+    append = FALSE)
+}
+\arguments{
+  \item{data}{a dataframe object.}
+
+  \item{cou}{a character string 3-digit ISO code specifying
+  the country.}
+
+  \item{isic}{industry classification to be used for the
+  data output locacation.}
+
+  \item{append}{a boolean expression if variables shall be
+  added to those already present.}
+}
+\description{
+  Convert ANA data to XLS
+}
+\details{
+  Convert dataframe for source "ANA" to XLS SAS input
+  format.
+}
+\examples{
+ANA2XLS(cou="ITA")
+}
+\author{
+  OECD STAN
+}
+\seealso{
+  \code{\link{NSO2XLS}}
+}
+\keyword{SAS}
+

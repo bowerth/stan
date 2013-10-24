@@ -1,0 +1,42 @@
+\name{FAMEprepare}
+\alias{FAMEprepare}
+\title{FAME prepare}
+\usage{
+  FAMEprepare(cou = stop("'cou' must be specified"),
+    year = 2012, isic = 4, classification = "NACE2",
+    tables = c(301, 302, 303, 2000), version = "latest")
+}
+\arguments{
+  \item{cou}{a 3-digit country ISO code character string.}
+
+  \item{year}{an integer specifying the year of interest.}
+
+  \item{isic}{an integer to specify the version of STAN.}
+
+  \item{classification}{a character sring matching the
+  industry classification used in the dataset name.}
+
+  \item{tables}{an integer vector specifying the SNA tables
+  to be looked for.}
+
+  \item{version}{optional: the version number of the file
+  to be used.}
+}
+\description{
+  Prepare for FAME
+}
+\details{
+  Identify latest version of submitted table, copy files
+  and generate program for FAME
+}
+\examples{
+FAMEall(cou="ITA")
+}
+\author{
+  OECD STAN
+}
+\seealso{
+  \code{\link{FAMEall}}
+}
+\keyword{FAME}
+

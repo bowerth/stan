@@ -1,0 +1,43 @@
+\name{FAMEload}
+\alias{FAMEload}
+\title{FAME load}
+\usage{
+  FAMEload(cou = stop("'cou' must be specified"),
+    shell = "C:\\WINDOWS\\system32\\cmd.exe", isic = 4,
+    subfolder = "\\Rawdata\\STD-SNA",
+    path.fame = "\\\\asap1\\fame\\fame")
+}
+\arguments{
+  \item{cou}{a 3-digit country ISO code character string.}
+
+  \item{shell}{a character string pointing to the system
+  command shell.}
+
+  \item{path.fame}{character string pointing to the
+  location of FAME.exe.}
+
+  \item{isic}{an integer to specify the version of STAN.}
+
+  \item{subfolder}{character string pointing to the
+  location of the folder conatining GESMES data and FAME
+  program file.}
+}
+\description{
+  Execute program in FAME
+}
+\details{
+  Start FAME and execute created code file the output is
+  written to cou.dat file in the respective countrys
+  STD-SNA folder.
+}
+\examples{
+FAMEload(cou="ITA")
+}
+\author{
+  OECD STAN
+}
+\seealso{
+  \code{\link{FAMEall}}, CMD
+}
+\keyword{FAME}
+

@@ -5,16 +5,28 @@ Author: OECD STAN <stan.contact@oecd.org>
 Maintainer: OECD STAN <stan.contact@oecd.org>
 Depends:
     R (>= 2.10.0)
-Description: Provides functions to work with the OECD Structural Analysis
-    Database
+Description: Provides functions for Structural Analysis
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyLoad: yes
 URL: http://www.oecd.org/sti/stan
-Authors@R: c(person(given="STAN", family="OECD", email="stan.contact@oecd.org",
-    role=c("aut", "cre")))
+Authors@R: c(person(given="STAN", family="OECD",
+    email="stan.contact@oecd.org", role=c("aut", "cre")))
 Version: 0.1
-Date: 2013-09-30
+Date: 2013-10-24
 Collate:
-    'aggregate_ind.R'
+    'addDatalist.R'
+    'ANA2XLS.R'
+    'bcpRead.R'
+    'bcpWrite.R'
+    'FAMEall.R'
+    'FAMEload.R'
+    'FAMEprepare.R'
+    'FAMEtransform.R'
+    'indAggregate.R'
+    'loadDim.R'
+    'NSO2XLS.R'
+    'packageData.R'
+    'queryData.R'
     'stan-package.R'
+    'XLStransform.R'

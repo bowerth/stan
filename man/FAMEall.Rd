@@ -5,7 +5,7 @@
   FAMEall(cou = stop("'cou' must be specified"), isic = 4,
     classification = "NACE2", year = 2012,
     tables = c(301, 302, 303, 2000), version = "latest",
-    ...)
+    append = FALSE, ...)
 }
 \arguments{
   \item{cou}{a 3-digit country ISO code character string.}

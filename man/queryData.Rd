@@ -4,9 +4,10 @@
 \usage{
   queryData(connection = stop("'connection' must be specified"),
     table = stop("'table' must be specified"),
-    namecou = STAN.COU, namevar = character(),
-    dim.ind = "ind", isic = 4, nameind = character(),
-    nameyear = character(), add.where = "")
+    namecou = character(), namevar = character(),
+    nameeuc = character(), dim.ind = "ind", isic = 4,
+    nameind = character(), nameyear = character(),
+    add.where = "", topn = character())
 }
 \arguments{
   \item{connection}{a connection handle as returned by
@@ -20,6 +21,9 @@
 
   \item{namevar}{a character vector of variables read from
   column \sQuote{var}.}
+
+  \item{nameeuc}{a character vector of end-use categories
+  read from column \sQuote{CATEG}.}
 
   \item{dim.ind}{name of column containing the industry
   dimension, if different from \sQuote{ind}.}
@@ -36,6 +40,8 @@
 
   \item{add.where}{additional statements passed to the
   \sQuote{WHERE} condition of the query.}
+
+  \item{topn}{extract only top N number of records.}
 }
 \description{
   Query data from SQL sources

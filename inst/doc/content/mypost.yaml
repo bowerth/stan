@@ -1,0 +1,9 @@
+title: 'A Dojo Object'
+date: 2010-11-01
+body: |
+    Let's do something in dojo
+
+        :::javascript
+        var b = dojo.byId('slideshow');
+        var mydiv = dojo.create('div', {'class':'foo'},b,'after'};
+        console.log("and that's about it");

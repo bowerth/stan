@@ -28,4 +28,3 @@ FAMEload <- function(cou=stop("'cou' must be specified"),
     input.file <- paste0(path.cou, cou, subfolder, '\\', cou, "_R.inp")
     shell(shQuote(paste0(path.fame, "\\fame i ", input.file)), shell = shell)
 }
-

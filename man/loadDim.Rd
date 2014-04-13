@@ -2,17 +2,20 @@
 \alias{loadDim}
 \title{Load Dimensions}
 \usage{
-  loadDim(dim = c("cou", "var", "indi4", "indi3"),
+  loadDim(dim = c("cou", "var", "indi4", "indi3", "hierarchyi3", "cur"),
     file = paste0(PATH.REPO, "stan\\data\\stanDim.rda"),
-    datalist = TRUE, ...)
+    datalist = TRUE, replace = FALSE, ...)
 }
 \arguments{
-  \item{dim}{a list of dimension to be loaded.}
+  \item{dim}{a character vector of dimension to be loaded.}
 
-  \item{file}{a data file}
+  \item{file}{Rdata file where objects will be stored.}
 
   \item{datalist}{a boolean expression if the file and its
-  contents shall be added to a package data list}
+  contents shall be added to a package data list.}
+
+  \item{replace}{specify if the existing data shall be
+  replaced.}
 }
 \description{
   Load STAN dimension members

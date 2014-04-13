@@ -1,0 +1,33 @@
+\name{mergeCalc}
+\alias{mergeCalc}
+\title{mergeCalc}
+\usage{
+  mergeCalc(data, diff = diff)
+}
+\arguments{
+  \item{data}{a dataframe with "value.x" and "value.y"
+  dimensions.}
+
+  \item{diff}{logical to calculate difference, default is
+  ratio.}
+}
+\description{
+  Calculates ratio or difference
+}
+\details{
+  Calculate new variable from data frame merged with
+  \code{\link{dimMerge}}.
+}
+\examples{
+x <- data.frame("ind" = c(rep('D01T03', 2), rep('D05T09', 2)), "var" = rep(c('PROD', 'VALU'), 2), "value" = c(1:4))
+x <- dimMerge(data=x, dim="var", dim1="PROD", dim2="VALU")
+x <- mergeCalc(data=x, diff=FALSE)
+}
+\author{
+  OECD STAN
+}
+\seealso{
+  \code{\link{dimMerge}}
+}
+\keyword{calculate}
+

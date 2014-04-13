@@ -59,11 +59,11 @@ FAMEtransform <- function(cou=stop("'cou' must be specified"),
     names(data) <- c('year','value')
     X <- strsplit(sapply(X,'[[', 1), split = '\\.')
     data$series.m <- sapply(X, '[[', 4) # D
-    data$var <- sapply(X, '[[', 5) # E
+    data$series.e <- sapply(X, '[[', 11) # K
     data$type <- sapply(X, '[[', 6) # F
+    data$var <- sapply(X, '[[', 5) # E
     data$s1 <- sapply(X, '[[', 7) # G
     data$ind <- sapply(X, '[[', 8) # H
-    data$series.e <- sapply(X, '[[', 11) # K
     data <- subset(data, select=c('series.m', 'series.e', 'var', 's1', 'type', 'ind', 'year', 'value'))
     ## filter certain values
     data <- data[data$s1=='S1',]

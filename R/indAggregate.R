@@ -1,4 +1,4 @@
-#' Aggregate ISIC3
+#' Aggregate ISIC
 #'
 #' Aggregate industries ISIC Rev. 3 and ISIC Rev. 4
 #'
@@ -7,7 +7,8 @@
 #' @param data a dataframe having STAN industry labels (ISIC Rev. 3 or ISIC Rev. 4) as column names.
 #' @param isic an integer specifying the ISIC classification of data sources.
 #' @param cumulative logical to cumulate values if aggregate already existing in data
-#' #' @author OECD STAN
+#'
+#' @author OECD STAN
 #' @keywords dimensions
 #' @seealso \code{\link{loadDim}}
 #' @export
@@ -33,59 +34,63 @@ indAggregate <- function(data=stop("'data' must be specified"),
 {
     if (isic==3)
     {
-        list.agg <- list("C01T02" = c("C01", "C02"),
-                         "C01T05" = c("C01T02", "C05"),
-                         "C10T12" = c("C10", "C11", "C12"),
-                         "C13T14" = c("C13", "C14"),
-                         "C10T14" = c("C10T12", "C13T14"),
-                         "C15T16" = c("C15", "C16"),
-                         "C17T18" = c("C17", "C18"),
-                         "C17T19" = c("C17T18", "C19"),
-                         "C21T22" = c("C21", "C22"),
-                         "C20T22" = c("C20", "C21T22"),
-                         ## "C24" = c("C2423", "C24X"),
-                         "C23T25" = c("C23", "C24", "C25"),
-                         "C23T26" = c("C23T25", "C26"),
-                         ## "C27" = c("C271T31", "C272T32"),
-                         "C27T28" = c("C27", "C28"),
-                         ## "C31" = c("C313", "C31X"),
-                         ## "C32" = c("C321", "C322", "C323"),
-                         ## "C33" = c("C3312", "C3313", "C33X"),
-                         "C30T33" = c("C30", "C31", "C32", "C33"),
-                         "C29T33" = c("C29", "C30T33"),
-                         ## "C35" = c("C351", "C353", "C352A9"),
-                         "C34T35" = c("C34", "C35"),
-                         "C36T37" = c("C36", "C37"),
-                         "C15T37" = c("C15T16", "C17T19", "C20T22", "C23T26", "C27T28", "C29T33"),
-                         "C40T41" = c("C40", "C41"),
-                         ## "C51" = c("C515", "C51X", "C52"),
-                         "C50T52" = c("C50", "C51", "C52"),
-                         "C50T55" = c("C50T52", "C55"),
-                         ## "C64" = c("C641", "C642"),
-                         "C60T63" = c("C60", "C61", "C62", "C63"),
-                         "C60T64" = c("C60T63", "C64"),
-                         "C65T67" = c("C65", "C66", "C67"),
-                         ## "C71" = c("C7123", "C71X"),
-                         ## "C74" = c("C741T3", "C749"),
-                         "C71T74" = c("C71", "C72", "C73", "C74"),
-                         "C70T74" = c("C70", "C71T74"),
-                         "C65T74" = c("C65T67", "C70T74"),
-                         "C90T93" = c("C90", "C91", "C92", "C93"),
-                         "C75T99" = c("C75", "C80", "C85", "C90T93", "C95"),
-                         "C75T99" = c("C75T99", "C99"),
-                         "C20A36" = c("C20", "C36"),
-                         "C10T41" = c("C10T14", "C15T37", "C40T41"),
-                         "C27T35" = c("C27T28", "C29T33", "C34T35"),
-                         "C50T64" = c("C50T55", "C60T64"),
-                         "C50T74X" = c("C50T64", "C65T67", "C71T74"),
-                         "C50T74" = c("C50T64", "C65T74"),
-                         "C50T99" = c("C50T74", "C75T99"),
-                         "CTOTAL" = c("C01T05", "C10T41", "C45", "C50T99"),
-                         "C10T74X" = c("C10T41", "C45", "C50T74X"),
-                         "LOTECH" = c("C15T16", "C17T19", "C20", "C21T22", "C36T37"),
-                         "HMHTECH" = c("C24", "C29T33", "C34T35"),
-                         "ENERGYP" = c("C10T12", "C23", "C40"),
-                         "NONMAN" = c("C01T05", "C10T14", "C40T41", "C45", "C50T99"))
+        list.agg <- STANi3.HIERARCHY
+        list.agg.add <- list(## "C01T02" = c("C01", "C02"),
+                             ## "C01T05" = c("C01T02", "C05"),
+                             ## "C10T12" = c("C10", "C11", "C12"),
+                             ## "C13T14" = c("C13", "C14"),
+                             ## "C10T14" = c("C10T12", "C13T14"),
+                             ## "C15T16" = c("C15", "C16"),
+                             ## "C17T18" = c("C17", "C18"),
+                             ## "C17T19" = c("C17T18", "C19"),
+                             ## "C21T22" = c("C21", "C22"),
+                             ## "C20T22" = c("C20", "C21T22"),
+                             ## ## "C24" = c("C2423", "C24X"),
+                             ## "C23T25" = c("C23", "C24", "C25"),
+                             ## "C23T26" = c("C23T25", "C26"),
+                             ## ## "C27" = c("C271T31", "C272T32"),
+                             ## "C27T28" = c("C27", "C28"),
+                             ## ## "C31" = c("C313", "C31X"),
+                             ## ## "C32" = c("C321", "C322", "C323"),
+                             ## ## "C33" = c("C3312", "C3313", "C33X"),
+                             ## "C30T33X" = c("C30", "C32", "C33"),
+                             ## "C30T33" = c("C30T33X", "C31"),
+                             ## "C29T33" = c("C29", "C30T33"),
+                             ## ## "C35" = c("C351", "C353", "C352A9"),
+                             ## "C34T35" = c("C34", "C35"),
+                             ## "C36T37" = c("C36", "C37"),
+                             ## "C15T37" = c("C15T16", "C17T19", "C20T22", "C23T26", "C27T28", "C29T33"),
+                             ## "C40T41" = c("C40", "C41"),
+                             ## ## "C51" = c("C515", "C51X", "C52"),
+                             ## "C50T52" = c("C50", "C51", "C52"),
+                             ## "C50T55" = c("C50T52", "C55"),
+                             ## ## "C64" = c("C641", "C642"),
+                             ## "C60T63" = c("C60", "C61", "C62", "C63"),
+                             ## "C60T64" = c("C60T63", "C64"),
+                             ## "C65T67" = c("C65", "C66", "C67"),
+                             ## ## "C71" = c("C7123", "C71X"),
+                             ## ## "C74" = c("C741T3", "C749"),
+                             ## "C73T74" = c("C73", "C74"),
+                             ## "C71T74" = c("C71", "C72", "C73T74"),
+                             ## "C70T74" = c("C70", "C71T74"),
+                             ## "C65T74" = c("C65T67", "C70T74"),
+                             ## "C90T93" = c("C90", "C91", "C92", "C93"),
+                             ## "C75T99" = c("C75", "C80", "C85", "C90T93", "C95"),
+                             ## "C75T99" = c("C75T99", "C99"),
+                             "C20A36" = as.factor(c("C20", "C36")),
+                             ## "C10T41" = as.factor(c("C10T14", "C15T37", "C40T41")),
+                             "C27T35" = as.factor(c("C27T28", "C29T33", "C34T35")),
+                             ## "C50T64" = as.factor(c("C50T55", "C60T64")),
+                             "C50T74X" = as.factor(c("C50T64", "C65T67", "C71T74")),
+                             ## "C50T74" = as.factor(c("C50T64", "C65T74")),
+                             ## "C50T99" = as.factor(c("C50T74", "C75T99")),
+                             ## "CTOTAL" = as.factor(c("C01T05", "C10T41", "C45", "C50T99")),
+                             "C10T74X" = as.factor(as.factor(c("C10T41", "C45", "C50T74X"))),
+                             "LOTECH" = as.factor(c("C15T16", "C17T19", "C20", "C21T22", "C36T37")),
+                             "HMHTECH" = as.factor(c("C24", "C29T33", "C34T35")),
+                             "ENERGYP" = as.factor(c("C10T12", "C23", "C40")),
+                             "NONMAN" = as.factor(c("C01T05", "C10T14", "C40T41", "C45", "C50T99")))
+        list.agg <- c(list.agg, list.agg.add)
     } else if (isic==4)
     {
         list.agg <- list("D01T02" = c("D01", "D02"),
@@ -160,16 +165,17 @@ indAggregate <- function(data=stop("'data' must be specified"),
         parts <- list.agg[[i]]
         if (all(is.element(parts, colnames(data))==TRUE))
         {
-            if (!agg%in%colnames(data))
-            {
-                temp <- data[,colnames(data)%in%parts]
-                data$agg <- apply(temp, 1, "sum")
-                names(data) <- sub("agg", agg, names(data))
-            } else if (cumulative==TRUE)
-            {
-                temp <- data[,colnames(data)%in%c(agg, parts)]
-                data$agg <- apply(temp, 1, "sum")
-                names(data) <- sub("agg", agg, names(data))
+            if (!agg %in% colnames(data)) {
+                temp <- data[, colnames(data) %in% parts]
+                new.agg <- unname(apply(as.matrix(temp), 1, "sum"))
+                data <- cbind(data, new.agg)
+                colnames(data) <- sub("new.agg", agg, colnames(data))
+            }
+            else if (cumulative == TRUE) {
+                temp <- data[, colnames(data) %in% c(agg, parts)]
+                new.agg <- unname(apply(temp, 1, "sum"))
+                data <- cbind(data, new.agg)
+                colnames(data) <- sub("new.agg", agg, colnames(data))
             }
         }
     }

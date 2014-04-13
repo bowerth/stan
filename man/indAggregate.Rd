@@ -1,6 +1,6 @@
 \name{indAggregate}
 \alias{indAggregate}
-\title{Aggregate ISIC3}
+\title{Aggregate ISIC}
 \usage{
   indAggregate(data = stop("'data' must be specified"),
     isic = 3, cumulative = FALSE)
@@ -13,7 +13,7 @@
   of data sources.}
 
   \item{cumulative}{logical to cumulate values if aggregate
-  already existing in data #'}
+  already existing in data}
 }
 \description{
   Aggregate industries ISIC Rev. 3 and ISIC Rev. 4

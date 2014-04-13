@@ -1,0 +1,38 @@
+\name{SASbatch}
+\alias{SASbatch}
+\title{SAS batch}
+\usage{
+  SASbatch(namecou = c("BGR", "LVA"), isic = 4,
+    prog.sas = c("load", "estim", "pub"), quiet = FALSE,
+    export = TRUE)
+}
+\arguments{
+  \item{cou}{a 3-digit country ISO code character string.}
+
+  \item{isic}{an integer to specify the version of STAN.}
+
+  \item{prog.sas}{a character vector with combination of
+  \code{load}, \code{estim}, \code{pub}.}
+
+  \item{quiet}{a logical to return the created SAS program
+  contents.}
+}
+\description{
+  Create SAS batch programs
+}
+\details{
+  Create or modify SAS batch program for STAN based on a
+  list of countries.
+}
+\examples{
+SASbatch(namecou=c("BGR"), prog.sas="load")
+}
+\author{
+  OECD STAN
+}
+\seealso{
+  \code{\link{couCreate}}, \code{\link{SASload}},
+  \code{\link{SASestim}}, \code{\link{SASpub}}
+}
+\keyword{SAS}
+

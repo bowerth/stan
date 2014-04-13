@@ -1,6 +1,6 @@
-#' XLS transform
+#' XLS transform (EU)
 #'
-#' XLS Questionnaire transformation
+#' XLS Questionnaire transformation (EU)
 #'
 #' Transform EU Excel Questionnaire for loading in SAS.
 #'
@@ -24,10 +24,10 @@ XLStransform <- function(cou=stop("'cou' must be specified"),
     ##
     if (isic==3)
     {
-        path <- paste0(PATH.COUi3, cou, '\\Rawdata\\STD-SNA\\')
+        path.cou <- paste0(PATH.COUi3, cou, '\\Rawdata\\STD-SNA\\')
     } else if (isic==4)
     {
-        path <- paste0(PATH.COUi4, cou, '\\Rawdata\\STD-SNA\\')
+        path.cou <- paste0(PATH.COUi4, cou, '\\Rawdata\\STD-SNA\\')
     }
     ##
     conv.var <- rbind.data.frame(c('V', 'N11', 'S1', 'N', 'P51', 'GFCF'),
@@ -43,7 +43,7 @@ XLStransform <- function(cou=stop("'cou' must be specified"),
                                  c('O', 'T11', 'S1', 'N', 'Z', 'CPNK'))
     names(conv.var) <- c('price', 'asset', 'sector', 'denom', 'trans', 'var')
     ##
-    filenames <- list.files(path)
+    filenames <- list.files(path.cou)
     X <- strsplit(x = filenames, split = '[.]')
     filenames.table <- NULL
     for (i in seq(along=filenames)) {
@@ -55,7 +55,7 @@ XLStransform <- function(cou=stop("'cou' must be specified"),
     data.all <- NULL
     for (file in filenames.table)
     {
-        wb <- loadWorkbook(paste0(path, file))
+        wb <- loadWorkbook(paste0(path.cou, file))
         sheets <- getSheets(wb)
         ##
         for (sheet in sheets)
@@ -130,5 +130,5 @@ XLStransform <- function(cou=stop("'cou' must be specified"),
     data.out$value <- as.numeric(data.out$value)
     ## data.d <- dcast(data.all, ind + var ~ year, value.var="value")
     ## FAMEtransform(cou = cou, append = FALSE)
-    ANA2XLS(data = data.out, cou = cou, append = append)
+    ANA2XLS(data = data.out, cou = cou, isic = isic, append = append)
 }

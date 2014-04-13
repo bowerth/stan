@@ -1,0 +1,72 @@
+\name{XLStransform2}
+\alias{XLStransform2}
+\title{XLS transform (non-EU)}
+\usage{
+  XLStransform2(cou = stop("'cou' needs to be specified"),
+    isic = 4, append = FALSE, path = PATH.SP,
+    folder = stop("'folder' needs to be specified"),
+    file = stop("'file' needs to be specified"),
+    prefix = "", nameyear = c(2000:2011), startRow = 14,
+    startCol = 1, endCol = 11,
+    colNames = c("ind", "PROD", "INTI", "VALU", "VALK", "CFCC", "CFCK", "NOPS", "OTXS", "LABR", "WAGE"))
+}
+\arguments{
+  \item{cou}{a 3-digit country ISO code character string.}
+
+  \item{isic}{industry classification to be used for the
+  data output locacation.}
+
+  \item{append}{a boolean expression if variables shall be
+  added to those already present.}
+
+  \item{path}{a character string specifying the search
+  location.}
+
+  \item{folder}{a character string specifying the
+  containing folder.}
+
+  \item{file}{a character string specifying the file name.}
+
+  \item{prefix}{a character string specifying the sheet
+  prefix.}
+
+  \item{nameyear}{a numeric vector with years in worksheet
+  names.}
+
+  \item{startRow}{an integer specifying the first data
+  row.}
+
+  \item{startCol}{an integer specifying the first data
+  column.}
+
+  \item{endCol}{an integer specifying the last data
+  column.}
+
+  \item{colNames}{an integer with variable names.}
+}
+\description{
+  XLS Questionnaire transformation (non-EU)
+}
+\details{
+  Transform non-EU Excel Questionnaire for loading in SAS.
+}
+\examples{
+cou <- "COL"
+folder.file <- couLocate(cou = cou)[3,] # select the file here
+folder <- as.character(folder.file[,1])
+file <- as.character(folder.file[,2])
+XLStransform2(cou="COL", isic = 3, folder=folder, file=file, prefix="3.1_", nameyear=c(2000:2011))
+cou <- "MEX"
+folder.file <- couLocate(cou = cou)[1,] # select the file here
+folder <- as.character(folder.file[,1])
+file <- as.character(folder.file[,2])
+XLStransform2(cou="MEX", isic = 3, folder=folder, file=file, prefix="3.1_", nameyear=sprintf("\%02d", c(3:11)))
+}
+\author{
+  OECD STAN
+}
+\seealso{
+  \code{\link{couLocate}}, \code{\link{ANA2XLS}}
+}
+\keyword{ANA}
+

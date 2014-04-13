@@ -1,0 +1,54 @@
+% OECD Structural Analysis Database
+% Frequently Asked Questions
+% April 2014
+
+# Measuring value-added along global production networks
+
+##### A Global production network
+- CZE(VA, INT goods) $\Rightarrow$ DEU(INT goods) $\Rightarrow \Rightarrow \Rightarrow$ CHN(final goods) $\Rightarrow$ USA(final consumption)
+
+##### Current TiVA FDDVA (VA created by foreign final demand)
+- CZE(VA) $\Rightarrow \Rightarrow \Rightarrow \Rightarrow \Rightarrow$ USA (Final consumption)
+
+##### Current TiVA EXGR_FVA (Foreign valued added embodied in exports)
+- CZE(VA) $\Rightarrow \Rightarrow \Rightarrow$CHN(final goods)$\Rightarrow$ World
+
+# Frequently requested TiVA indicators regarding regional integration
+  1. CZE(VA) $\Rightarrow$ DEU(INT goods) $\Rightarrow$ CHN(final goods) $\Rightarrow$ World
+  2. CZE(VA) $\Rightarrow$ DEU(INT goods) $\Rightarrow$ $\Rightarrow
+     \Rightarrow$ USA (final consumption)
+<!--- CHN(INT EX) $\Rightarrow$ DEU(FNL goods) $\Rightarrow$
+     $\Rightarrow \Rightarrow$ USA (HH FNL) --->
+- Many country pairs are not interesting in general e.g. VA involved in the production network of CZE $\Rightarrow$ KHM $\Rightarrow$ CYP $\Rightarrow$ CHL
+
+# Currently developed tools
+
+- [stanapp](http://10.101.26.220:3838/stanapp/) STAN data browsing tool
+- [stanindici4](http://10.101.26.220:3838/stanindici4/) STAN indicator (ISIC4)
+- [icioapp](http://10.101.26.220:3838/icioapp/) TiVA indicator
+- [icioappedit](http://10.101.26.220:3838/icioappedit/) TiVA indicator (with editing functionality)
+
+## Future additions
+- Other embodied indicators (jobs/co2 vectors)
+- BTDIxE browser
+- Interactive charts
+
+# Explanation Flow Diagram
+## Source-Export-Demand
+
+<center><img src="./img/flow_diagram.png" height="300px"/></center>
+<!--- ![](./img/flow_diagram.png) --->
+
+# Source Data
+## Export Matrix
+
+<center><img src="./img/converter_schema.png" height="338px"/></center>
+
+# Source Data
+## Selection Matrix (green = 1, white = 0)
+
+<center><img src="./img/converter_image.png" height="400px"/></center>
+
+# Calculation
+
+<center><img src="./img/calculation_picture.png" height="420px"/></center>

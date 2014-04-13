@@ -24,6 +24,7 @@ NSO2XLS <- function(data=NULL,
                     file=paste0(PATH.COUi4,cou,'/Rawdata/R_',cou,'_',sou,'_4SAS_2013-14.xls'))
 {
     require(XLConnect)
+    require(reshape2)
     ##
     sheet <- 'Unites'
     unites <- readWorksheetFromFile(file = cover, sheet = sheet)[,c(1:6)]

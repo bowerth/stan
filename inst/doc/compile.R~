@@ -1,0 +1,14 @@
+
+## source("~/LocalData/Dropbox/GitHub/stan/inst/doc/compile.R")
+
+library(knitr)
+
+path <- paste0(PATH.REPO, 'stan\\inst\\doc\\')
+file <- "slides"
+
+command <- paste0('pandoc -s -S -i -t dzslides --mathjax ', path, file, '.md -o ', path, file, '.html')
+
+knit(input = paste0(path, file, '.Rmd'),
+     output = paste0(path, file, '.md'))
+##
+shell(shQuote(command))

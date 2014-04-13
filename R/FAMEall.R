@@ -23,6 +23,7 @@ FAMEall <- function(cou=stop("'cou' must be specified"),
                     year=2012,
                     tables=c(301,302,303,2000),
                     version='latest',
+                    append=FALSE,
                     ...)
 {
     FAMEprepare(cou=cou,
@@ -32,5 +33,5 @@ FAMEall <- function(cou=stop("'cou' must be specified"),
                 tables=tables,
                 version=version)
     FAMEload(cou=cou)
-    FAMEtransform(cou=cou)
+    FAMEtransform(cou=cou, append=append)
 }

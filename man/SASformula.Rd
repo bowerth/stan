@@ -1,0 +1,32 @@
+\name{SASformula}
+\alias{SASformula}
+\title{SAS formula}
+\usage{
+  SASformula(file = stop("'file' must be specified"),
+    line.remove = NULL)
+}
+\arguments{
+  \item{file}{filepath to SAS program.}
+
+  \item{line.remove}{character vector with rows to remove.}
+}
+\description{
+  Convert SAS program for R
+}
+\details{
+  Convert a SAS program with DATA step calculation formulas
+  to an R data frame
+}
+\examples{
+file <- paste0(PATH.SASi4, "Lists\\\\MDL_STAN_i4_i3_A64.txt")
+line.remove <- c("/* aggregate */")
+SASformula(file=file, line.remove=line.remove)
+}
+\author{
+  OECD STAN
+}
+\seealso{
+  \code{\link{calcFormula}}
+}
+\keyword{SAS}
+

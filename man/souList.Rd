@@ -1,0 +1,32 @@
+\name{souList}
+\alias{souList}
+\title{SOU List}
+\usage{
+  souList(isic = 4, namesou = c("NSO", "SUT", "STD-SNA"),
+    fileext = c("csv", "txt", "rda"))
+}
+\arguments{
+  \item{isic}{an integer to specify the version of STAN.}
+
+  \item{namesou}{a character string for subfolders
+  containing sources.}
+
+  \item{fileext}{}
+}
+\description{
+  Create source list
+}
+\details{
+  Create Source List for countries in folder.
+}
+\examples{
+souList(isic=3)
+}
+\author{
+  OECD STAN
+}
+\seealso{
+  \code{\link{SASload}}
+}
+\keyword{SAS}
+

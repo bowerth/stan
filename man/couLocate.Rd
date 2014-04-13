@@ -1,0 +1,35 @@
+\name{couLocate}
+\alias{couLocate}
+\title{COU Locate}
+\usage{
+  couLocate(cou = stop("'cou' must be specified"),
+    nameyear = rev(c(2008:2011)), path = PATH.SP,
+    getSheets = FALSE)
+}
+\arguments{
+  \item{cou}{a 3-digit country ISO code character string.}
+
+  \item{nameyear}{a numeric vector with years to search
+  subfolders.}
+
+  \item{path}{a character string specifying the search
+  location.}
+}
+\description{
+  List country files
+}
+\details{
+  List files and containing folders for a country.
+}
+\examples{
+couLocate(cou = 'COL')
+couLocate(cou = 'COL', getSheets=TRUE)
+}
+\author{
+  OECD STAN
+}
+\seealso{
+  \code{\link{ANA2XLS}}
+}
+\keyword{ANA}
+

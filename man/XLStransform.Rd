@@ -1,6 +1,6 @@
 \name{XLStransform}
 \alias{XLStransform}
-\title{XLS transform}
+\title{XLS transform (EU)}
 \usage{
   XLStransform(cou = stop("'cou' must be specified"),
     isic = 4, append = FALSE)
@@ -16,7 +16,7 @@
   added to those already present.}
 }
 \description{
-  XLS Questionnaire transformation
+  XLS Questionnaire transformation (EU)
 }
 \details{
   Transform EU Excel Questionnaire for loading in SAS.

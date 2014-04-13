@@ -1,0 +1,45 @@
+\name{SASestim}
+\alias{SASestim}
+\title{SAS estim}
+\usage{
+  SASestim(cou = stop("'cou' must be specified"), isic = 4,
+    sources = list(BGR = c("NSO", "SUT", "ISPATCH")),
+    variables = c("PROD", "VALU", "LABR"),
+    period = "1970-2010", quiet = FALSE)
+}
+\arguments{
+  \item{cou}{a 3-digit country ISO code character string.}
+
+  \item{isic}{an integer to specify the version of STAN.}
+
+  \item{sources}{a list naming the sources used for
+  estimation.}
+
+  \item{variables}{a character vector naming the variables
+  to estimate.}
+
+  \item{period}{a character string with the estimation
+  period.}
+
+  \item{quiet}{a logical to return the created SAS program
+  contents.}
+}
+\description{
+  Create SAS estimation programs
+}
+\details{
+  Create or modify SAS estimation programs for STAN based
+  on a list of countries and sources.
+}
+\examples{
+SASestim(cou="BGR", sources=list(BGR = c('NSONA', 'SUT', 'ISPATCH')))
+}
+\author{
+  OECD STAN
+}
+\seealso{
+  \code{\link{SASbatch}}, \code{\link{SASload}},
+  \code{\link{SASpub}}
+}
+\keyword{SAS}
+

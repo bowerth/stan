@@ -4,7 +4,7 @@
 \usage{
   ANA2XLS(data = stop("'data' must be specified"),
     cou = stop("'data' must be specified"), isic = 4,
-    append = FALSE)
+    append = FALSE, SDMX = FALSE)
 }
 \arguments{
   \item{data}{a dataframe object.}
@@ -17,6 +17,8 @@
 
   \item{append}{a boolean expression if variables shall be
   added to those already present.}
+
+  \item{SDMX}{use SDMX industry list.}
 }
 \description{
   Convert ANA data to XLS

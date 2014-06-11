@@ -1,0 +1,28 @@
+# Welcome
+
+Welcome message
+
+## Methods
+
+Learn about the concepts and definitions used in National Accounts and the methods applied for the generation of a dataset that meets academic standards for structural analysis. The book is broken down into the following chapters (which you can also access from the drop-down menus at the top-right):
+
+<ul class="toc">
+  <li><a href="Introduction.html">Introduction</a></li>
+<li class="dropdown-header">General Information</li>
+<li><a href="Variables.html">Variables</a></li>
+<li><a href="Data-sources.html">Data Sources</a></li>
+<li><a href="Country-notes.html">Country Notes</a></li>
+<li><a href="Updating.html">Updating</a></li>
+
+</ul>
+
+## Data Sources
+
+Time series from countries' National Statistical Offices (NSOs) are the fundamental units of the database. They include compositional data and structural analysis is based on the relationsships between these variables. In the process of selecting and mapping variables from national definitions and harmonizing national classifications of economic activities with the International Standard Industry Classification, these relationships need to be monitored closely. You will be able to identify relevant series from NSOs and combine them using basic estimation methods.
+
+<ul class="toc">
+  <li class="dropdown-header">Getting started</li>
+<li><a href="Philosophy.html">Philosophy</a></li>
+
+</ul>
+

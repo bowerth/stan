@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Datasources &middot; Advanced R.</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="www/bootstrap.min.css" rel="stylesheet">
+    <link href="www/highlight.css" rel="stylesheet">
+
+    <link href='http://fonts.googleapis.com/css?family=Inconsolata:400,700'
+      rel='stylesheet' type='text/css'>
+  </head>
+
+  <body>
+
+    <div class="container">
+
+      <div class="masthead">
+        <ul class="nav nav-pills pull-right">
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              Methods <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu" role="menu">
+              <li><a href="Introduction.html">Introduction</a></li>
+<li class="dropdown-header">General Information</li>
+<li><a href="Variables.html">Variables</a></li>
+<li><a href="Data-sources.html">Data Sources</a></li>
+<li><a href="Country-notes.html">Country Notes</a></li>
+<li><a href="Updating.html">Updating</a></li>
+
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              Sources <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu pull-right" role="menu">
+              <li class="dropdown-header">Getting started</li>
+<li><a href="Philosophy.html">Philosophy</a></li>
+
+            </ul>
+          </li>
+        </ul>
+
+        <h3 class="muted"><a href="/">STAN</a> <small>by OECD STI/EAS</small></h3>
+        <hr>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-3" id="nav">
+          <h4>Contents</h4>
+          <ul class="list-unstyled" id="toc"></ul>
+
+          <hr>
+          <p><a href="/contribute.html">How to contribute</a></p>
+
+          <p><a class="btn btn-primary" href="http://stats.oecd.org/Index.aspx?DataSetCode=STANI4/Updating.rmd">Access data</a></p>
+        </div>
+
+        <div id="content" class="col-sm-8 pull-right">
+          <h1>Updating STAN</h1>
+<h2>Criteria for updates</h2>
+<p>Updates of STAN take place according to availability of data from NSOs.</p>
+<h3>Timing</h3>
+<p>STAN is updated on a country-by-country basis. The first step is to ensure that the maximum amount of publicly available National Accounts by activity data has been obtained to act as the <em>primary source</em>. For countries that don’t use ISIC Rev.4 or NACE Rev.2, the data are then converted from the national industrial classification to ISIC Rev.4 using a country-specific conversion key. Almost all countries use annually re-weighted chained methodology. Volumes are aggregated to STAN industries following national practice - for example, chained Fisher aggregates are calculated for the United States, chained Laspeyres aggregates for France.</p>
+<h3>Secondary Sources</h3>
+<p>The next step is to ensure that the latest available ISIC Rev.4 business survey data (from SSIS and SBS) has been loaded into the STAN system together with data from earlier versions of STAN and ANA, approximately converted to ISIC Rev.4. These are the <em>secondary sources</em>. For each variable, if (i) more industry detail is available from the <em>secondary sources</em> than latest (SNA93) National Accounts, and/or (ii) any of the <em>secondary sources</em> extend further back in time than the latest National Accounts, a general estimation program is then run to fill in as many gaps as possible.</p>
+<h2 id="upda-est">Estimation Routine</h2>
+<p>Using the <strong>hierarchical structure</strong> of the industry list, the estimation program performs the following:</p>
+<ul>
+<li>At all levels of industry where data are available for the primary source (e.g. ISIC 13-15), the time-series correlations between the primary source and the secondary sources are calculated to chose best secondary source (such as industrial survey data or old National Accounts series) for filling in further detail (e.g. ISICs 13, 14 and 15) and where necessary extending the series backwards; to estimate missing detail, the chosen secondary source data are adjusted for each year according to the relationship between the primary source and secondary source data at the lowest level that they coincide (e.g. ISIC 13-15). The implicit assumption being that the relative distribution of the secondary source data within the subgroup is valid for the primary source (i.e. National Accounts). In general, extra detail is only estimated for current price measures and for manufacturing industries only</li>
+<li>To extend series backwards, the chosen secondary source data are linked to the primary source data at the first available year for the primary source data</li>
+<li>Dinally, further adjustments to the estimates may be made to ensure that data in each level of the hierarchy of the industry list sums to the data at the superior level of the hierarchy</li>
+</ul>
+<h3>Quality Checks</h3>
+<p>Following the estimation procedure, quality control checks are made using graphs and summary statistics. Ratios of variables are checked for consistency, while taking account of why some anomalies may occur, and comparisons are made with earlier versions of STAN. Consistency with other OECD National Accounts based data sets is also verified.</p>
+
+        </div>
+      </div>
+
+      <div class="footer">
+        <hr>
+        <p>&copy; OECD STAN. Powered by <a href="http://jekyllrb.com/">jekyll</a>,
+          <a href="http://yihui.name/knitr/">knitr</a>, and
+          <a href="http://johnmacfarlane.net/pandoc/">pandoc</a>. Source
+          available on <a href="https://github.com/bowerth/standoc/">github</a>.
+        </p>
+      </div>
+
+    </div> <!-- /container -->
+
+  <script src="//code.jquery.com/jquery.js"></script>
+  <script src="www/bootstrap.min.js"></script>
+  <script src="www/toc.js"></script>
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-67989-16', 'had.co.nz');
+    ga('send', 'pageview');
+
+  </script>
+  </body>
+</html>

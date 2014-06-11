@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Introduction &middot; Advanced R.</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="www/bootstrap.min.css" rel="stylesheet">
+    <link href="www/highlight.css" rel="stylesheet">
+
+    <link href='http://fonts.googleapis.com/css?family=Inconsolata:400,700'
+      rel='stylesheet' type='text/css'>
+  </head>
+
+  <body>
+
+    <div class="container">
+
+      <div class="masthead">
+        <ul class="nav nav-pills pull-right">
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              Methods <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu" role="menu">
+              <li><a href="Introduction.html">Introduction</a></li>
+<li class="dropdown-header">General Information</li>
+<li><a href="Variables.html">Variables</a></li>
+<li><a href="Data-sources.html">Data Sources</a></li>
+<li><a href="Country-notes.html">Country Notes</a></li>
+<li><a href="Updating.html">Updating</a></li>
+
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              Sources <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu pull-right" role="menu">
+              <li class="dropdown-header">Getting started</li>
+<li><a href="Philosophy.html">Philosophy</a></li>
+
+            </ul>
+          </li>
+        </ul>
+
+        <h3 class="muted"><a href="/">STAN</a> <small>by OECD STI/EAS</small></h3>
+        <hr>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-3" id="nav">
+          <h4>Contents</h4>
+          <ul class="list-unstyled" id="toc"></ul>
+
+          <hr>
+          <p><a href="/contribute.html">How to contribute</a></p>
+
+          <p><a class="btn btn-primary" href="http://stats.oecd.org/Index.aspx?DataSetCode=STANI4/Introduction.rmd">Access data</a></p>
+        </div>
+
+        <div id="content" class="col-sm-8 pull-right">
+          <h1>Introduction</h1>
+<p>The <strong>“STAN database for Industrial Analysis”</strong> provides analysts and researchers with a comprehensive tool for analysing industrial performance at a relatively detailed level of activity. It includes annual measures of output, labour input, investment and international trade that allow users to construct a wide range of indicators to focus on areas such as productivity growth, competitiveness and general structural change. Through the use of a standard industry list, comparisons can be made across countries. The industry list provides sufficient detail to enable users to highlight high-technology sectors and is compatible with those used in related OECD databases.</p>
+<p>STAN is primarily based on member countries’ Annual National Accounts by activity tables and uses data from other sources, such as national industrial surveys/censuses, to estimate any missing detail. Since many of the data points are estimated, they do not represent official member country submissions.</p>
+<p>The current version of STAN is based on the International Standard Industrial Classification of all Economic Activities, Revision 4 (ISIC Rev.4) and covers all activities (including services). Earlier versions of STAN were based on ISIC Rev.3 and ISIC Rev.2 where the latter covered the manufacturing sector only.</p>
+<p>To optimize timeliness, STAN is updated on a ‘rolling basis’ - new tables are made available as soon as they are ready via OECD.Stat or via OLISnet, the dedicated online service for governments and related agencies. In OECD.Stat, STAN is grouped under ``Industry and Services’’ together with related data sets such as R&amp;D expenditure (<a href="http://www.oecd.org/sti/anberd">ANBERD</a>) and Bilateral Trade by Industry and End-Use (<a href="http://www.oecd.org/sti/btd">BTDIxE</a>), derived <a href="http://www.oecd.org/sti/stan/indicators">STAN Indicators</a>. Further examples of indicators derived from STAN variables are available in the latest <a href="http://www.oecd-ilibrary.org/science-and-technology/oecd-science-technology-and-industry-scoreboard_20725345">Science, Technology and Industry Scoreboard</a> publication.</p>
+<p>STAN is maintained by the Economic Analysis and Statistics Division of OECD’s Directorate for Science, Technology and Industry under the auspices of the Statistical Working Party on Industry Analysis. The data are published on the responsibility of the Secretary-General of the OECD.</p>
+<h2>Recommended citation:</h2>
+<p>OECD, STAN database</p>
+<h2>Recommended reading</h2>
+<p>The <a href="https://unstats.un.org/unsd/nationalaccount/sna.asp">System of National Accounts</a> Manuals provide a more detailed description of the concepts and definitions used in STAN.</p>
+<h2>Getting help</h2>
+<p>Additional information can be found on the STAN internet page: <a href="http://www.oecd.org/sti/stan">www.oecd.org/sti/stan</a>. If you think any of the information in this document is unclear, misleading or inaccurate, or have any suggestions on how it can be improved, please contact <a href="stan.contact@oecd.org"><a href="mailto:stan.contact@oecd.org">stan.contact@oecd.org</a></a> (mentioning STAN in the message title). Comments concerning STAN data or their presentation are also welcomed.</p>
+<h2 id="intro-ack">Acknowledgements</h2>
+<p>We would like to thank the National Accounts division of the OECD Statistics Directorate for their support and patience in the area of National Accounts by detailed economic activity statistics.</p>
+<p>Thanks go to all contributers in alphabetical order: <span class="citation">@aaa</span>.</p>
+<h2>Conventions</h2>
+<p>An important feature of STAN is the use of a standard industry list for all countries to facilitate international comparisons, see table below. The list is based on ISIC Rev.4 (see the <a href="http://unstats.un.org/unsd/cr/registry/regcst.asp?Cl=27">U.N.’s classification registry</a>) and includes detailed service sectors. The list is compatible with the Statistical Classification of Economic Activities in the European Community, Rev.2 (2008) (see <a href="http://ec.europa.eu/eurostat/ramon/nomenclatures/index.cfm?TargetUrl=LST_NOM_DTL&amp;StrNom=NACE_REV2&amp;StrLanguageCode=EN&amp;IntPcKey=&amp;StrLayoutCode=HIERARCHIC">NACE Rev.2 in Eurostat RAMON</a>).</p>
+<p>The industry list is designed to provide users with enough detail to focus on technology- and/or knowledge-intensive activities while taking into consideration general data availability across countries (based on recent experience). Also taken into account is:</p>
+<ul>
+<li>the list used in the previous ISIC Rev.3 version of STAN that accounts for manufactures in the old ISIC Rev.2 version of STAN</li>
+<li>compatibility with related OECD data sets such as ANBERD and OECD’s Input-Output tables INSERT LINK and</li>
+<li>the level of detail requested in the joint OECD/Eurostat official National Accounts questionnaire.</li>
+</ul>
+<p>An additional table showing the industry list together with an approximate ISIC Rev.3 equivalence can be found at INSERT LINK</p>
+<p>ISIC codes are abbreviated with <code>D</code> for ISIC Rev. 4. Ranges are indicated with <code>T</code> between the first and last activity in range. <code>X</code> indicates the exclusion of one or more sectors in the range. <code>A</code> indicates an aggregate of two non-neighbouring codes.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">ind</th>
+<th align="left">label</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">D01T03</td>
+<td align="left">Agriculture, forestry and fishing</td>
+</tr>
+<tr class="even">
+<td align="left">D01</td>
+<td align="left">Crop and animal production, hunting and related service activities</td>
+</tr>
+<tr class="odd">
+<td align="left">D02</td>
+<td align="left">Forestry and logging</td>
+</tr>
+<tr class="even">
+<td align="left">D03</td>
+<td align="left">Fishing and aquaculture</td>
+</tr>
+<tr class="odd">
+<td align="left">D05T09</td>
+<td align="left">Mining and quarrying</td>
+</tr>
+<tr class="even">
+<td align="left">D05</td>
+<td align="left">Mining of coal and lignite</td>
+</tr>
+<tr class="odd">
+<td align="left">D06</td>
+<td align="left">Extraction of crude petroleum and natural gas</td>
+</tr>
+<tr class="even">
+<td align="left">D07</td>
+<td align="left">Mining of metal ores</td>
+</tr>
+<tr class="odd">
+<td align="left">D08</td>
+<td align="left">Other mining and quarrying</td>
+</tr>
+<tr class="even">
+<td align="left">D09</td>
+<td align="left">Mining support service activities</td>
+</tr>
+<tr class="odd">
+<td align="left">D10T33</td>
+<td align="left">Manufacturing</td>
+</tr>
+<tr class="even">
+<td align="left">D10T12</td>
+<td align="left">Food products, beverages and tobacco</td>
+</tr>
+<tr class="odd">
+<td align="left">D10</td>
+<td align="left">Food products</td>
+</tr>
+<tr class="even">
+<td align="left">D11</td>
+<td align="left">Beverages</td>
+</tr>
+<tr class="odd">
+<td align="left">D12</td>
+<td align="left">Tobacco products</td>
+</tr>
+<tr class="even">
+<td align="left">D13T15</td>
+<td align="left">Textiles, wearing apparel, leather and related prodcuts</td>
+</tr>
+<tr class="odd">
+<td align="left">D13</td>
+<td align="left">Textiles</td>
+</tr>
+<tr class="even">
+<td align="left">D14</td>
+<td align="left">Wearing apparel</td>
+</tr>
+<tr class="odd">
+<td align="left">D15</td>
+<td align="left">Leather and related products</td>
+</tr>
+<tr class="even">
+<td align="left">D16T18</td>
+<td align="left">Wood and paper products, and printing</td>
+</tr>
+<tr class="odd">
+<td align="left">D16</td>
+<td align="left">Wood and products of wood and cork, except furniture; articles of straw and plaiting materials</td>
+</tr>
+<tr class="even">
+<td align="left">D17</td>
+<td align="left">Paper and paper products</td>
+</tr>
+<tr class="odd">
+<td align="left">D18</td>
+<td align="left">Printing and reproduction of recorded media</td>
+</tr>
+<tr class="even">
+<td align="left">D19</td>
+<td align="left">Coke and refined petroleum products</td>
+</tr>
+<tr class="odd">
+<td align="left">D20</td>
+<td align="left">Chemicals and chemical products</td>
+</tr>
+<tr class="even">
+<td align="left">D21</td>
+<td align="left">Basic pharmaceutical products and pharmaceutical preparations</td>
+</tr>
+<tr class="odd">
+<td align="left">D22T23</td>
+<td align="left">Rubber and plastics products, and other non-metallic mineral products</td>
+</tr>
+<tr class="even">
+<td align="left">D22</td>
+<td align="left">Rubber and plastics products</td>
+</tr>
+<tr class="odd">
+<td align="left">D23</td>
+<td align="left">Other non-metallic mineral products</td>
+</tr>
+<tr class="even">
+<td align="left">D24T25</td>
+<td align="left">Basic metals and fabricated metal products, except machinery and equipment</td>
+</tr>
+<tr class="odd">
+<td align="left">D24</td>
+<td align="left">Basic metals</td>
+</tr>
+<tr class="even">
+<td align="left">D25</td>
+<td align="left">Fabricated metal products, except machinery and equipment</td>
+</tr>
+<tr class="odd">
+<td align="left">D26</td>
+<td align="left">Computer, electronic and optical products</td>
+</tr>
+<tr class="even">
+<td align="left">D27</td>
+<td align="left">Electrical equipment</td>
+</tr>
+<tr class="odd">
+<td align="left">D28</td>
+<td align="left">Machinery and equipment n.e.c.</td>
+</tr>
+<tr class="even">
+<td align="left">D29T30</td>
+<td align="left">Transport equipment</td>
+</tr>
+<tr class="odd">
+<td align="left">D29</td>
+<td align="left">Motor vehicles, trailers and semi-trailers</td>
+</tr>
+<tr class="even">
+<td align="left">D30</td>
+<td align="left">Other transport equipment</td>
+</tr>
+<tr class="odd">
+<td align="left">D31T33</td>
+<td align="left">Furniture; other manufacturing; repair and installation of machinery and equipment</td>
+</tr>
+<tr class="even">
+<td align="left">D31T32</td>
+<td align="left">Furniture, other manufacturing</td>
+</tr>
+<tr class="odd">
+<td align="left">D31</td>
+<td align="left">Furniture</td>
+</tr>
+<tr class="even">
+<td align="left">D32</td>
+<td align="left">Other manufacturing</td>
+</tr>
+<tr class="odd">
+<td align="left">D33</td>
+<td align="left">Repair and installation of machinery and equipment</td>
+</tr>
+<tr class="even">
+<td align="left">D35</td>
+<td align="left">Electricity, gas, steam and air conditioning supply</td>
+</tr>
+<tr class="odd">
+<td align="left">D36T39</td>
+<td align="left">Water supply; sewerage, waste management and remediation activities</td>
+</tr>
+<tr class="even">
+<td align="left">D36</td>
+<td align="left">Water collection, treatment and supply</td>
+</tr>
+<tr class="odd">
+<td align="left">D37T39</td>
+<td align="left">Sewerage, waste collection, treatment and disposal activities; materials recovery; remediation activities and other waste management services</td>
+</tr>
+<tr class="even">
+<td align="left">D37</td>
+<td align="left">Sewerage</td>
+</tr>
+<tr class="odd">
+<td align="left">D38</td>
+<td align="left">Waste collection, treatment and disposal activities; materials recovery</td>
+</tr>
+<tr class="even">
+<td align="left">D39</td>
+<td align="left">Remediation activities and other waste management services</td>
+</tr>
+<tr class="odd">
+<td align="left">D41T43</td>
+<td align="left">Construction</td>
+</tr>
+<tr class="even">
+<td align="left">D41</td>
+<td align="left">Construction of buildings</td>
+</tr>
+<tr class="odd">
+<td align="left">D42</td>
+<td align="left">Civil engineering</td>
+</tr>
+<tr class="even">
+<td align="left">D43</td>
+<td align="left">Specialized construction activities</td>
+</tr>
+<tr class="odd">
+<td align="left">D45T56</td>
+<td align="left">Wholesale and retail trade; transportation and storage; accommodation and food service activities</td>
+</tr>
+<tr class="even">
+<td align="left">D45T47</td>
+<td align="left">Wholesale and retail trade, repair of motor vehicles and motorcycles</td>
+</tr>
+<tr class="odd">
+<td align="left">D45</td>
+<td align="left">Wholesale and retail trade and repair of motor vehicles and motorcycles</td>
+</tr>
+<tr class="even">
+<td align="left">D46</td>
+<td align="left">Wholesale trade, except of motor vehicles and motorcycles</td>
+</tr>
+<tr class="odd">
+<td align="left">D47</td>
+<td align="left">Retail trade, except of motor vehicles and motorcycles</td>
+</tr>
+<tr class="even">
+<td align="left">D49T53</td>
+<td align="left">Transportation and storage</td>
+</tr>
+<tr class="odd">
+<td align="left">D49</td>
+<td align="left">Land transport and transport via pipelines</td>
+</tr>
+<tr class="even">
+<td align="left">D50</td>
+<td align="left">Water transport</td>
+</tr>
+<tr class="odd">
+<td align="left">D51</td>
+<td align="left">Air transport</td>
+</tr>
+<tr class="even">
+<td align="left">D52</td>
+<td align="left">Warehousing and support activities for transportation</td>
+</tr>
+<tr class="odd">
+<td align="left">D53</td>
+<td align="left">Postal and courier activities</td>
+</tr>
+<tr class="even">
+<td align="left">D55T56</td>
+<td align="left">Accommodation and food service activities</td>
+</tr>
+<tr class="odd">
+<td align="left">D55</td>
+<td align="left">Accommodation</td>
+</tr>
+<tr class="even">
+<td align="left">D56</td>
+<td align="left">Food and beverage service activities</td>
+</tr>
+<tr class="odd">
+<td align="left">D58T63</td>
+<td align="left">Information and communication</td>
+</tr>
+<tr class="even">
+<td align="left">D58T60</td>
+<td align="left">Publishing, audiovisual and broadcasting activities</td>
+</tr>
+<tr class="odd">
+<td align="left">D58</td>
+<td align="left">Publishing activities</td>
+</tr>
+<tr class="even">
+<td align="left">D59T60</td>
+<td align="left">Audiovisual and broadcasting activities</td>
+</tr>
+<tr class="odd">
+<td align="left">D59</td>
+<td align="left">Motion picture, video and television programme production, sound recording and music publishing activities</td>
+</tr>
+<tr class="even">
+<td align="left">D60</td>
+<td align="left">Programming and broadcasting activities</td>
+</tr>
+<tr class="odd">
+<td align="left">D61</td>
+<td align="left">Telecommunications</td>
+</tr>
+<tr class="even">
+<td align="left">D62T63</td>
+<td align="left">It and other information services</td>
+</tr>
+<tr class="odd">
+<td align="left">D62</td>
+<td align="left">Computer programming, consultancy and related activities</td>
+</tr>
+<tr class="even">
+<td align="left">D63</td>
+<td align="left">Information service activities</td>
+</tr>
+<tr class="odd">
+<td align="left">D64T66</td>
+<td align="left">Financial and insurance activities</td>
+</tr>
+<tr class="even">
+<td align="left">D64</td>
+<td align="left">Financial service activities, except insurance and pension funding</td>
+</tr>
+<tr class="odd">
+<td align="left">D65</td>
+<td align="left">Insurance, reinsurance and pension funding, except compulsory social security</td>
+</tr>
+<tr class="even">
+<td align="left">D66</td>
+<td align="left">Activities auxiliary to financial service and insurance activities</td>
+</tr>
+<tr class="odd">
+<td align="left">D68</td>
+<td align="left">Real estate activities</td>
+</tr>
+<tr class="even">
+<td align="left">D69T82</td>
+<td align="left">Professional, scientific and technical activities; administrative and support service activities</td>
+</tr>
+<tr class="odd">
+<td align="left">D69T75</td>
+<td align="left">Professional, scientific and technical activities</td>
+</tr>
+<tr class="even">
+<td align="left">D69T71</td>
+<td align="left">Legal and accounting activities; activities of head offices; management consultancy activities; architecture and engineering activities; technical testing and analysis</td>
+</tr>
+<tr class="odd">
+<td align="left">D69T70</td>
+<td align="left">Legal and accounting activities; activities of head offices; management consultancy activities</td>
+</tr>
+<tr class="even">
+<td align="left">D69</td>
+<td align="left">Legal and accounting activities</td>
+</tr>
+<tr class="odd">
+<td align="left">D70</td>
+<td align="left">Activities of head offices; management consultancy activities</td>
+</tr>
+<tr class="even">
+<td align="left">D71</td>
+<td align="left">Architectural and engineering activities; technical testing and analysis</td>
+</tr>
+<tr class="odd">
+<td align="left">D72</td>
+<td align="left">Scientific research and development</td>
+</tr>
+<tr class="even">
+<td align="left">D73T75</td>
+<td align="left">Advertising and market research; other professional, scientific and technical activities; veterinary activities</td>
+</tr>
+<tr class="odd">
+<td align="left">D73</td>
+<td align="left">Advertising and market research</td>
+</tr>
+<tr class="even">
+<td align="left">D74T75</td>
+<td align="left">Other professional, scientific and technical activities; veterinary activities</td>
+</tr>
+<tr class="odd">
+<td align="left">D74</td>
+<td align="left">Other professional, scientific and technical activities</td>
+</tr>
+<tr class="even">
+<td align="left">D75</td>
+<td align="left">Veterinary activities</td>
+</tr>
+<tr class="odd">
+<td align="left">D77T82</td>
+<td align="left">Administrative and support service activities</td>
+</tr>
+<tr class="even">
+<td align="left">D77</td>
+<td align="left">Rental and leasing activities</td>
+</tr>
+<tr class="odd">
+<td align="left">D78</td>
+<td align="left">Employment activities</td>
+</tr>
+<tr class="even">
+<td align="left">D79</td>
+<td align="left">Travel agency, tour operator, reservation service and related activities</td>
+</tr>
+<tr class="odd">
+<td align="left">D80T82</td>
+<td align="left">Security and investigation activities; services to buildings and landscape activities; office administrative, office support and other business support activities</td>
+</tr>
+<tr class="even">
+<td align="left">D80</td>
+<td align="left">Security and investigation activities</td>
+</tr>
+<tr class="odd">
+<td align="left">D81</td>
+<td align="left">Services to buildings and landscape activities</td>
+</tr>
+<tr class="even">
+<td align="left">D82</td>
+<td align="left">Office administrative, office support and other business support activities</td>
+</tr>
+<tr class="odd">
+<td align="left">D84T88</td>
+<td align="left">Public administration and defence; compulsory social security; education; human health and social work activities</td>
+</tr>
+<tr class="even">
+<td align="left">D84</td>
+<td align="left">Public administration and defence; compulsory social security</td>
+</tr>
+<tr class="odd">
+<td align="left">D85</td>
+<td align="left">Education</td>
+</tr>
+<tr class="even">
+<td align="left">D86T88</td>
+<td align="left">Human health and social work activities</td>
+</tr>
+<tr class="odd">
+<td align="left">D86</td>
+<td align="left">Human health activities</td>
+</tr>
+<tr class="even">
+<td align="left">D87T88</td>
+<td align="left">Residential care and social work activities</td>
+</tr>
+<tr class="odd">
+<td align="left">D87</td>
+<td align="left">Residential care activities</td>
+</tr>
+<tr class="even">
+<td align="left">D88</td>
+<td align="left">Social work activities without accommodation</td>
+</tr>
+<tr class="odd">
+<td align="left">D90T99</td>
+<td align="left">Arts, entertainment, repair of household goods and other services</td>
+</tr>
+<tr class="even">
+<td align="left">D90T93</td>
+<td align="left">Arts, entertainment and recreation</td>
+</tr>
+<tr class="odd">
+<td align="left">D90T92</td>
+<td align="left">Creative, arts and entertainment activities; libraries, archives, museums and other cultural activities; gambling and betting activities</td>
+</tr>
+<tr class="even">
+<td align="left">D90</td>
+<td align="left">Creative, arts and entertainment activities</td>
+</tr>
+<tr class="odd">
+<td align="left">D91</td>
+<td align="left">Libraries, archives, museums and other cultural activities</td>
+</tr>
+<tr class="even">
+<td align="left">D92</td>
+<td align="left">Gambling and betting activities</td>
+</tr>
+<tr class="odd">
+<td align="left">D93</td>
+<td align="left">Sports activities and amusement and recreation activities</td>
+</tr>
+<tr class="even">
+<td align="left">D94T96</td>
+<td align="left">Other service activities</td>
+</tr>
+<tr class="odd">
+<td align="left">D94</td>
+<td align="left">Activities of membership organizations</td>
+</tr>
+<tr class="even">
+<td align="left">D95</td>
+<td align="left">Repair of computers and personal and household goods</td>
+</tr>
+<tr class="odd">
+<td align="left">D96</td>
+<td align="left">Other personal service activities</td>
+</tr>
+<tr class="even">
+<td align="left">D97T98</td>
+<td align="left">Activities of households as employers; undifferentiated activities of households for own use</td>
+</tr>
+<tr class="odd">
+<td align="left">D97</td>
+<td align="left">Activities of households as employers of domestic personnel</td>
+</tr>
+<tr class="even">
+<td align="left">D98</td>
+<td align="left">Undifferentiated goods- and services-producing activities of private households for own use</td>
+</tr>
+<tr class="odd">
+<td align="left">D99</td>
+<td align="left">Activities of extraterritorial organizations and bodies</td>
+</tr>
+<tr class="even">
+<td align="left">D05T39</td>
+<td align="left">Industry including energy</td>
+</tr>
+</tbody>
+</table>
+<h2>Colophon</h2>
+<p>This book was written in <a href="http://rmarkdown.rstudio.com/">Rmarkdown</a> inside <a href="http://www.rstudio.com/ide/">Rstudio</a>. <a href="http://yihui.name/knitr/">knitr</a> and <a href="http://johnmacfarlane.net/pandoc/">pandoc</a> converted the raw Rmarkdown to html and pdf. The website was made with <a href="http://jekyllrb.com/">jekyll</a>, styled with <a href="http://getbootstrap.com/">bootstrap</a>, and automatically published to amazon’s <a href="http://aws.amazon.com/s3/">S3</a> with <a href="https://github.com/laurilehmijoki/s3_website">s3_website</a> by <a href="https://travis-ci.org/">travis-ci</a>.</p>
+<p>Code is set in <a href="http://levien.com/type/myfonts/inconsolata.html">inconsolata</a>.</p>
+
+        </div>
+      </div>
+
+      <div class="footer">
+        <hr>
+        <p>&copy; OECD STAN. Powered by <a href="http://jekyllrb.com/">jekyll</a>,
+          <a href="http://yihui.name/knitr/">knitr</a>, and
+          <a href="http://johnmacfarlane.net/pandoc/">pandoc</a>. Source
+          available on <a href="https://github.com/bowerth/standoc/">github</a>.
+        </p>
+      </div>
+
+    </div> <!-- /container -->
+
+  <script src="//code.jquery.com/jquery.js"></script>
+  <script src="www/bootstrap.min.js"></script>
+  <script src="www/toc.js"></script>
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-67989-16', 'had.co.nz');
+    ga('send', 'pageview');
+
+  </script>
+  </body>
+</html>

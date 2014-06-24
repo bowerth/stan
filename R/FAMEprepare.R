@@ -16,7 +16,7 @@
 #' @seealso \code{\link{FAMEall}}
 #' @export
 #' @examples
-#' FAMEall(cou="ITA")
+#' FAMEprepare(cou="ITA")
 
 FAMEprepare <- function(cou=stop("'cou' must be specified"),
                         year=2012,
@@ -45,6 +45,18 @@ FAMEprepare <- function(cou=stop("'cou' must be specified"),
     ##
     command <- NULL # create GESMES command, one row for each table
     filenames <- list.files(path.data)
+    ## only select GESMES files
+    X <- strsplit(x = filenames, split = '[.]')
+    all.ges <- NULL
+    ## i <- 1
+    for (i in c(1:length(X)))
+    {
+        if (tolower(X[[i]][length(X[[i]])])=="ges")
+        {
+            all.ges <- c(all.ges, filenames[i])
+        }
+    }
+    filenames <- all.ges
     for(table in tables) {
         ## return all versions of the selected table
         X <- strsplit(x = filenames, split = '_')

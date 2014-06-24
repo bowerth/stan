@@ -6,7 +6,7 @@
     isic = 4, append = FALSE, path = PATH.SP,
     folder = stop("'folder' needs to be specified"),
     file = stop("'file' needs to be specified"),
-    prefix = "", nameyear = c(2000:2011), startRow = 14,
+    prefix = "", nameyear = c(2000:2012), startRow = 14,
     startCol = 1, endCol = 11,
     colNames = c("ind", "PROD", "INTI", "VALU", "VALK", "CFCC", "CFCK", "NOPS", "OTXS", "LABR", "WAGE"))
 }
@@ -60,7 +60,7 @@ cou <- "MEX"
 folder.file <- couLocate(cou = cou)[1,] # select the file here
 folder <- as.character(folder.file[,1])
 file <- as.character(folder.file[,2])
-XLStransform2(cou="MEX", isic = 3, folder=folder, file=file, prefix="3.1_", nameyear=sprintf("\%02d", c(3:11)))
+XLStransform2(cou="MEX", isic = 4, folder=folder, file=file, prefix="3.1 ", nameyear=c(2003:2012))
 }
 \author{
   OECD STAN

@@ -30,7 +30,19 @@ XLStransform <- function(cou=stop("'cou' must be specified"),
         path.cou <- paste0(PATH.COUi4, cou, '\\Rawdata\\STD-SNA\\')
     }
     ##
-    conv.var <- rbind.data.frame(c('V', 'N11', 'S1', 'N', 'P51', 'GFCF'),
+    ## unique(data.m$trans)
+    ## unique(data.m$price)
+    conv.var <- rbind.data.frame(c('V', 'Z', 'S1', 'N', 'P1', 'PROD'),
+                                 c('V', 'Z', 'S1', 'N', 'P2', 'INTI'),
+                                 c('V', 'Z', 'S1', 'N', 'B1G', 'VALU'),
+                                 c('L', 'Z', 'S1', 'N', 'B1G', 'VALK'),
+                                 c('Y', 'Z', 'S1', 'N', 'B1G', 'VKPY'),
+                                 c('V', 'Z', 'S1', 'N', 'K1', 'CFCC'),
+                                 c('V', 'Z', 'S1', 'N', 'B2A3N', 'NOPS'),
+                                 c('V', 'Z', 'S1', 'N', 'D29X39', 'OTXS'),
+                                 c('V', 'Z', 'S1', 'N', 'D1', 'LABR'),
+                                 c('V', 'Z', 'S1', 'N', 'D11', 'WAGE'),
+                                 c('V', 'N11', 'S1', 'N', 'P51', 'GFCF'),
                                  c('L', 'N11', 'S1', 'N', 'P51', 'GFCK'),
                                  c('Z', 'Z', 'S1', 'M', 'EETO', 'EMPN'),
                                  c('Z', 'Z', 'S1', 'M', 'EEEM', 'EMPE'),
@@ -57,6 +69,7 @@ XLStransform <- function(cou=stop("'cou' must be specified"),
     {
         wb <- loadWorkbook(paste0(path.cou, file))
         sheets <- getSheets(wb)
+        ## sheet <- sheets[1]
         ##
         for (sheet in sheets)
         {

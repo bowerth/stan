@@ -56,7 +56,7 @@ packageData(list=sourcesSTANNAi3,
             namecou = unique(c(union(STAN.COU, STAN.COUKPC), "BGR", "BRN", "CYP", "HKG", "KHM", "LKA", "LTU", "LVA", "MLT", "MYS", "ROU", "SAU", "SGP", "THA", "VNM")),
             namevar = union(STAN.VARALL, c("FDDE", "FGGE", "FHHE", "GCFI", "INVC", "GDPR")),
             isic = 3,
-            file = paste0(PATH.REPO, "stanData\\\\data\\\\STANNAi3.rda"),
+            file = file.path(PATH.REPO, "stanData\\\\data\\\\STANNAi3.rda"),
             replace = TRUE)
 
 ## include or update sources, keeping existing sources in file:
@@ -64,14 +64,14 @@ packageData(list = c("ICIO052013"),
             namecou = unique(c(union(STAN.COU, STAN.COUKPC), "BGR", "BRN", "CYP", "HKG", "KHM", "LKA", "LTU", "LVA", "MLT", "MYS", "ROU", "SAU", "SGP", "THA", "VNM")),
             namevar = union(STAN.VARALL, c("FDDE", "FGGE", "FHHE", "GCFI", "INVC", "GDPR")),
             isic = 3,
-            file = paste0(PATH.REPO, "stanData\\\\data\\\\STANNAi3.rda"),
+            file = file.path(PATH.REPO, "stanData\\\\data\\\\STANNAi3.rda"),
             replace = FALSE)
 
 ## create for icioapp:
 packageData(list = c("ICIOVB2013"),
             isic = 3,
             nameyear=c(1995:2009),
-            file = paste0(PATH.REPO, "icioData\\\\data\\\\STANICIOi3.rda"),
+            file = file.path(PATH.REPO, "icioData\\\\data\\\\STANICIOi3.rda"),
             replace = TRUE)
 }
 \author{

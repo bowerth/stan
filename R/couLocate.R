@@ -27,7 +27,7 @@ couLocate <- function(cou=stop("'cou' must be specified"),
     folder <- folders[substr(folders,1,3)==cou]
     if(!length(folder)==0)
     {
-        files <- as.data.frame(list.files(paste0(path, folder)))
+        files <- as.data.frame(list.files(file.path(path, folder)))
         files$folder <- folder
         names(files) <- c('filenames','folder')
         files <- subset(files, select=c('folder', 'filenames'))
@@ -35,13 +35,13 @@ couLocate <- function(cou=stop("'cou' must be specified"),
     }
     for(year in nameyear)
     {
-        folders <- list.files(paste0(path, year, '\\'))
+        folders <- list.files(file.path(path, year))
         folder <- paste0(folders[substr(folders,1,3)==cou])
         if(!length(folder)==0)
         {
             for(i in seq(along=folder)) {
-                files <- as.data.frame(list.files(paste0(path, year, '\\',  folder[i])))
-                files$folder <- paste0(year, '\\', folder[i])
+                files <- as.data.frame(list.files(file.path(path, year, folder[i])))
+                files$folder <- file.path(year, folder[i])
                 names(files) <- c('filenames','folder')
                 files <- subset(files, select=c('folder', 'filenames'))
                 files.all <- rbind(files.all, files)
@@ -55,12 +55,12 @@ couLocate <- function(cou=stop("'cou' must be specified"),
     {
         require(XLConnect)
         sheets.all <- NULL
-        filepaths <- paste0(files.all[,1], "\\", files.all[,2])
+        filepaths <- file.path(files.all[,1], files.all[,2])
         X <- strsplit(filepaths, "[.]")
         filepaths <- filepaths[sapply(X, '[[', 2)%in%c("xls", "xlsx")]
         for (folder.file in filepaths)
         {
-            wb <- loadWorkbook(paste0(path, folder.file))
+            wb <- loadWorkbook(file.path(path, folder.file))
             sheets <- list(file = getSheets(wb))
             names(sheets) <- folder.file
             sheets.all <- c(sheets.all, sheets)

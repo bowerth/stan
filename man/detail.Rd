@@ -1,6 +1,6 @@
 \name{detail}
 \alias{detail}
-\title{extend}
+\title{detail}
 \usage{
   detail(data, namesou, ind.parent, ind.peers)
 }
@@ -11,21 +11,21 @@
   source and secondary source(s).}
 }
 \description{
-  Extend time series
+  Add detailed shares
 }
 \details{
-  Extend time series using growth rates of secondary
-  sources
+  Add industry detail to time series using shares from
+  secondary sources
 }
 \examples{
 data table: cou, var, ind, year, value
-extend(data=data.ext.start, namesou=namesou.ext)
+detail(data=data.det.start, namesou=namesou.det, ind.parent=ind.parent[1], ind.peers=ind.peers)
 }
 \author{
   OECD STAN
 }
 \seealso{
-  \code{\link{detail}}
+  \code{\link{extend}}
 }
 \keyword{estimate}
 

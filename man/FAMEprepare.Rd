@@ -30,7 +30,7 @@
   and generate program for FAME
 }
 \examples{
-FAMEall(cou="ITA")
+FAMEprepare(cou="ITA")
 }
 \author{
   OECD STAN

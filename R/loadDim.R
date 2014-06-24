@@ -1,6 +1,6 @@
 #' Load Dimensions
 #'
-#' Load STAN dimension members
+#' Load dimension members
 #'
 #' Function to create a data file with the dimension members used in STAN.
 #'
@@ -17,7 +17,7 @@
 #' loadDim(dim = c("cou", "var"), file = "data.rda", datalist = TRUE)
 
 loadDim <- function(dim=c("cou", "var", "indi4", "indi3", "hierarchyi3", "cur"),
-                    file=paste0(PATH.REPO,'stan\\data\\stanDim.rda'),
+                    file=file.path(PATH.REPO, "stan", "data", "stanDim.rda"),
                     datalist=TRUE,
                     replace=FALSE,
                     ...)
@@ -35,21 +35,32 @@ loadDim <- function(dim=c("cou", "var", "indi4", "indi3", "hierarchyi3", "cur"),
 
     if ("cou"%in%dim)
     {
-        require(XLConnect)
-        STAN.COU <- readWorksheetFromFile(file = paste0(PATH.SASi4, "lists/STAN_cou_list.xls"), sheet = 1)
-        names(STAN.COU) <- tolower(names(STAN.COU))
-        STAN.COU2 <- STAN.COU$iso2[STAN.COU$inoecd==1]
-        STAN.COU <- STAN.COU$cou[STAN.COU$inoecd==1]
-        list <- c(list, "STAN.COU", "STAN.COU2")
+        ## require(XLConnect)
+        ## STAN.COU <- readWorksheetFromFile(file = file.path(PATH.SASi4, "lists/STAN_cou_list.xls"), sheet = 1)
+        ## names(STAN.COU) <- tolower(names(STAN.COU))
+        STAN.COU <- read.csv(file = file.path(dbpath, "GitHub", "stan", "inst", "loadDim_cou.csv"))
+        id <- "reg."
+        namereg <- names(STAN.COU)[substr(names(STAN.COU), 1, nchar(id))==id]
+        list.all <- NULL
+        ## reg <- namereg[1]
+        for (reg in namereg) {
+            list.reg <- list(as.character(STAN.COU$iso3[STAN.COU[[reg]]==1]))
+            names(list.reg) <- substr(reg, 5, nchar(reg))
+            list.all <- c(list.all, list.reg)
+        }
+        STAN.COU <- list.all
+        ## STAN.COUEU <- STAN.COU[["EU"]]
+        ## STAN.COUKPC <- STAN.COU[["KPC"]]
+        list <- c(list, "STAN.COU") # STAN.COU: STAN.COU[["OECD"]]
     }
 
     if ("var"%in%dim)
     {
         require(XLConnect)
-        STAN.VAR <- readWorksheetFromFile(file = paste0(paste0(PATH.SASi4, "lists/STAN_var_list.xls")), sheet = 1)
+        STAN.VAR <- readWorksheetFromFile(file = file.path(PATH.SASi4, "lists/STAN_var_list.xls"), sheet = 1)
         names(STAN.VAR) <- tolower(names(STAN.VAR))
-        STAN.VARLABEL  <- STAN.VAR[,colnames(STAN.VAR)%in%c('var','lbvar_en')]
-        names(STAN.VARLABEL) <- c('var','label')
+        STAN.VARLABEL  <- STAN.VAR[,colnames(STAN.VAR)%in%c("var","lbvar_en")]
+        names(STAN.VARLABEL) <- c("var","label")
         STAN.VARLABEL$label <- properCase(as.character(STAN.VARLABEL$label))
         STAN.VARALL <- as.factor(STAN.VAR$var)
         STAN.VARCLP <- as.factor(STAN.VAR[!is.na(STAN.VAR$clp) & STAN.VAR$clp==1,2])
@@ -61,40 +72,70 @@ loadDim <- function(dim=c("cou", "var", "indi4", "indi3", "hierarchyi3", "cur"),
 
     if ("indi3"%in%dim)
     {
-        require(xlsx)                   # necessary if formulas are contained in file
-        STANi3.IND <- read.xlsx(paste0(PATH.SASi3,'lists/STAN_Industry_list_i3.xls'),1)
-        STANi3.IND <- STANi3.IND[!colnames(STANi3.IND)%in%c('NA.')]
-        STANi3.INDLABEL  <- STANi3.IND[,colnames(STANi3.IND)%in%c('Ind','LABEL_en.TEXT')]
-        names(STANi3.INDLABEL) <- c('ind','label')
-        STANi3.INDLABEL$label <- properCase(as.character(STANi3.INDLABEL$label))
-        STANi3.INDALL <- as.factor(STANi3.IND[,"Ind"])
+        ## require(xlsx)                   # necessary if formulas are contained in file
+        ## STANi3.IND <- read.xlsx(file.path(PATH.SASi3, "lists", "STAN_Industry_list_i3.xls"),1)
+        ## STANi3.IND <- STANi3.IND[!colnames(STANi3.IND)%in%c("NA.")]
+        ## STANi3.INDLABEL  <- STANi3.IND[,colnames(STANi3.IND)%in%c("Ind","LABEL_en.TEXT")]
+        ## names(STANi3.INDLABEL) <- c("ind","label")
+        ## STANi3.INDLABEL$label <- properCase(as.character(STANi3.INDLABEL$label))
+        ## STANi3.INDALL <- as.factor(STANi3.IND[,"Ind"])
 
-        STANi3.INDA6 <- as.factor(STANi3.IND[!is.na(STANi3.IND$IndA6) & STANi3.IND$IndA6==1,3])
-        STANi3.INDA17 <- as.factor(STANi3.IND[!is.na(STANi3.IND$IndA17) & STANi3.IND$IndA17==1,3])
-        STANi3.INDA31 <- as.factor(STANi3.IND[!is.na(STANi3.IND$IndA31) & STANi3.IND$IndA31==1,3])
-        STANi3.INDA60 <- as.factor(STANi3.IND[!is.na(STANi3.IND$IndA60) & STANi3.IND$IndA60==1,3])
-        STANi3.INDICIO <- as.factor(STANi3.IND[!is.na(STANi3.IND$IndICIO),3])
+        ## STANi3.INDA6 <- as.factor(STANi3.IND[!is.na(STANi3.IND$IndA6) & STANi3.IND$IndA6==1,3])
+        ## STANi3.INDA17 <- as.factor(STANi3.IND[!is.na(STANi3.IND$IndA17) & STANi3.IND$IndA17==1,3])
+        ## STANi3.INDA31 <- as.factor(STANi3.IND[!is.na(STANi3.IND$IndA31) & STANi3.IND$IndA31==1,3])
+        ## STANi3.INDA60 <- as.factor(STANi3.IND[!is.na(STANi3.IND$IndA60) & STANi3.IND$IndA60==1,3])
+        ## STANi3.INDICIO <- as.factor(STANi3.IND[!is.na(STANi3.IND$IndICIO),3])
+        ## ##
+        ## STANi3.INDA18 <- as.factor(STANi3.IND[!is.na(STANi3.IND$IndA18),3])
+        ## STANi3.INDA18 <- STANi3.INDA18[order(STANi3.INDA18)]
+        ## ##
+        ## STANi3.INDA34 <- as.factor(STANi3.IND[!is.na(STANi3.IND$IndA34),3])
+        ## STANi3.INDA34 <- STANi3.INDA34[order(STANi3.INDA34)]
+        ## ## ## one list with all industries + aggregates for level sorting
+        ## ## STANi3.INDA60All <- cbind.data.frame(STANi3.IND$Ind, STANi3.IND$IndA60All)
+        ## ## STANi3.INDA60All <- STANi3.INDA60All[order(STANi3.INDA60All[,2]),]
+        ## ## STANi3.INDA60All <- as.factor(STANi3.INDA60All[!is.na(STANi3.INDA60All[,2]),1])
+        ## ## STANi3.INDA60All <- factor(STANi3.INDA60All, levels = STANi3.INDA60All)
+
+        STANi3.IND <- read.csv(file = file.path(dbpath, "GitHub", "stan", "inst", "loadDim_indi3.csv"))
+        STANi3.INDLABEL  <- STANi3.IND[,colnames(STANi3.IND)%in%c("ind","label")]
+        STANi3.INDLABEL$label <- properCase(as.character(STANi3.INDLABEL$label))
+
+        dim <- "ind"
+        id <- "Ind"
+        levels <- STANi3.IND[[dim]]
+        nameind <- names(STANi3.IND)[substr(names(STANi3.IND), 1, nchar(id))==id]
         ##
-        STANi3.INDA18 <- as.factor(STANi3.IND[!is.na(STANi3.IND$IndA18),3])
-        STANi3.INDA18 <- STANi3.INDA18[order(STANi3.INDA18)]
-        ##
-        STANi3.INDA34 <- as.factor(STANi3.IND[!is.na(STANi3.IND$IndA34),3])
-        STANi3.INDA34 <- STANi3.INDA34[order(STANi3.INDA34)]
-        ## ## one list with all industries + aggregates for level sorting
-        ## STANi3.INDA60All <- cbind.data.frame(STANi3.IND$Ind, STANi3.IND$IndA60All)
-        ## STANi3.INDA60All <- STANi3.INDA60All[order(STANi3.INDA60All[,2]),]
-        ## STANi3.INDA60All <- as.factor(STANi3.INDA60All[!is.na(STANi3.INDA60All[,2]),1])
-        ## STANi3.INDA60All <- factor(STANi3.INDA60All, levels = STANi3.INDA60All)
-        detach("package:xlsx", unload=TRUE)
-        list <- c(list, "STANi3.INDLABEL", "STANi3.INDALL", "STANi3.INDA6", "STANi3.INDA17", "STANi3.INDA31", "STANi3.INDA60", "STANi3.INDICIO", "STANi3.INDA18", "STANi3.INDA34")
+        list.all <- NULL
+        ## ind <- "IndA34"
+        for (ind in nameind) {
+            ## values <- as.character(STANi3.IND[[dim]][!is.na(STANi3.IND[[ind]])])
+            ## values <- factor(STANi3.IND[[dim]][!is.na(STANi3.IND[[ind]])], levels = levels)
+            values <- as.character(STANi3.IND[[dim]][!is.na(STANi3.IND[[ind]])])
+            list.ind <- list(values)
+            names(list.ind) <- substr(ind, nchar(id)+1, nchar(ind))
+            list.all <- c(list.all, list.ind)
+        }
+        STANi3.IND <- c(list(levels = levels), list.all)
+
+        STANi3.INDALL <- STANi3.IND[["ALL"]]
+        STANi3.INDA6 <- STANi3.IND[["A6"]]
+        STANi3.INDA17 <- STANi3.IND[["A17"]]
+        STANi3.INDA31 <- STANi3.IND[["A31"]]
+        STANi3.INDA60 <- STANi3.IND[["A60"]]
+        STANi3.INDICIO <- STANi3.IND[["ICIO"]]
+        STANi3.INDA18 <- STANi3.IND[["A18"]]
+        STANi3.INDA34 <- STANi3.IND[["A34"]]
+        ## detach("package:xlsx", unload=TRUE)
+        list <- c(list, "STANi3.IND", "STANi3.INDLABEL", "STANi3.INDALL", "STANi3.INDA6", "STANi3.INDA17", "STANi3.INDA31", "STANi3.INDA60", "STANi3.INDICIO", "STANi3.INDA18", "STANi3.INDA34")
     }
 
     if ("hierarchyi3"%in%dim)
     {
-        matrix.agg <- paste0(PATH.COUi3, 'Aggregation_general_2digit_ISIC3.csv')
+        matrix.agg <- file.path(PATH.COUi3, "Aggregation_general_2digit_ISIC3.csv")
         nameagg <- read.csv(matrix.agg)[,1]
-        agg.include <- union(union(union(STANi3.INDA6, STANi3.INDA18), STANi3.INDA34), c("CTOTAL", "C15T37", "C50T74", "C99"))
-        agg.include <- union(agg.include, "C65T99") # UNSD SNA
+        agg.include <- union(union(union(STANi3.INDA6, STANi3.INDA18), STANi3.INDA34), c("CTOTAL", "C15T37", "C99")) # "C50T74",
+        ## agg.include <- union(agg.include, "C65T99") # UNSD SNA
         agg.include <- union(agg.include, "C80T93") # UNData M+N+O
         ## cat(paste0(sort(agg.include), "\n"))
         agg.exclude <- setdiff(nameagg, agg.include)
@@ -108,14 +149,35 @@ loadDim <- function(dim=c("cou", "var", "indi4", "indi3", "hierarchyi3", "cur"),
         list <- c(list, "STANi3.HIERARCHY", "STANi3.HIERARCHYINV", "STANi3.INDA60All")
     }
 
+    if ("ISCO08"%in%dim)
+    {
+        ## cat(paste0('c("', ISCO08, '", "', ISCO08LABEL, '")\n'))
+        conv.occ <- rbind.data.frame(c("OC0T9", "Total"),
+                                     c("OC0",   "Armed forces occupations"),
+                                     c("OC1",   "Managers"),
+                                     c("OC2",   "Professionals"),
+                                     c("OC3",   "Technicians and associate professionals"),
+                                     c("OC4",   "Clerical support workers"),
+                                     c("OC5",   "Service and sales workers"),
+                                     c("OC6",   "Skilled agricultural, forestry and fishery workers"),
+                                     c("OC7",   "Craft and related trades workers"),
+                                     c("OC8",   "Plant and machine operators, and assemblers"),
+                                     c("OC9",   "Elementary occupations"),
+                                     c("OCNA",  "Not elsewhere classified")
+                                     )
+        ISCO08 <- conv.occ[,2]
+        ISCO08LABEL <- conv.occ[,1]
+        list <- c(list, "ISCO08", "ISCO08LABEL")
+    }
+
     if ("indi4"%in%dim)
     {
         require(xlsx)                   # necessary if formulas are contained in file
-        ## STAN.IND <- readWorksheetFromFile(file = paste0(PATH.SASi4,'lists/STAN_Industry_list_i4.xls'), sheet = 2)
-        STANi4.IND <- read.xlsx(paste0(PATH.SASi4, "lists/STAN_Industry_list_i4.xls"),2)
-        STANi4.IND <- STANi4.IND[!colnames(STANi4.IND)%in%c('NA.')]
-        STANi4.INDLABEL  <- STANi4.IND[,colnames(STANi4.IND)%in%c('Ind','LABEL_en.TEXT')]
-        names(STANi4.INDLABEL) <- c('ind','label')
+        ## STAN.IND <- readWorksheetFromFile(file = file.path(PATH.SASi4,"lists", "STAN_Industry_list_i4.xls"), sheet = 2)
+        STANi4.IND <- read.xlsx(file.path(PATH.SASi4, "lists", "STAN_Industry_list_i4.xls"),2)
+        STANi4.IND <- STANi4.IND[!colnames(STANi4.IND)%in%c("NA.")]
+        STANi4.INDLABEL  <- STANi4.IND[,colnames(STANi4.IND)%in%c("Ind","LABEL_en.TEXT")]
+        names(STANi4.INDLABEL) <- c("ind","label")
         STANi4.INDLABEL$label <- properCase(as.character(STANi4.INDLABEL$label))
         STANi4.INDALL <- as.character(STANi4.IND[,3][!is.na(STANi4.IND[,3])])
         STANi4.INDA10 <- as.character(STANi4.IND[!is.na(STANi4.IND$IndA10) & STANi4.IND$IndA10==1,3])
@@ -130,7 +192,7 @@ loadDim <- function(dim=c("cou", "var", "indi4", "indi3", "hierarchyi3", "cur"),
 
     if ("hierarchyi4"%in%dim)
     {
-        matrix.agg <- paste0(PATH.COUi4, 'Aggregation_general_2digit.csv')
+        matrix.agg <- file.path(PATH.COUi4, "Aggregation_general_2digit.csv")
         agg.exclude <- c("D05T39", "D45T82", "D45T99", "D45T82X", "D05T82X", "D16A31", "D24T33X", "ENERGYP", "NONMAN")
         ## include "C10T41", "C65T99", "HITECH", "ICTMAN", "ICTSER", "MHTECH", "MLTECH"
         ## included: "C10T41", "C50T64", "C65T74", "C50T74", "C50T99"
@@ -178,7 +240,7 @@ loadDim <- function(dim=c("cou", "var", "indi4", "indi3", "hierarchyi3", "cur"),
         ## merge UN and NO
         table.UN.NO <- merge(table.UN, table.NO)
         ## ISO 3166 country names (for check) - currently not available 02/10/2104
-        url.ISO3166 <- paste0(PATH.SASi3, "DATA_in\\ISO\\country_names_and_code_elements_txt-temp.txt")
+        url.ISO3166 <- file.path(PATH.SASi3, "DATA_in", "ISO", "country_names_and_code_elements_txt-temp.txt")
         ## url.ISO3166 <- "http://www.iso.org/iso/home/standards/country_codes/country_names_and_code_elements_txt.htm"
         table.ISO3166 <- readLines(url.ISO3166, encoding = "UTF-8")
         ##
@@ -197,7 +259,7 @@ loadDim <- function(dim=c("cou", "var", "indi4", "indi3", "hierarchyi3", "cur"),
         ## ISO 4217 from xls link
         file.ISO4217 <- tempfile(fileext = ".xls")
         ##
-        download.file("http://www.currency-iso.org/dam/downloads/table_a1.xls", destfile = file.ISO4217, method = 'curl')
+        download.file("http://www.currency-iso.org/dam/downloads/table_a1.xls", destfile = file.ISO4217, method = "curl")
         ##
         table.ISO4217 <- readWorksheetFromFile(file.ISO4217, sheet = 1, startRow = 4)
         names(table.ISO4217) <- c("countryISO", "currency", "cur", "curcode", "unitISO", "fundISO")
@@ -227,10 +289,10 @@ loadDim <- function(dim=c("cou", "var", "indi4", "indi3", "hierarchyi3", "cur"),
         table <- table.UN.NO.ISO3166.ISO4217.EU
         table$inEURO[is.na(table$inEURO)] <- 0
         ##
-        STAN.CUR <- subset(table[is.na(table$fundISO) & !is.na(table$cur),], select = c("cou", "cur"))
-        STAN.CUR$cou <- as.character(STAN.CUR$cou)
-        STAN.CUR <- rbind.data.frame(STAN.CUR, c("TWN", "TWD"))
-        STAN.CUR$cou <- as.factor(STAN.CUR$cou)
+        STAN.COUCUR <- subset(table[is.na(table$fundISO) & !is.na(table$cur),], select = c("cou", "cur"))
+        STAN.COUCUR$cou <- as.character(STAN.COUCUR$cou)
+        STAN.COUCUR <- rbind.data.frame(STAN.COUCUR, c("TWN", "TWD"))
+        STAN.COUCUR$cou <- as.factor(STAN.COUCUR$cou)
         ##
         STAN.COUEN <- subset(table[is.na(table$fundISO) & !is.na(table$cur),], select = c("cou", "countryUNen"))
         STAN.COUEN$countryUNen <- gsub(" (Plurinational State of)", "", STAN.COUEN$countryUNen, fixed = TRUE) # Bolivia
@@ -246,9 +308,11 @@ loadDim <- function(dim=c("cou", "var", "indi4", "indi3", "hierarchyi3", "cur"),
         STAN.COUFR$cou <- as.factor(STAN.COUFR$cou)
         ##
         STAN.COU2 <- subset(table[is.na(table$fundISO) & !is.na(table$cur),], select = c("cou", "cou2"))
-        STAN.COUEU <- subset(table[table$inEURO==1,], select = c("cou"))[,1]
+        ## STAN.COUEU <- subset(table[table$inEURO==1,], select = c("cou"))[,1]
         ## STAN.COUUN <- subset(table[is.na(table$fundISO) & !is.na(table$cur),], select = c("cou", "codeUN")) # see above
-        list <- c(list, "STAN.CUR", "STAN.COUEN", "STAN.COUFR", "STAN.COU2", "STAN.COUEU", "STAN.COUUN")
+        ## list <- list[!list%in%c("STAN.CUR")]
+        ## rm(STAN.CUR)
+        list <- c(list, "STAN.COUCUR", "STAN.COUEN", "STAN.COUFR", "STAN.COU2", "STAN.COUUN")
     }
     save(list = list, file = file)
     if (datalist==TRUE) addDatalist(file = file, list = list)

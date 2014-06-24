@@ -6,7 +6,9 @@
 #'
 #' @param data a dataframe having STAN industry labels (ISIC Rev. 3 or ISIC Rev. 4) as column names.
 #' @param isic an integer specifying the ISIC classification of data sources.
-#' @param cumulative logical to cumulate values if aggregate already existing in data
+#' @param cumulative logical to cumulate values if aggregate already existing in data.
+#' @param naAsZero logical convert NAs to zero before calculating aggregates.
+#' @param fill2D logical add column with NA or zero for each missing 2-digit industry
 #'
 #' @author OECD STAN
 #' @keywords dimensions
@@ -30,7 +32,10 @@
 
 indAggregate <- function(data=stop("'data' must be specified"),
                          isic=3,
-                         cumulative=FALSE)
+                         cumulative=FALSE,
+                         naAsZero=FALSE,
+                         fill2D=FALSE
+                         )
 {
     if (isic==3)
     {
@@ -96,8 +101,8 @@ indAggregate <- function(data=stop("'data' must be specified"),
         list.agg <- list("D01T02" = c("D01", "D02"),
                          "D01T03" = c("D01T02", "D03"),
                          "D05T06" = c("D05", "D06"),
-                         "D07T09" = c("D07", "D08", "D09"),
-                         "D05T09" = c("D05T06", "D07T09"),
+                         "D07T08" = c("D07", "D08"),
+                         "D05T09" = c("D05T06", "D07T08", "D09"),
                          "D10T11" = c("D10", "D11"),
                          "D10T12" = c("D10T11", "D12"),
                          "D13T14" = c("D13", "D14"),
@@ -159,21 +164,47 @@ indAggregate <- function(data=stop("'data' must be specified"),
                          "NONMAN" = c("D01T03", "D05T09", "D35T39", "D41T43", "D45T99"),
                          "DTOTAL" = c("D10T33", "NONMAN"))
     }
+
+    sum.na <- function(x) {
+        x[which(is.na(x))] <- 0
+        return(sum(x))
+    }
+
+    ## add missing A88 (2-digit) industries
+    if (fill2D==TRUE)
+    {
+        if (isic==3) {
+            missing.2d <- STANi4.INDA88[!STANi3.INDA60%in%colnames(data)]
+        } else if (isic==4) {
+            missing.2d <- STANi4.INDA88[!STANi4.INDA88%in%colnames(data)]
+        }
+        if (naAsZero==TRUE) {
+            m <- matrix(0, nrow(data), length(missing.2d))
+        } else {
+            m <- matrix(NA, nrow(data), length(missing.2d))
+        }
+        colnames(m) <- missing.2d
+        data <- cbind.data.frame(data, m)
+    }
+
     for (i in seq(along=list.agg))
     {
         agg <- names(list.agg[i])
         parts <- list.agg[[i]]
         if (all(is.element(parts, colnames(data))==TRUE))
         {
-            if (!agg %in% colnames(data)) {
-                temp <- data[, colnames(data) %in% parts]
-                new.agg <- unname(apply(as.matrix(temp), 1, "sum"))
-                data <- cbind(data, new.agg)
-                colnames(data) <- sub("new.agg", agg, colnames(data))
-            }
-            else if (cumulative == TRUE) {
-                temp <- data[, colnames(data) %in% c(agg, parts)]
-                new.agg <- unname(apply(temp, 1, "sum"))
+            if (!agg %in% colnames(data))
+            {
+                if (cumulative==TRUE) {
+                    temp <- data[, colnames(data) %in% c(agg, parts)]
+                } else {
+                    temp <- data[, colnames(data) %in% parts]
+                }
+                if (naAsZero==TRUE) {
+                    new.agg <- unname(apply(as.matrix(temp), 1, "sum.na"))
+                } else {
+                    new.agg <- unname(apply(as.matrix(temp), 1, "sum"))
+                }
                 data <- cbind(data, new.agg)
                 colnames(data) <- sub("new.agg", agg, colnames(data))
             }

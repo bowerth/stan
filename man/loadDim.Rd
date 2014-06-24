@@ -3,7 +3,7 @@
 \title{Load Dimensions}
 \usage{
   loadDim(dim = c("cou", "var", "indi4", "indi3", "hierarchyi3", "cur"),
-    file = paste0(PATH.REPO, "stan\\data\\stanDim.rda"),
+    file = file.path(PATH.REPO, "stan", "data", "stanDim.rda"),
     datalist = TRUE, replace = FALSE, ...)
 }
 \arguments{

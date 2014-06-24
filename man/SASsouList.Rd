@@ -1,0 +1,28 @@
+\name{SASsouList}
+\alias{SASsouList}
+\title{SAS SOU List}
+\usage{
+  SASsouList(namesou = c("STANandBTD"), isic = 4)
+}
+\arguments{
+  \item{sou}{a source code character string.}
+
+  \item{isic}{an integer to specify the version of STAN.}
+}
+\description{
+  Updates sources list
+}
+\details{
+  Adds or removes sources from SAS Source List.
+}
+\examples{
+souList(namesou=c("LVA"))
+}
+\author{
+  OECD STAN
+}
+\seealso{
+  \code{\link{SAScouCreate}}, \code{\link{SAScouList}}
+}
+\keyword{SAS}
+

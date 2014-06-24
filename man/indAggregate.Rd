@@ -3,7 +3,8 @@
 \title{Aggregate ISIC}
 \usage{
   indAggregate(data = stop("'data' must be specified"),
-    isic = 3, cumulative = FALSE)
+    isic = 3, cumulative = FALSE, naAsZero = FALSE,
+    fill2D = FALSE)
 }
 \arguments{
   \item{data}{a dataframe having STAN industry labels (ISIC
@@ -13,7 +14,13 @@
   of data sources.}
 
   \item{cumulative}{logical to cumulate values if aggregate
-  already existing in data}
+  already existing in data.}
+
+  \item{naAsZero}{logical convert NAs to zero before
+  calculating aggregates.}
+
+  \item{fill2D}{logical add column with NA or zero for each
+  missing 2-digit industry}
 }
 \description{
   Aggregate industries ISIC Rev. 3 and ISIC Rev. 4

@@ -1,19 +1,19 @@
-#' extend
+#' detail
 #'
-#' Extend time series
+#' Add detailed shares
 #'
-#' Extend time series using growth rates of secondary sources
+#' Add industry detail to time series using shares from secondary sources
 #'
 #' @param data a dataframe object.
 #' @param namesou a character vector specifying the main source and secondary source(s).
 #'
 #' @author OECD STAN
 #' @keywords estimate
-#' @seealso \code{\link{detail}}
+#' @seealso \code{\link{extend}}
 #' @export
 #' @examples
 #' data table: cou, var, ind, year, value
-#' extend(data=data.ext.start, namesou=namesou.ext)
+#' detail(data=data.det.start, namesou=namesou.det, ind.parent=ind.parent[1], ind.peers=ind.peers)
 
 detail <- function(data, namesou, ind.parent, ind.peers)
 {

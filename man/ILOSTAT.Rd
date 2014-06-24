@@ -1,0 +1,64 @@
+\name{ILOSTAT}
+\alias{ILOSTAT}
+\title{Query Data ILOSTAT}
+\usage{
+  ILOSTAT(scheme = "datastructure", dimension = "codelist",
+    DSD = "YI_ALL_EMP_TEMP_ECO_OCU_NB",
+    codelist = "CL_ECO_ISIC4", filter = filter.list,
+    query = FALSE)
+}
+\arguments{
+  \item{scheme}{an API scheme. Available schemes are
+  "datastructure", "codelist" and "data".}
+
+  \item{dimension}{for scheme "datastructure": the format
+  of dimensions returned. The dimension format "codelist"
+  is compatible with scheme "codelist".}
+
+  \item{DSD}{a datastructure definition identified by the
+  triplet \code{[collection; country; indicator]}.}
+
+  \item{codelist}{a codelist as returned by
+  \code{scheme="datastructure", dimension="codelist"}.}
+
+  \item{filter}{for scheme "data": a named list of filters
+  passed to the API. The position of list items corresponds
+  to the API filter dimensions. Each list item is either
+  empty (no filter on dimension) or a character vector
+  containing dimension members to be included in the
+  results. Dimension members can be obtained from
+  \code{scheme="codelist"} and a codelist item, e.g.
+  "CL_ECO_ISIC4".}
+
+  \item{query}{logical to return SDMX http url only.}
+}
+\description{
+  Query data from ILOSTAT SDMX API
+}
+\details{
+  Helper function to efficiently query data from ILOSTAT
+  SDMX API.
+}
+\examples{
+filter.list <- list(COLLECTION = "YI",
+                    COUNTRY = c("FRA", "ESP", "AUT"),
+                    FREQ = NULL,
+                    SURVEY = NULL,
+                    REPRESENTED_VARIABLE = NULL,
+                    CLASSIF_ECO = c("ECO_ISIC4_TOTAL", "ECO_ISIC4_A"),
+                    CLASSIF_OCU = c("OCU_ISCO08_TOTAL", "OCU_ISCO08_1"))
+
+result <- ILOSTAT(scheme="codelist", codelist = "CL_ECO_ISIC4")
+result <- ILOSTAT(scheme="datastructure", dimension = "codelist", DSD = "YI_ALL_EMP_TEMP_ECO_OCU_NB")
+result <- ILOSTAT(scheme="datastructure", dimension = "conceptRef", DSD = "YI_ALL_EMP_TEMP_ECO_OCU_NB")
+result <- ILOSTAT(scheme="data", filter = filter.list, DSD = "YI_ALL_EMP_TEMP_ECO_OCU_NB")
+}
+\author{
+  OECD STAN
+}
+\seealso{
+  \code{\link{XMLtransform}}
+}
+\keyword{ILO,}
+\keyword{SDMX}
+

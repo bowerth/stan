@@ -1,0 +1,56 @@
+\input texinfo
+@documentencoding UTF-8
+
+@ifnottex
+@paragraphindent 0
+@end ifnottex
+@titlepage
+@title OECD Structural Analysis Database
+@author Frequently Asked Questions
+@end titlepage
+
+@node Top
+@top OECD Structural Analysis Database
+
+@menu
+* label section 1::
+* label section 2::
+@end menu
+
+@node label section 1
+@chapter label section 1
+@anchor{#label-section-1}
+@menu
+* title question 11::
+* title question 12::
+@end menu
+
+@node title question 11
+@section title question 1.1
+@anchor{#title-question-1.1}
+text question 1.1
+
+@node title question 12
+@section title question 1.2
+@anchor{#title-question-1.2}
+text question 1.2
+
+@node label section 2
+@chapter label section 2
+@anchor{#label-section-2}
+@menu
+* title question 21::
+* title question 22::
+@end menu
+
+@node title question 21
+@section title question 2.1
+@anchor{#title-question-2.1}
+text question 2.1
+
+@node title question 22
+@section title question 2.2
+@anchor{#title-question-2.2}
+text question 2.2
+
+@bye

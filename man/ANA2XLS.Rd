@@ -3,7 +3,7 @@
 \title{ANA2XLS}
 \usage{
   ANA2XLS(data = stop("'data' must be specified"),
-    cou = stop("'data' must be specified"), isic = 4,
+    cou = stop("'cou' must be specified"), isic = 4,
     append = FALSE, SDMX = FALSE)
 }
 \arguments{

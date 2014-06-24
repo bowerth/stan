@@ -10,10 +10,10 @@ License: GPL (>= 3)
 Encoding: UTF-8
 LazyLoad: yes
 URL: http://www.oecd.org/sti/stan
-Authors@R: c(person(given="STAN", family="OECD",
-    email="stan.contact@oecd.org", role=c("aut", "cre")))
+Authors@R: c(person(given="STAN", family="OECD", email="stan.contact@oecd.org",
+    role=c("aut", "cre")))
 Version: 0.1
-Date: 2014-04-09
+Date: 2014-06-20
 Collate:
     'addDatalist.R'
     'ANA2XLS.R'
@@ -21,29 +21,34 @@ Collate:
     'bcpWrite.R'
     'calcFormula.R'
     'convCreate.R'
-    'couCreate.R'
-    'couList.R'
     'couLocate.R'
     'couReport.R'
     'detail.R'
     'dimMerge.R'
+    'estimate.R'
     'extend.R'
     'FAMEall.R'
     'FAMEload.R'
     'FAMEprepare.R'
     'FAMEtransform.R'
     'hierarchy.R'
+    'ILOSTAT.R'
     'indAggregate.R'
     'loadDim.R'
     'mergeCalc.R'
     'NSO2XLS.R'
+    'odataRead.R'
     'packageData.R'
     'queryData.R'
     'SASbatch.R'
+    'SAScouCreate.R'
+    'SAScouList.R'
     'SASestim.R'
     'SASfomula.R'
     'SASload.R'
     'SASpub.R'
+    'SASsouList.R'
+    'sdmxRead.R'
     'souList.R'
     'stan-package.R'
     'XLStransform.R'

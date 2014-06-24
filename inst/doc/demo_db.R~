@@ -1,0 +1,17 @@
+
+library(RSQLite)
+
+DbFile <- paste0("/home/z930/Dropbox/GitHub/stan/inst/doc/faq.db")
+
+diskdb <- dbConnect(SQLite(), dbname = DbFile)
+## ok <- dbWriteTable(diskdb, "estates", estates.new, row.names = FALSE, overwrite = TRUE)
+
+entries.db <- dbReadTable(diskdb, "entries")
+
+header <- paste0('% OECD Structural Analysis Database', '\n',
+                 '% Frequently Asked Questions', '\n',
+                 '% April 2014', '\n')
+
+md.text <- cat(header, '\n',
+               paste0('# ', entries.db$title, '\n\n',
+                      entries.db$text, '\n\n'))

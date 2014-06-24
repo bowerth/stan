@@ -16,6 +16,8 @@
 #' @examples
 #' XMLtransform(cou = "POL", isic = 4, append = FALSE, SDMX = TRUE)
 
+## XMLtransform(cou = "SWE", isic = 4, append = FALSE, SDMX = TRUE)
+
 XMLtransform <- function(cou=stop("'cou' must be specified"),
                          isic=4,
                          append=FALSE,
@@ -72,7 +74,7 @@ XMLtransform <- function(cou=stop("'cou' must be specified"),
     for (file in filenames.table)
     {
         cat("\t", file, "\n")
-        xml.data <- xmlParse(file = paste0(path, file))
+        xml.data <- xmlParse(file = paste0(path.cou, file))
         xml.list <- xmlToList(xml.data)
         data.list <- xml.list[2]
         data.file <- NULL

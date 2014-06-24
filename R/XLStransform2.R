@@ -31,7 +31,7 @@
 #' folder.file <- couLocate(cou = cou)[1,] # select the file here
 #' folder <- as.character(folder.file[,1])
 #' file <- as.character(folder.file[,2])
-#' XLStransform2(cou="MEX", isic = 3, folder=folder, file=file, prefix="3.1_", nameyear=sprintf("%02d", c(3:11)))
+#' XLStransform2(cou="MEX", isic = 4, folder=folder, file=file, prefix="3.1 ", nameyear=c(2003:2012))
 
 XLStransform2 <- function(cou=stop("'cou' needs to be specified"),
                           isic=4,
@@ -40,7 +40,7 @@ XLStransform2 <- function(cou=stop("'cou' needs to be specified"),
                           folder=stop("'folder' needs to be specified"),
                           file=stop("'file' needs to be specified"),
                           prefix="",
-                          nameyear=c(2000:2011),
+                          nameyear=c(2000:2012),
                           startRow=14,
                           startCol=1,
                           endCol=11,
@@ -50,16 +50,17 @@ XLStransform2 <- function(cou=stop("'cou' needs to be specified"),
     require(reshape2)
     if (isic==3)
     {
-        path.cou <- paste0(PATH.COUi3, cou, '\\Rawdata\\STD-SNA\\')
+        path.cou <- file.path(PATH.COUi3, cou, "Rawdata", "STD-SNA")
     } else if (isic==4)
     {
-        path.cou <- paste0(PATH.COUi4, cou, '\\Rawdata\\STD-SNA\\')
+        path.cou <- file.path(PATH.COUi4, cou, "Rawdata", "STD-SNA")
     }
     ##
     removeComma= function(s) {gsub(",", "", s, fixed = TRUE)}
     ##
     data.all <- NULL
-    wb <- loadWorkbook(filename = paste0(path, folder, "\\", file))
+    ## options(java.parameters = "-Xmx4096m")
+    wb <- loadWorkbook(filename = file.path(path, folder, file))
     for(year in nameyear) {
         sheet <- paste0(prefix, year)
         data <- readWorksheet(object = wb, sheet = sheet,
@@ -78,6 +79,6 @@ XLStransform2 <- function(cou=stop("'cou' needs to be specified"),
     data.out <- data.all
     data.out <- data.out[!is.na(data.out$value),]
     data.out <- data.out[!is.na(data.out$ind),]
-    write.csv(data.out, file = paste0(path.cou, cou, "_STD-SNA.csv"), row.names = FALSE)
+    ## write.csv(data.out, file = file.path(path.cou, paste0(cou, '_STD-SNA.csv')), row.names = FALSE)
     ANA2XLS(data = data.out, cou = cou, isic = isic, append = append)
 }

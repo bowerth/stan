@@ -34,8 +34,25 @@ sdmxRead <- function(api="http://stats.oecd.org/SDMX-JSON",
 {
     require(RCurl)
     require(jsonlite)
-    if (scheme == "data")
-    {
+    if (scheme=="codelist") {
+        ## http://stats.oecd.org/SDMX-JSON/metadata/SNA_TABLE4/all
+        ## DSD <- "SNA_TABLE4"
+        url.scheme <- "metadata"
+        theurl <- paste(api, url.scheme, DSD, sep = '/')
+        theurl <- paste0(theurl, append)
+
+        if (query==TRUE) return(theurl)
+        ## fetch values from URL
+        tt <- getURL(theurl)
+        codelist <- fromJSON(txt = tt)
+
+        ## class(codelist[[2]]$dimensions$observation)
+        codelist <- codelist[[2]]$dimensions$observation
+        code.all <- codelist$values
+        names(code.all) <- codelist$id
+        return(code.all)
+    }
+    if (scheme=="data") {
         filter.string <- sapply(filter, FUN='toString')
         filter.string <- gsub(", ", "+", filter.string)
         filter.string <- toString(filter.string)
@@ -86,28 +103,28 @@ sdmxRead <- function(api="http://stats.oecd.org/SDMX-JSON",
 # ## from http://www.r-bloggers.com/reading-oecd-stat-into-r/
 
 # library(XML2R)
- 
+
 # file <- "http://stats.oecd.org/restsdmx/sdmx.ashx/GetData/UN_DEN/AUS+CAN+FRA+DEU+NZL+GBR+USA+OECD/OECD?startTime=1960&endTime=2012"
- 
+
 # obs <- XML2Obs(file)
 # tables <- collapse_obs(obs)
- 
+
 # # The data we care about is stored in the following three nodes
 # # We only care about the country variable in the keys node
 # keys <- tables[["MessageGroup//DataSet//Series//SeriesKey//Value"]]
 # dates <- tables[["MessageGroup//DataSet//Series//Obs//Time"]]
 # values <- tables[["MessageGroup//DataSet//Series//Obs//ObsValue"]]
- 
+
 # # Extract the country part of the keys table
 # # Have to use both COU and COUNTRY as OECD don't use a standard name
 # country_list <- keys[keys[,1]== "COU" | keys[,1]== "COUNTRY"]
 # # The country names are stored in the middle third of the above list
 # country_list <- country_list[(length(country_list)*1/3+1):(length(country_list)*2/3)]
- 
+
 # # Bind the existing date and value vectors
 # dat <- cbind.data.frame(as.numeric(dates[,1]),as.numeric(values[,1]))
 # colnames(dat) <- c('date', 'value')
- 
+
 # # Add the country variable
 # # This code maps a new country each time the diff(dat$date)<=0 ...
 # # ...as there are a different number of readings for each country
@@ -115,5 +132,5 @@ sdmxRead <- function(api="http://stats.oecd.org/SDMX-JSON",
 # dat$country <- c(country_list[1], country_list[cumsum(diff(dat$date) <= 0) + 1])
 # #created this as too many sig figs make the rChart ugly
 # dat$value2 <- signif(dat$value,2)
- 
+
 # head(dat)

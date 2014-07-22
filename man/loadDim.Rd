@@ -18,7 +18,7 @@
   replaced.}
 }
 \description{
-  Load STAN dimension members
+  Load dimension members
 }
 \details{
   Function to create a data file with the dimension members

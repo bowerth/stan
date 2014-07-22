@@ -34,9 +34,11 @@ indAggregate <- function(data=stop("'data' must be specified"),
                          isic=3,
                          cumulative=FALSE,
                          naAsZero=FALSE,
-                         fill2D=FALSE
+                         fill2D=FALSE,
+                         missing.2d=NULL # c("C95", "C99")
                          )
 {
+
     if (isic==3)
     {
         list.agg <- STANi3.HIERARCHY
@@ -171,12 +173,15 @@ indAggregate <- function(data=stop("'data' must be specified"),
     }
 
     ## add missing A88 (2-digit) industries
-    if (fill2D==TRUE)
-    {
-        if (isic==3) {
-            missing.2d <- STANi4.INDA88[!STANi3.INDA60%in%colnames(data)]
-        } else if (isic==4) {
-            missing.2d <- STANi4.INDA88[!STANi4.INDA88%in%colnames(data)]
+    if (fill2D==TRUE) {
+        if (length(missing.2d)==0) {
+            if (isic==3) {
+                missing.2d <- STANi3.INDA60[!STANi3.INDA60%in%colnames(data)]
+            } else if (isic==4) {
+                missing.2d <- STANi4.INDA88[!STANi4.INDA88%in%colnames(data)]
+            }
+        } else {
+            missing.2d <- missing.2d[!missing.2d%in%colnames(data)]
         }
         if (naAsZero==TRUE) {
             m <- matrix(0, nrow(data), length(missing.2d))

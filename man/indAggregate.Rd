@@ -4,7 +4,7 @@
 \usage{
   indAggregate(data = stop("'data' must be specified"),
     isic = 3, cumulative = FALSE, naAsZero = FALSE,
-    fill2D = FALSE)
+    fill2D = FALSE, missing.2d = NULL)
 }
 \arguments{
   \item{data}{a dataframe having STAN industry labels (ISIC

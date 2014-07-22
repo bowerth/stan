@@ -91,11 +91,6 @@ loadDim <- function(dim=c("cou", "var", "indi4", "indi3", "hierarchyi3", "cur"),
         ## ##
         ## STANi3.INDA34 <- as.factor(STANi3.IND[!is.na(STANi3.IND$IndA34),3])
         ## STANi3.INDA34 <- STANi3.INDA34[order(STANi3.INDA34)]
-        ## ## ## one list with all industries + aggregates for level sorting
-        ## ## STANi3.INDA60All <- cbind.data.frame(STANi3.IND$Ind, STANi3.IND$IndA60All)
-        ## ## STANi3.INDA60All <- STANi3.INDA60All[order(STANi3.INDA60All[,2]),]
-        ## ## STANi3.INDA60All <- as.factor(STANi3.INDA60All[!is.na(STANi3.INDA60All[,2]),1])
-        ## ## STANi3.INDA60All <- factor(STANi3.INDA60All, levels = STANi3.INDA60All)
 
         STANi3.IND <- read.csv(file = file.path(dbpath, "GitHub", "stan", "inst", "loadDim_indi3.csv"))
         STANi3.INDLABEL  <- STANi3.IND[,colnames(STANi3.IND)%in%c("ind","label")]
@@ -126,6 +121,8 @@ loadDim <- function(dim=c("cou", "var", "indi4", "indi3", "hierarchyi3", "cur"),
         STANi3.INDICIO <- STANi3.IND[["ICIO"]]
         STANi3.INDA18 <- STANi3.IND[["A18"]]
         STANi3.INDA34 <- STANi3.IND[["A34"]]
+        ## STANi3.INDA60All generated with hierarchy below
+
         ## detach("package:xlsx", unload=TRUE)
         list <- c(list, "STANi3.IND", "STANi3.INDLABEL", "STANi3.INDALL", "STANi3.INDA6", "STANi3.INDA17", "STANi3.INDA31", "STANi3.INDA60", "STANi3.INDICIO", "STANi3.INDA18", "STANi3.INDA34")
     }
@@ -135,7 +132,7 @@ loadDim <- function(dim=c("cou", "var", "indi4", "indi3", "hierarchyi3", "cur"),
         matrix.agg <- file.path(PATH.COUi3, "Aggregation_general_2digit_ISIC3.csv")
         nameagg <- read.csv(matrix.agg)[,1]
         agg.include <- union(union(union(STANi3.INDA6, STANi3.INDA18), STANi3.INDA34), c("CTOTAL", "C15T37", "C99")) # "C50T74",
-        ## agg.include <- union(agg.include, "C65T99") # UNSD SNA
+        agg.include <- union(agg.include, "C65T99") # UNSD SNA
         agg.include <- union(agg.include, "C80T93") # UNData M+N+O
         ## cat(paste0(sort(agg.include), "\n"))
         agg.exclude <- setdiff(nameagg, agg.include)

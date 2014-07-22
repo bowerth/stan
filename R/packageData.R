@@ -91,10 +91,10 @@ packageData <- function(list=c("STAN", "BTD"),
             names(DATA.STAN) <-  sub("var.x", "var", names(DATA.STAN))
             names(DATA.STAN) <-  sub("value.x", "value", names(DATA.STAN))
             DATA.STAN$value[DATA.STAN$var%in%STAN.VARMON] <- DATA.STAN$value[DATA.STAN$var%in%STAN.VARMON] / DATA.STAN$value.y[DATA.STAN$var%in%STAN.VARMON]
+
             DATA.STAN <- subset(DATA.STAN, select = c("cou", "var", "ind", "year", "value"))
             DATA.STAN <- DATA.STAN[DATA.STAN$cou%in%namecou & DATA.STAN$var%in%namevar & DATA.STAN$ind%in%nameind,] # & DATA.STAN$year%in%nameyear,]
         }
-
         if ("BTD"%in%list) { # STAN BTD ISIC Rev. 3L categ "Total" and partner "WOR" in USD
             techind <- c("HITECH",
                          "MHTECH",
@@ -171,8 +171,8 @@ packageData <- function(list=c("STAN", "BTD"),
 
         ## if ("EUANA"%in%list) { # retrieve Eurostat Annual national accounts from SDMX
         ##     load("I:\\STANi4\\SAS07\\SASsystem\\DATA_in\\NAMA\\NAMA.rda")
-        ##     h(DATA.NAMAi4)
-        ## }
+        ##   require(RJSDMX)
+        ##   my_ts=getTimeSeries('ECB','EXR.M.USD.EUR.SP00.A')
 
         if ("EUNAIOR1"%in%list) { # converted information from Eurostat SUTs in NACE Rev. 1
             ## source("http://oecdshare.oecd.org/sti/eas/stan/STAN_R/1_load_EUNAIOR1.R")
@@ -208,18 +208,18 @@ packageData <- function(list=c("STAN", "BTD"),
             DATA.UNDATA203CON <- DATA.UNDATA203CON[DATA.UNDATA203CON$cou%in%namecou & DATA.UNDATA203CON$var%in%namevar & DATA.UNDATA203CON$ind%in%nameind,]
             list <- c(list, "UNDATA203CON")
         }
-        if ("UNDATAPATCH"%in%list) { # UN Data platform, table 203, connecting all series
-            source(file.path(PATH.IO, "2014sut-io", "data-sources", "7_UN", "1_load_UNSD_UNData_SQL.R"))
-            writeRDA <- TRUE; writeCSV <- FALSE
-            source(file.path(PATH.IO, "2014sut-io", "data-sources", "7_UN", "patch.r"))
-            load(file.path(PATH.SASi3, "DATA_in", "UN", "UNSD_MADT", "UNDATAPATCH.rda")) # in USD
+        ## if ("UNDATAPATCH"%in%list) { # UN Data platform, table 203, connecting all series
+        ##     source(file.path(PATH.IO, "2014sut-io", "data-sources", "7_UN", "1_load_UNSD_UNData_SQL.R"))
+        ##     writeRDA <- TRUE; writeCSV <- FALSE
+        ##     source(file.path(PATH.IO, "2014sut-io", "data-sources", "7_UN", "patch.r"))
+        ##     load(file.path(PATH.SASi3, "DATA_in", "UN", "UNSD_MADT", "UNDATAPATCH.rda")) # in USD
 
-            DATA.UNDATAPATCH <- data.patch.usd
-            h(DATA.UNDATAPATCH)
+        ##     DATA.UNDATAPATCH <- data.patch.usd
+        ##     h(DATA.UNDATAPATCH)
 
-            DATA.UNDATAPATCH <- DATA.UNDATAPATCH[DATA.UNDATAPATCH$cou%in%namecou & DATA.UNDATAPATCH$var%in%namevar & DATA.UNDATAPATCH$ind%in%nameind,]
-            list <- c(list, "UNDATAPATCH")
-        }
+        ##     DATA.UNDATAPATCH <- DATA.UNDATAPATCH[DATA.UNDATAPATCH$cou%in%namecou & DATA.UNDATAPATCH$var%in%namevar & DATA.UNDATAPATCH$ind%in%nameind,]
+        ##     list <- c(list, "UNDATAPATCH")
+        ## }
 
         if ("WIOT042012"%in%list) {     # WIOT tables [wiotapr2012]
             load(file.path(PATH.SASi3, "DATA_in", "WIOD", "WIOTapr2012.rda"))
@@ -374,12 +374,54 @@ packageData <- function(list=c("STAN", "BTD"),
             X <- strsplit(as.character(DATA.ANBERD$cou), "_")
             DATA.ANBERD$cou <- sapply(X, "[[", 1)
             DATA.ANBERD$type <- sapply(X, "[[", 2)
-            DATA.ANBERD$var[DATA.ANBERD$type=="MA"] <- "RDNC"
+            DATA.ANBERD <- rbind(DATA.ANBERD[DATA.ANBERD$type=="MA",],
+                                 DATA.ANBERD[DATA.ANBERD$type!="MA",])
+            DATA.ANBERD <- DATA.ANBERD[!duplicated(DATA.ANBERD[,colnames(DATA.ANBERD)%in%c("cou", "ind", "year")]),]
+            ## DATA.ANBERD$var[DATA.ANBERD$type=="MA"] <- "RDNC"
+            DATA.ANBERD$var <- "RDNC"
             DATA.ANBERD <- DATA.ANBERD[DATA.ANBERD$cou%in%namecou & DATA.ANBERD$var%in%namevar & DATA.ANBERD$ind%in%nameind,] # & DATA.ANBERD$year%in%nameyear,]
         }
 
         if ("XRATES"%in%list) {         # Exchange rates and PPPs
-            DATA.XRATES <- sqlQuery(SQL.STAN, "SELECT * FROM XRATESMII")
+            ## DATA.XRATES <- sqlQuery(SQL.STAN, "SELECT * FROM XRATESMII")
+
+            url.append <- paste0("/all")
+            code.all <- sdmxRead(api="http://stats.oecd.org/SDMX-JSON",
+                                 scheme="codelist",
+                                 DSD="SNA_TABLE4",
+                                 filter=filter.list,
+                                 append=url.append,
+                                 query=FALSE)
+            ##
+            filter.list <- lapply(code.all, '[[', 1)
+            filter.list <- filter.list[!names(filter.list)=="TIME_PERIOD"]
+            conv.var <- rbind.data.frame(c("EXC", "EXCH"),
+                                         c("PPPGDP", "PPPS"))
+            ##
+            names(conv.var) <- c("transact", "var")
+            url.append <- paste0('/all?', paste('json-lang=en', 'detail=Full', 'dimensionAtObservation=AllDimensions', sep = '&'))
+            ##
+            data.all <- NULL
+            ## for (var in conv.var$transact) {
+            for (var in conv.var$transact[1]) { # PPPGDP doesn't work
+                filter.list[["TRANSACT"]] <- var
+                data <- sdmxRead(api="http://stats.oecd.org/SDMX-JSON",
+                                 scheme="data",
+                                 DSD="SNA_TABLE4",
+                                 filter=filter.list,
+                                 append=url.append,
+                                 query=FALSE)
+                data.all <- rbind(data.all, data)
+            }
+            ##
+            names(data.all) <- sub("location", "cou", names(data.all))
+            names(data.all) <- sub("transact", "var", names(data.all))
+            data.all$cou <- as.character(data.all$cou)
+            data.all$var <- as.character(data.all$var)
+            data.all$var[data.all$var=="EXC"] <- "EXCH"
+            DATA.XRATES <- subset(data.all, select = c("var", "cou", "year", "value"))
+            DATA.XRATES <- DATA.XRATES[DATA.XRATES$cou%in%namecou & DATA.XRATES$var%in%namevar,] # & DATA.XRATES$year%in%nameyear,]
+
         }
 
         if ("LFSEU"%in%list) {          # European labour force survey

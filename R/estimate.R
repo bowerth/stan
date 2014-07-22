@@ -23,6 +23,7 @@ estimate <- function(data=data.all,
 {
     data.est <- NULL
     for (i in 1:nrow(sources)) {
+        ## print(sources[i,])
         ##
         ## cat(paste0(toString(sapply(sources[i,], function (x) as.character(x))), '\n'))
         ##
@@ -145,3 +146,4 @@ estimate <- function(data=data.all,
     }
     return(data.est)
 }
+

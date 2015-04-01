@@ -1,0 +1,51 @@
+var,VarALL,VarPYP,VarCLP,VarNSOM,VarMON,VarPUB,Eurostat,label,labelfr
+PROD,1,0,0,0,1,1,P1,"Production (gross output), current prices","Production brute, prix courants"
+PRDK,1,0,1,1,1,2,,"Production (gross output), volumes","Production brute, volumes"
+PKPY,1,1,0,0,1,,,"Production (gross output), volumes, Previous Year","Production brute, volumes, année précédent"
+PKOT,1,0,0,1,0,,,"Production (gross output), volumes, other measure","Production brute, volumes, autre"
+PRDP,1,0,0,1,0,3,,"Production (Gross Output), deflators","Production brute, déflateurs"
+INTI,1,0,0,0,1,4,P2,"Intermediate inputs, current prices","Consommations intermédiaires, prix courants"
+INTK,1,0,1,0,1,5,,"Intermediate inputs, volumes","Consommations intermédiaires, volumes"
+IKPY,1,1,0,0,1,,,"Intermediate inputs, volumes, Previous Year","Consommations intermédiaires, volumes, année précédent"
+IKOT,1,0,0,1,0,,,"Intermediate inputs, volumes, other measure","Consommations intermédiaires, volumes, autre"
+INTP,1,0,0,1,0,6,,"Intermediate inputs, deflators","Consommations intermédiaires, déflateurs"
+VALU,1,0,0,0,1,7,B1G,"Value added, current prices","Valeur ajoutée, prix courants"
+VALK,1,0,1,1,1,8,,"Value added, volumes","Valeur ajoutée, volumes"
+VKPY,1,1,0,0,1,,,"value added, volumes, Previous Year","Valeur ajoutée, volumes, année précédent"
+VKOT,1,0,0,1,0,,,"value added, volumes, other measure","Valeur ajoutée, volumes, autre"
+VALP,1,0,0,1,0,9,,"Value Added, deflators","Valeur ajoutée, déflateurs"
+VAFC,1,0,0,0,1,26,,"Value added at factor costs, current prices","Valeur ajoutée au coût des facteurs, prix courants"
+LABR,1,0,0,0,1,10,D1,Labour costs (compensation of employees),Coûts de la main-d'oeuvre (rémunération des salariés)
+WAGE,1,0,0,0,1,11,D11,Wages and salaries,Salaires et traitements
+GOPS,1,0,0,0,1,28,B2N_B3N,Gross operating surplus and mixed income,Excédent brut d'exploitation et revenu mixte brut
+NOPS,1,0,0,0,1,29,,Net operating surplus and mixed income,Excédent net d'exploitation et revenu mixte net
+CFCC,1,0,0,0,1,30,K1,Consumption of fixed capital,Consommation de capital fixe
+OTXS,1,0,0,0,1,27,D29_M_D39,Other taxes less subsidies on production,Autres impôts moins subventions sur la production
+EMPN,1,0,0,0,0,12,,Number of persons engaged (total employment),Nombre de personnes engagées (emploi total)
+EMPE,1,0,0,0,0,13,,Number of employees,Nombre de salariés
+SELF,1,0,0,0,0,14,,Self-employed,Nombre de travailleurs indépendants
+FTEN,1,0,0,0,0,15,,Full-time equivalents - total engaged,Equivalents temps plein - personnes engagées
+FTEE,1,0,0,0,0,16,,Full-time equivalents - employees,Equivalents temps plein - salariés
+JOBN,1,0,0,0,0,,,Total employment - number of jobs,Nombre de postes de travail (emploi total)
+JOBE,1,0,0,0,0,,,Employees - number of jobs,Nombre de postes de travail (salariés)
+HRSN,1,0,0,0,0,17,,Hours worked - total engaged,Heures travaillées - personnes engagées
+HRSE,1,0,0,0,0,18,,Hours worked - employees,Heures travaillées - salariés
+GFCF,1,0,0,0,1,19,,"Gross fixed capital formation, current prices","Formation brute de capital fixe, prix courants"
+GFCK,1,0,1,1,1,20,,"Gross fixed capital formation, volumes","Formation brute de capital fixe, volumes"
+GKPY,1,1,0,0,1,,,"Gross fixed capital formation, volumes, Previous Year","Formation brute de capital fixe, volumes, année précédent"
+GKOT,1,0,0,1,0,,,"Gross fixed capital formation, volumes, other measure","Formation brute de capital fixe, volumes, autre"
+GFCP,1,0,0,1,0,21,,"Gross Fixed Capital Formation, deflators","Formation brute de capital fixe, déflateurs"
+CAPG,1,0,0,0,1,22,,"Gross capital stock, current prices","Stock brut de capital, prix courants"
+CPGK,1,0,1,1,1,23,,"Gross capital stock, volumes","Stock brut de capital, volumes"
+CGPY,1,1,0,0,1,,,"Gross capital stock , volumes, Previous Year","Stock brut de capital, volumes, année précédent"
+CGOT,1,0,0,1,0,,,"Gross capital stock , volumes, other measure","Stock brut de capital, volumes, autre"
+CPGP,1,0,0,1,0,,,"Gross capital stock , deflators","Stock brut de capital, déflateurs"
+CAPN,1,0,0,0,1,24,,"Net capital stock, current prices","Stock net de capital, prix courants"
+CPNK,1,0,1,1,1,25,,"Net capital stock, volumes","Stock net de capital, volumes"
+CNPY,1,1,0,0,1,,,"Net capital stock, volumes, Previous Year","Stock net de capital, volumes, année précédent"
+CNOT,1,0,0,1,0,,,"Net capital stock, volumes, other measure","Stock net de capital, volumes, autre"
+CPNP,1,0,0,1,0,,,"Net capital stock, deflators","Stock net de capital, déflateurs"
+EXPO,1,0,0,0,1,26,,Exports of goods at current prices,"Exportations de biens, prix courants"
+IMPO,1,0,0,0,1,27,,Imports of goods at current prices,"Importations de biens, prix courants"
+MFPI,1,0,0,0,0,,,"Multi-factor Productivity, growth rate","Productivité multifactorielle, taux de croissance"
+RDNC,1,0,0,0,1,,,RD expenditures,Dépenses en RD

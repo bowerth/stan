@@ -1,0 +1,281 @@
+"","countryISO","currency","cur","curcode","unitISO","fundISO"
+"1","AFGHANISTAN","Afghani","AFN","971","2",NA
+"2","ÅLAND ISLANDS","Euro","EUR","978","2",NA
+"3","ALBANIA","Lek","ALL","008","2",NA
+"4","ALGERIA","Algerian Dinar","DZD","012","2",NA
+"5","AMERICAN SAMOA","US Dollar","USD","840","2",NA
+"6","ANDORRA","Euro","EUR","978","2",NA
+"7","ANGOLA","Kwanza","AOA","973","2",NA
+"8","ANGUILLA","East Caribbean Dollar","XCD","951","2",NA
+"9","ANTARCTICA","No universal currency",NA,NA,NA,NA
+"10","ANTIGUA AND BARBUDA","East Caribbean Dollar","XCD","951","2",NA
+"11","ARGENTINA","Argentine Peso","ARS","032","2",NA
+"12","ARMENIA","Armenian Dram","AMD","051","2",NA
+"13","ARUBA","Aruban Florin","AWG","533","2",NA
+"14","AUSTRALIA","Australian Dollar","AUD","036","2",NA
+"15","AUSTRIA","Euro","EUR","978","2",NA
+"16","AZERBAIJAN","Azerbaijanian Manat","AZN","944","2",NA
+"17","BAHAMAS","Bahamian Dollar","BSD","044","2",NA
+"18","BAHRAIN","Bahraini Dinar","BHD","048","3",NA
+"19","BANGLADESH","Taka","BDT","050","2",NA
+"20","BARBADOS","Barbados Dollar","BBD","052","2",NA
+"21","BELARUS","Belarussian Ruble","BYR","974","0",NA
+"22","BELGIUM","Euro","EUR","978","2",NA
+"23","BELIZE","Belize Dollar","BZD","084","2",NA
+"24","BENIN","CFA Franc BCEAO","XOF","952","0",NA
+"25","BERMUDA","Bermudian Dollar","BMD","060","2",NA
+"26","BHUTAN","Ngultrum","BTN","064","2",NA
+"27","BHUTAN","Indian Rupee","INR","356","2",NA
+"28","BOLIVIA, PLURINATIONAL STATE OF","Boliviano","BOB","068","2",NA
+"29","BOLIVIA, PLURINATIONAL STATE OF","Mvdol","BOV","984","2",TRUE
+"30","BONAIRE, SINT EUSTATIUS AND SABA","US Dollar","USD","840","2",NA
+"31","BOSNIA AND HERZEGOVINA","Convertible Mark","BAM","977","2",NA
+"32","BOTSWANA","Pula","BWP","072","2",NA
+"33","BOUVET ISLAND","Norwegian Krone","NOK","578","2",NA
+"34","BRAZIL","Brazilian Real","BRL","986","2",NA
+"35","BRITISH INDIAN OCEAN TERRITORY","US Dollar","USD","840","2",NA
+"36","BRUNEI DARUSSALAM","Brunei Dollar","BND","096","2",NA
+"37","BULGARIA","Bulgarian Lev","BGN","975","2",NA
+"38","BURKINA FASO","CFA Franc BCEAO","XOF","952","0",NA
+"39","BURUNDI","Burundi Franc","BIF","108","0",NA
+"40","CAMBODIA","Riel","KHR","116","2",NA
+"41","CAMEROON","CFA Franc BEAC","XAF","950","0",NA
+"42","CANADA","Canadian Dollar","CAD","124","2",NA
+"43","CABO VERDE","Cabo Verde Escudo","CVE","132","2",NA
+"44","CAYMAN ISLANDS","Cayman Islands Dollar","KYD","136","2",NA
+"45","CENTRAL AFRICAN REPUBLIC","CFA Franc BEAC","XAF","950","0",NA
+"46","CHAD","CFA Franc BEAC","XAF","950","0",NA
+"47","CHILE","Unidad de Fomento","CLF","990","4",TRUE
+"48","CHILE","Chilean Peso","CLP","152","0",NA
+"49","CHINA","Yuan Renminbi","CNY","156","2",NA
+"50","CHRISTMAS ISLAND","Australian Dollar","AUD","036","2",NA
+"51","COCOS (KEELING) ISLANDS","Australian Dollar","AUD","036","2",NA
+"52","COLOMBIA","Colombian Peso","COP","170","2",NA
+"53","COLOMBIA","Unidad de Valor Real","COU","970","2",TRUE
+"54","COMOROS","Comoro Franc","KMF","174","0",NA
+"55","CONGO","CFA Franc BEAC","XAF","950","0",NA
+"56","CONGO, DEMOCRATIC REPUBLIC OF THE ","Congolese Franc","CDF","976","2",NA
+"57","COOK ISLANDS","New Zealand Dollar","NZD","554","2",NA
+"58","COSTA RICA","Costa Rican Colon","CRC","188","2",NA
+"59","CÔTE D'IVOIRE","CFA Franc BCEAO","XOF","952","0",NA
+"60","CROATIA","Croatian Kuna","HRK","191","2",NA
+"61","CUBA","Peso Convertible","CUC","931","2",NA
+"62","CUBA","Cuban Peso","CUP","192","2",NA
+"63","CURAÇAO","Netherlands Antillean Guilder","ANG","532","2",NA
+"64","CYPRUS","Euro","EUR","978","2",NA
+"65","CZECH REPUBLIC","Czech Koruna","CZK","203","2",NA
+"66","DENMARK","Danish Krone","DKK","208","2",NA
+"67","DJIBOUTI","Djibouti Franc","DJF","262","0",NA
+"68","DOMINICA","East Caribbean Dollar","XCD","951","2",NA
+"69","DOMINICAN REPUBLIC","Dominican Peso","DOP","214","2",NA
+"70","ECUADOR","US Dollar","USD","840","2",NA
+"71","EGYPT","Egyptian Pound","EGP","818","2",NA
+"72","EL SALVADOR","El Salvador Colon","SVC","222","2",NA
+"73","EL SALVADOR","US Dollar","USD","840","2",NA
+"74","EQUATORIAL GUINEA","CFA Franc BEAC","XAF","950","0",NA
+"75","ERITREA","Nakfa","ERN","232","2",NA
+"76","ESTONIA","Euro","EUR","978","2",NA
+"77","ETHIOPIA","Ethiopian Birr","ETB","230","2",NA
+"78","EUROPEAN UNION","Euro","EUR","978","2",NA
+"79","FALKLAND ISLANDS (MALVINAS)","Falkland Islands Pound","FKP","238","2",NA
+"80","FAROE ISLANDS","Danish Krone","DKK","208","2",NA
+"81","FIJI","Fiji Dollar","FJD","242","2",NA
+"82","FINLAND","Euro","EUR","978","2",NA
+"83","FRANCE","Euro","EUR","978","2",NA
+"84","FRENCH GUIANA","Euro","EUR","978","2",NA
+"85","FRENCH POLYNESIA","CFP Franc","XPF","953","0",NA
+"86","FRENCH SOUTHERN TERRITORIES","Euro","EUR","978","2",NA
+"87","GABON","CFA Franc BEAC","XAF","950","0",NA
+"88","GAMBIA","Dalasi","GMD","270","2",NA
+"89","GEORGIA","Lari","GEL","981","2",NA
+"90","GERMANY","Euro","EUR","978","2",NA
+"91","GHANA","Ghana Cedi","GHS","936","2",NA
+"92","GIBRALTAR","Gibraltar Pound","GIP","292","2",NA
+"93","GREECE","Euro","EUR","978","2",NA
+"94","GREENLAND","Danish Krone","DKK","208","2",NA
+"95","GRENADA","East Caribbean Dollar","XCD","951","2",NA
+"96","GUADELOUPE","Euro","EUR","978","2",NA
+"97","GUAM","US Dollar","USD","840","2",NA
+"98","GUATEMALA","Quetzal","GTQ","320","2",NA
+"99","GUERNSEY","Pound Sterling","GBP","826","2",NA
+"100","GUINEA","Guinea Franc","GNF","324","0",NA
+"101","GUINEA-BISSAU","CFA Franc BCEAO","XOF","952","0",NA
+"102","GUYANA","Guyana Dollar","GYD","328","2",NA
+"103","HAITI","Gourde","HTG","332","2",NA
+"104","HAITI","US Dollar","USD","840","2",NA
+"105","HEARD ISLAND AND McDONALD ISLANDS","Australian Dollar","AUD","036","2",NA
+"106","HOLY SEE (VATICAN CITY STATE)","Euro","EUR","978","2",NA
+"107","HONDURAS","Lempira","HNL","340","2",NA
+"108","HONG KONG","Hong Kong Dollar","HKD","344","2",NA
+"109","HUNGARY","Forint","HUF","348","2",NA
+"110","ICELAND","Iceland Krona","ISK","352","0",NA
+"111","INDIA","Indian Rupee","INR","356","2",NA
+"112","INDONESIA","Rupiah","IDR","360","2",NA
+"113","INTERNATIONAL MONETARY FUND (IMF) ","SDR (Special Drawing Right)","XDR","960","N.A.",NA
+"114","IRAN, ISLAMIC REPUBLIC OF","Iranian Rial","IRR","364","2",NA
+"115","IRAQ","Iraqi Dinar","IQD","368","3",NA
+"116","IRELAND","Euro","EUR","978","2",NA
+"117","ISLE OF MAN","Pound Sterling","GBP","826","2",NA
+"118","ISRAEL","New Israeli Sheqel","ILS","376","2",NA
+"119","ITALY","Euro","EUR","978","2",NA
+"120","JAMAICA","Jamaican Dollar","JMD","388","2",NA
+"121","JAPAN","Yen","JPY","392","0",NA
+"122","JERSEY","Pound Sterling","GBP","826","2",NA
+"123","JORDAN","Jordanian Dinar","JOD","400","3",NA
+"124","KAZAKHSTAN","Tenge","KZT","398","2",NA
+"125","KENYA","Kenyan Shilling","KES","404","2",NA
+"126","KIRIBATI","Australian Dollar","AUD","036","2",NA
+"127","KOREA, DEMOCRATIC PEOPLE’S REPUBLIC OF","North Korean Won","KPW","408","2",NA
+"128","KOREA, REPUBLIC OF","Won","KRW","410","0",NA
+"129","KUWAIT","Kuwaiti Dinar","KWD","414","3",NA
+"130","KYRGYZSTAN","Som","KGS","417","2",NA
+"131","LAO PEOPLE’S DEMOCRATIC REPUBLIC","Kip","LAK","418","2",NA
+"132","LATVIA","Euro","EUR","978","2",NA
+"133","LEBANON","Lebanese Pound","LBP","422","2",NA
+"134","LESOTHO","Loti","LSL","426","2",NA
+"135","LESOTHO","Rand","ZAR","710","2",NA
+"136","LIBERIA","Liberian Dollar","LRD","430","2",NA
+"137","LIBYA","Libyan Dinar","LYD","434","3",NA
+"138","LIECHTENSTEIN","Swiss Franc","CHF","756","2",NA
+"139","LITHUANIA","Euro","EUR","978","2",NA
+"140","LUXEMBOURG","Euro","EUR","978","2",NA
+"141","MACAO","Pataca","MOP","446","2",NA
+"142","MACEDONIA, THE FORMER 
+YUGOSLAV REPUBLIC OF","Denar","MKD","807","2",NA
+"143","MADAGASCAR","Malagasy Ariary","MGA","969","2",NA
+"144","MALAWI","Kwacha","MWK","454","2",NA
+"145","MALAYSIA","Malaysian Ringgit","MYR","458","2",NA
+"146","MALDIVES","Rufiyaa","MVR","462","2",NA
+"147","MALI","CFA Franc BCEAO","XOF","952","0",NA
+"148","MALTA","Euro","EUR","978","2",NA
+"149","MARSHALL ISLANDS","US Dollar","USD","840","2",NA
+"150","MARTINIQUE","Euro","EUR","978","2",NA
+"151","MAURITANIA","Ouguiya","MRO","478","2",NA
+"152","MAURITIUS","Mauritius Rupee","MUR","480","2",NA
+"153","MAYOTTE","Euro","EUR","978","2",NA
+"154","MEMBER COUNTRIES OF THE AFRICAN DEVELOPMENT BANK GROUP","ADB Unit of Account","XUA","965","N.A.",NA
+"155","MEXICO","Mexican Peso","MXN","484","2",NA
+"156","MEXICO","Mexican Unidad de Inversion (UDI)","MXV","979","2",TRUE
+"157","MICRONESIA, FEDERATED STATES OF","US Dollar","USD","840","2",NA
+"158","MOLDOVA, REPUBLIC OF","Moldovan Leu","MDL","498","2",NA
+"159","MONACO","Euro","EUR","978","2",NA
+"160","MONGOLIA","Tugrik","MNT","496","2",NA
+"161","MONTENEGRO","Euro","EUR","978","2",NA
+"162","MONTSERRAT","East Caribbean Dollar","XCD","951","2",NA
+"163","MOROCCO","Moroccan Dirham","MAD","504","2",NA
+"164","MOZAMBIQUE","Mozambique Metical","MZN","943","2",NA
+"165","MYANMAR","Kyat","MMK","104","2",NA
+"166","NAMIBIA","Namibia Dollar","NAD","516","2",NA
+"167","NAMIBIA","Rand","ZAR","710","2",NA
+"168","NAURU","Australian Dollar","AUD","036","2",NA
+"169","NEPAL","Nepalese Rupee","NPR","524","2",NA
+"170","NETHERLANDS","Euro","EUR","978","2",NA
+"171","NEW CALEDONIA","CFP Franc","XPF","953","0",NA
+"172","NEW ZEALAND","New Zealand Dollar","NZD","554","2",NA
+"173","NICARAGUA","Cordoba Oro","NIO","558","2",NA
+"174","NIGER","CFA Franc BCEAO","XOF","952","0",NA
+"175","NIGERIA","Naira","NGN","566","2",NA
+"176","NIUE","New Zealand Dollar","NZD","554","2",NA
+"177","NORFOLK ISLAND","Australian Dollar","AUD","036","2",NA
+"178","NORTHERN MARIANA ISLANDS","US Dollar","USD","840","2",NA
+"179","NORWAY","Norwegian Krone","NOK","578","2",NA
+"180","OMAN","Rial Omani","OMR","512","3",NA
+"181","PAKISTAN","Pakistan Rupee","PKR","586","2",NA
+"182","PALAU","US Dollar","USD","840","2",NA
+"183","PALESTINE, STATE OF","No universal currency",NA,NA,NA,NA
+"184","PANAMA","Balboa","PAB","590","2",NA
+"185","PANAMA","US Dollar","USD","840","2",NA
+"186","PAPUA NEW GUINEA","Kina","PGK","598","2",NA
+"187","PARAGUAY","Guarani","PYG","600","0",NA
+"188","PERU","Nuevo Sol","PEN","604","2",NA
+"189","PHILIPPINES","Philippine Peso","PHP","608","2",NA
+"190","PITCAIRN","New Zealand Dollar","NZD","554","2",NA
+"191","POLAND","Zloty","PLN","985","2",NA
+"192","PORTUGAL","Euro","EUR","978","2",NA
+"193","PUERTO RICO","US Dollar","USD","840","2",NA
+"194","QATAR","Qatari Rial","QAR","634","2",NA
+"195","RÉUNION","Euro","EUR","978","2",NA
+"196","ROMANIA","New Romanian Leu","RON","946","2",NA
+"197","RUSSIAN FEDERATION","Russian Ruble","RUB","643","2",NA
+"198","RWANDA","Rwanda Franc","RWF","646","0",NA
+"199","SAINT BARTHÉLEMY","Euro","EUR","978","2",NA
+"200","SAINT HELENA, ASCENSION AND 
+TRISTAN DA CUNHA","Saint Helena Pound","SHP","654","2",NA
+"201","SAINT KITTS AND NEVIS","East Caribbean Dollar","XCD","951","2",NA
+"202","SAINT LUCIA","East Caribbean Dollar","XCD","951","2",NA
+"203","SAINT MARTIN (FRENCH PART)","Euro","EUR","978","2",NA
+"204","SAINT PIERRE AND MIQUELON","Euro","EUR","978","2",NA
+"205","SAINT VINCENT AND THE GRENADINES","East Caribbean Dollar","XCD","951","2",NA
+"206","SAMOA","Tala","WST","882","2",NA
+"207","SAN MARINO","Euro","EUR","978","2",NA
+"208","SAO TOME AND PRINCIPE","Dobra","STD","678","2",NA
+"209","SAUDI ARABIA","Saudi Riyal","SAR","682","2",NA
+"210","SENEGAL","CFA Franc BCEAO","XOF","952","0",NA
+"211","SERBIA","Serbian Dinar","RSD","941","2",NA
+"212","SEYCHELLES","Seychelles Rupee","SCR","690","2",NA
+"213","SIERRA LEONE","Leone","SLL","694","2",NA
+"214","SINGAPORE","Singapore Dollar","SGD","702","2",NA
+"215","SINT MAARTEN (DUTCH PART)","Netherlands Antillean Guilder","ANG","532","2",NA
+"216","SISTEMA UNITARIO DE COMPENSACION REGIONAL DE PAGOS ""SUCRE""","Sucre","XSU","994","N.A.",NA
+"217","SLOVAKIA","Euro","EUR","978","2",NA
+"218","SLOVENIA","Euro","EUR","978","2",NA
+"219","SOLOMON ISLANDS","Solomon Islands Dollar","SBD","090","2",NA
+"220","SOMALIA","Somali Shilling","SOS","706","2",NA
+"221","SOUTH AFRICA","Rand","ZAR","710","2",NA
+"222","SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS","No universal currency",NA,NA,NA,NA
+"223","SOUTH SUDAN","South Sudanese Pound","SSP","728","2",NA
+"224","SPAIN","Euro","EUR","978","2",NA
+"225","SRI LANKA","Sri Lanka Rupee","LKR","144","2",NA
+"226","SUDAN","Sudanese Pound","SDG","938","2",NA
+"227","SURINAME","Surinam Dollar","SRD","968","2",NA
+"228","SVALBARD AND JAN MAYEN","Norwegian Krone","NOK","578","2",NA
+"229","SWAZILAND","Lilangeni","SZL","748","2",NA
+"230","SWEDEN","Swedish Krona","SEK","752","2",NA
+"231","SWITZERLAND","WIR Euro","CHE","947","2",TRUE
+"232","SWITZERLAND","Swiss Franc","CHF","756","2",NA
+"233","SWITZERLAND","WIR Franc","CHW","948","2",TRUE
+"234","SYRIAN ARAB REPUBLIC","Syrian Pound","SYP","760","2",NA
+"235","TAIWAN, PROVINCE OF CHINA","New Taiwan Dollar","TWD","901","2",NA
+"236","TAJIKISTAN","Somoni","TJS","972","2",NA
+"237","TANZANIA, UNITED REPUBLIC OF","Tanzanian Shilling","TZS","834","2",NA
+"238","THAILAND","Baht","THB","764","2",NA
+"239","TIMOR-LESTE","US Dollar","USD","840","2",NA
+"240","TOGO","CFA Franc BCEAO","XOF","952","0",NA
+"241","TOKELAU","New Zealand Dollar","NZD","554","2",NA
+"242","TONGA","Pa’anga","TOP","776","2",NA
+"243","TRINIDAD AND TOBAGO","Trinidad and Tobago Dollar","TTD","780","2",NA
+"244","TUNISIA","Tunisian Dinar","TND","788","3",NA
+"245","TURKEY","Turkish Lira","TRY","949","2",NA
+"246","TURKMENISTAN","Turkmenistan New Manat","TMT","934","2",NA
+"247","TURKS AND CAICOS ISLANDS","US Dollar","USD","840","2",NA
+"248","TUVALU","Australian Dollar","AUD","036","2",NA
+"249","UGANDA","Uganda Shilling","UGX","800","0",NA
+"250","UKRAINE","Hryvnia","UAH","980","2",NA
+"251","UNITED ARAB EMIRATES","UAE Dirham","AED","784","2",NA
+"252","UNITED KINGDOM","Pound Sterling","GBP","826","2",NA
+"253","UNITED STATES","US Dollar","USD","840","2",NA
+"254","UNITED STATES","US Dollar (Next day)","USN","997","2",TRUE
+"255","UNITED STATES MINOR OUTLYING ISLANDS","US Dollar","USD","840","2",NA
+"256","URUGUAY","Uruguay Peso en Unidades Indexadas (URUIURUI)","UYI","940","0",TRUE
+"257","URUGUAY","Peso Uruguayo","UYU","858","2",NA
+"258","UZBEKISTAN","Uzbekistan Sum","UZS","860","2",NA
+"259","VANUATU","Vatu","VUV","548","0",NA
+"260","VENEZUELA, BOLIVARIAN REPUBLIC OF","Bolivar","VEF","937","2",NA
+"261","VIET NAM","Dong","VND","704","0",NA
+"262","VIRGIN ISLANDS (BRITISH)","US Dollar","USD","840","2",NA
+"263","VIRGIN ISLANDS (U.S.)","US Dollar","USD","840","2",NA
+"264","WALLIS AND FUTUNA","CFP Franc","XPF","953","0",NA
+"265","WESTERN SAHARA","Moroccan Dirham","MAD","504","2",NA
+"266","YEMEN","Yemeni Rial","YER","886","2",NA
+"267","ZAMBIA","Zambian Kwacha","ZMW","967","2",NA
+"268","ZIMBABWE","Zimbabwe Dollar","ZWL","932","2",NA
+"269","ZZ01_Bond Markets Unit European_EURCO","Bond Markets Unit European Composite Unit (EURCO)","XBA","955","N.A.",NA
+"270","ZZ02_Bond Markets Unit European_EMU-6","Bond Markets Unit European Monetary Unit (E.M.U.-6)","XBB","956","N.A.",NA
+"271","ZZ03_Bond Markets Unit European_EUA-9","Bond Markets Unit European Unit of Account 9 (E.U.A.-9)","XBC","957","N.A.",NA
+"272","ZZ04_Bond Markets Unit European_EUA-17","Bond Markets Unit European Unit of Account 17 (E.U.A.-17)","XBD","958","N.A.",NA
+"273","ZZ06_Testing_Code","Codes specifically reserved for testing purposes","XTS","963","N.A.",NA
+"274","ZZ07_No_Currency","The codes assigned for transactions where no currency is involved","XXX","999","N.A.",NA
+"275","ZZ08_Gold","Gold","XAU","959","N.A.",NA
+"276","ZZ09_Palladium","Palladium","XPD","964","N.A.",NA
+"277","ZZ10_Platinum","Platinum","XPT","962","N.A.",NA
+"278","ZZ11_Silver","Silver","XAG","961","N.A.",NA

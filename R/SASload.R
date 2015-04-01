@@ -30,7 +30,7 @@ SASload <- function(cou=stop("'cou' must be specified"),
     if (isic==3) path.sas <- PATH.SASi3
     if (isic==4) path.sas <- PATH.SASi4
     ##
-    prog.cou <- paste0(path.sas, "progs\\PAYS\\", cou, "\\", cou, "_load.sas")
+    prog.cou <- file.path(path.sas, "progs", "PAYS", cou, paste0(cou, "_load.sas"))
     fileCon <- file(prog.cou)
     if (!file.exists(prog.cou)) file.create(prog.cou)
     if (load.swn==TRUE) load.swn.str <- "oui" else load.swn.str <- "non"

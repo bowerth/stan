@@ -20,8 +20,8 @@
 NSO2XLS <- function(data=NULL,
                     cou=stop("'cou' must be specified"),
                     sou='NSO',
-                    cover=paste0(PATH.COUi4,cou,'/Rawdata/',cou,'_',sou,'_4SAS_template.xls'),
-                    file=paste0(PATH.COUi4,cou,'/Rawdata/R_',cou,'_',sou,'_4SAS_2013-14.xls'))
+                    cover=file.path(PATH.COUi4, cou, "Rawdata", paste0(cou, "_", sou, "_4SAS_template.xls")),
+                    file=file.path(PATH.COUi4, cou, "Rawdata", paste0('R_', cou, '_', sou, '_4SAS_2013-14.xls')))
 {
     require(XLConnect)
     require(reshape2)

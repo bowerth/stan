@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+<meta name="author" content="OECD ITN/CIS" />
+
+<meta name="date" content="2015-03-11" />
+
+<title>createDotStatXML</title>
+
+
+
+
+<link href="data:text/css,body%20%7B%0A%20%20background%2Dcolor%3A%20%23fff%3B%0A%20%20margin%3A%201em%20auto%3B%0A%20%20max%2Dwidth%3A%20700px%3B%0A%20%20overflow%3A%20visible%3B%0A%20%20padding%2Dleft%3A%202em%3B%0A%20%20padding%2Dright%3A%202em%3B%0A%20%20font%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0A%20%20font%2Dsize%3A%2014px%3B%0A%20%20line%2Dheight%3A%201%2E35%3B%0A%7D%0A%0A%23header%20%7B%0A%20%20text%2Dalign%3A%20center%3B%0A%7D%0A%0A%23TOC%20%7B%0A%20%20clear%3A%20both%3B%0A%20%20margin%3A%200%200%2010px%2010px%3B%0A%20%20padding%3A%204px%3B%0A%20%20width%3A%20400px%3B%0A%20%20border%3A%201px%20solid%20%23CCCCCC%3B%0A%20%20border%2Dradius%3A%205px%3B%0A%0A%20%20background%2Dcolor%3A%20%23f6f6f6%3B%0A%20%20font%2Dsize%3A%2013px%3B%0A%20%20line%2Dheight%3A%201%2E3%3B%0A%7D%0A%20%20%23TOC%20%2Etoctitle%20%7B%0A%20%20%20%20font%2Dweight%3A%20bold%3B%0A%20%20%20%20font%2Dsize%3A%2015px%3B%0A%20%20%20%20margin%2Dleft%3A%205px%3B%0A%20%20%7D%0A%0A%20%20%23TOC%20ul%20%7B%0A%20%20%20%20padding%2Dleft%3A%2040px%3B%0A%20%20%20%20margin%2Dleft%3A%20%2D1%2E5em%3B%0A%20%20%20%20margin%2Dtop%3A%205px%3B%0A%20%20%20%20margin%2Dbottom%3A%205px%3B%0A%20%20%7D%0A%20%20%23TOC%20ul%20ul%20%7B%0A%20%20%20%20margin%2Dleft%3A%20%2D2em%3B%0A%20%20%7D%0A%20%20%23TOC%20li%20%7B%0A%20%20%20%20line%2Dheight%3A%2016px%3B%0A%20%20%7D%0A%0Atable%20%7B%0A%20%20margin%3A%201em%20auto%3B%0A%20%20border%2Dwidth%3A%201px%3B%0A%20%20border%2Dcolor%3A%20%23DDDDDD%3B%0A%20%20border%2Dstyle%3A%20outset%3B%0A%20%20border%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0A%20%20border%2Dwidth%3A%202px%3B%0A%20%20padding%3A%205px%3B%0A%20%20border%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0A%20%20border%2Dwidth%3A%201px%3B%0A%20%20border%2Dstyle%3A%20inset%3B%0A%20%20line%2Dheight%3A%2018px%3B%0A%20%20padding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0A%20%20border%2Dleft%2Dstyle%3A%20none%3B%0A%20%20border%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0A%20%20background%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0A%0Ap%20%7B%0A%20%20margin%3A%200%2E5em%200%3B%0A%7D%0A%0Ablockquote%20%7B%0A%20%20background%2Dcolor%3A%20%23f6f6f6%3B%0A%20%20padding%3A%200%2E25em%200%2E75em%3B%0A%7D%0A%0Ahr%20%7B%0A%20%20border%2Dstyle%3A%20solid%3B%0A%20%20border%3A%20none%3B%0A%20%20border%2Dtop%3A%201px%20solid%20%23777%3B%0A%20%20margin%3A%2028px%200%3B%0A%7D%0A%0Adl%20%7B%0A%20%20margin%2Dleft%3A%200%3B%0A%7D%0A%20%20dl%20dd%20%7B%0A%20%20%20%20margin%2Dbottom%3A%2013px%3B%0A%20%20%20%20margin%2Dleft%3A%2013px%3B%0A%20%20%7D%0A%20%20dl%20dt%20%7B%0A%20%20%20%20font%2Dweight%3A%20bold%3B%0A%20%20%7D%0A%0Aul%20%7B%0A%20%20margin%2Dtop%3A%200%3B%0A%7D%0A%20%20ul%20li%20%7B%0A%20%20%20%20list%2Dstyle%3A%20circle%20outside%3B%0A%20%20%7D%0A%20%20ul%20ul%20%7B%0A%20%20%20%20margin%2Dbottom%3A%200%3B%0A%20%20%7D%0A%0Apre%2C%20code%20%7B%0A%20%20background%2Dcolor%3A%20%23f7f7f7%3B%0A%20%20border%2Dradius%3A%203px%3B%0A%20%20color%3A%20%23333%3B%0A%7D%0Apre%20%7B%0A%20%20white%2Dspace%3A%20pre%2Dwrap%3B%20%20%20%20%2F%2A%20Wrap%20long%20lines%20%2A%2F%0A%20%20border%2Dradius%3A%203px%3B%0A%20%20margin%3A%205px%200px%2010px%200px%3B%0A%20%20padding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0A%20%20background%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0A%0Acode%20%7B%0A%20%20font%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0A%20%20font%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0A%20%20padding%3A%202px%200px%3B%0A%7D%0A%0Adiv%2Efigure%20%7B%0A%20%20text%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0A%20%20background%2Dcolor%3A%20%23FFFFFF%3B%0A%20%20padding%3A%202px%3B%0A%20%20border%3A%201px%20solid%20%23DDDDDD%3B%0A%20%20border%2Dradius%3A%203px%3B%0A%20%20border%3A%201px%20solid%20%23CCCCCC%3B%0A%20%20margin%3A%200%205px%3B%0A%7D%0A%0Ah1%20%7B%0A%20%20margin%2Dtop%3A%200%3B%0A%20%20font%2Dsize%3A%2035px%3B%0A%20%20line%2Dheight%3A%2040px%3B%0A%7D%0A%0Ah2%20%7B%0A%20%20border%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0A%20%20padding%2Dtop%3A%2010px%3B%0A%20%20padding%2Dbottom%3A%202px%3B%0A%20%20font%2Dsize%3A%20145%25%3B%0A%7D%0A%0Ah3%20%7B%0A%20%20border%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0A%20%20padding%2Dtop%3A%2010px%3B%0A%20%20font%2Dsize%3A%20120%25%3B%0A%7D%0A%0Ah4%20%7B%0A%20%20border%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0A%20%20margin%2Dleft%3A%208px%3B%0A%20%20font%2Dsize%3A%20105%25%3B%0A%7D%0A%0Ah5%2C%20h6%20%7B%0A%20%20border%2Dbottom%3A%201px%20solid%20%23ccc%3B%0A%20%20font%2Dsize%3A%20105%25%3B%0A%7D%0A%0Aa%20%7B%0A%20%20color%3A%20%230033dd%3B%0A%20%20text%2Ddecoration%3A%20none%3B%0A%7D%0A%20%20a%3Ahover%20%7B%0A%20%20%20%20color%3A%20%236666ff%3B%20%7D%0A%20%20a%3Avisited%20%7B%0A%20%20%20%20color%3A%20%23800080%3B%20%7D%0A%20%20a%3Avisited%3Ahover%20%7B%0A%20%20%20%20color%3A%20%23BB00BB%3B%20%7D%0A%20%20a%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0A%20%20%20%20text%2Ddecoration%3A%20underline%3B%20%7D%0A%20%20a%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0A%20%20%20%20text%2Ddecoration%3A%20underline%3B%20%7D%0A%0A%2F%2A%20Class%20described%20in%20https%3A%2F%2Fbenjeffrey%2Ecom%2Fposts%2Fpandoc%2Dsyntax%2Dhighlighting%2Dcss%0A%20%20%20Colours%20from%20https%3A%2F%2Fgist%2Egithub%2Ecom%2Frobsimmons%2F1172277%20%2A%2F%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%2F%2A%20Keyword%20%2A%2F%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%2F%2A%20DataType%20%2A%2F%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%2F%2A%20DecVal%20%28decimal%20values%29%20%2A%2F%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%2F%2A%20BaseN%20%2A%2F%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%2F%2A%20Float%20%2A%2F%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%2F%2A%20Char%20%2A%2F%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%2F%2A%20String%20%2A%2F%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%2F%2A%20Comment%20%2A%2F%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%2F%2A%20OtherToken%20%2A%2F%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%2F%2A%20AlertToken%20%2A%2F%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%2F%2A%20Function%20calls%20%2A%2F%20%0Acode%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%2F%2A%20ErrorTok%20%2A%2F%0A%0A" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+
+
+
+<div id="header">
+<h1 class="title">createDotStatXML</h1>
+<h4 class="author"><em>OECD ITN/CIS</em></h4>
+<h4 class="date"><em>2015-03-11</em></h4>
+</div>
+
+
+<table>
+<tbody>
+<tr class="odd">
+<td align="left">PARAMETER</td>
+<td align="left">DESCRIPTION</td>
+<td align="left">USAGE/EXAMPLE</td>
+</tr>
+<tr class="even">
+<td align="left">ENTRYGATE</td>
+<td align="left">A subfolder on the Entrygate server that serves as a root for the processing during this import job/action.</td>
+<td align="left">ENTRYGATE=“STD - Annual National Accounts”</td>
+</tr>
+<tr class="odd">
+<td align="left">WORK_FOLDER</td>
+<td align="left">A subfolder on the Entrygate server that contains the import job/action xml files.</td>
+<td align="left">WORK_FOLDER =“STD - Annual National Accounts\WORK”</td>
+</tr>
+<tr class="even">
+<td align="left">CSV_FOLDER</td>
+<td align="left">A subfolder on the Entrygate server that contains the import job/action data files.</td>
+<td align="left">CSV_FOLDER =“STD - Annual National Accounts\CSVFILES”</td>
+</tr>
+<tr class="odd">
+<td align="left">XML_FILENAME</td>
+<td align="left">The name of the xml file that is generated from the input after running CreateDotStatXml.</td>
+<td align="left">XML_FILENAME=“SNA_TABLE1_UPDATE_OWNER_DIM2.xml”</td>
+</tr>
+<tr class="even">
+<td align="left">DOMAIN</td>
+<td align="left">The Windows domain that contains users.</td>
+<td align="left">DOMAIN=“OECDMAIN”</td>
+</tr>
+<tr class="odd">
+<td align="left">CONTACTS</td>
+<td align="left">The users need to be contacted. A list of domain users, separated by ,.</td>
+<td align="left">CONTACTS=“Whoever_J,Otherperson_B”</td>
+</tr>
+<tr class="even">
+<td align="left">OWNERS</td>
+<td align="left">Thw owners of the dataset. A list of domain users, separated by ,.</td>
+<td align="left">OWNERS=“Whoever_J,Someoneelse_L”</td>
+</tr>
+<tr class="odd">
+<td align="left">NOTIFICATIONS</td>
+<td align="left">A list that specifies which user on the contatc list in what case should be notified. The email will be sent when the minimum severity setting is met - eg: if it’s set to warning, the email will be sent not only in case of warning, but in case of failure, too.</td>
+<td align="left">NOTIFICATIONS=“F,N”</td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left">Possible values:</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left">- NO, N: no notification is needed</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left">- WARNING, W: on warning</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left">- FAILURE, F: on failure</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left">- SUCCESS, S: on success</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left">- No setting (empty): in any case</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left">Default value (no setting): in any case.</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">SECURITY</td>
+<td align="left">A list that specifies who has privileges to use the dataset.</td>
+<td align="left">SECURITY=“Domain Users”</td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left">Possible values:</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left">- ALL, PUBLIC: dataset is public</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left">- Domain Users, OECDMAIN, OECD/OLIS: dataset is available for the domain users</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left">- <domain username>: dataset is available for the specified user</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">LANGUAGES</td>
+<td align="left">The list of language ISO codes used by the dataset. The languages are separated by #.</td>
+<td align="left">LANGUAGES=“en#fr”</td>
+</tr>
+<tr class="odd">
+<td align="left">ALLOW10PERCENT</td>
+<td align="left">Specifies if core data view is allowed or not. Possible values: TRUE and FALSE.</td>
+<td align="left">ALLOW10PERCENT=“TRUE”</td>
+</tr>
+<tr class="even">
+<td align="left">ALLOW10PERCENTSPECIFIED</td>
+<td align="left">Specifies if ALLOW10PERCENT contains valid value or not. Possible values: TRUE and FALSE.</td>
+<td align="left">ALLOW10PERCENTSPECIFIED=“TRUE”</td>
+</tr>
+<tr class="odd">
+<td align="left">ACTION</td>
+<td align="left">The type of action Entrygate must do.</td>
+<td align="left">ACTION=“UPDATE”</td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left">Possible values:</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left">- CREATE</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left">- UPDATE</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left">- DELETE</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left">- REMOVEDATASET</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">DS_CODE</td>
+<td align="left">The code of the dataset to work with.</td>
+<td align="left">DS_CODE=“SNA_TABLE1”</td>
+</tr>
+<tr class="even">
+<td align="left">THEME</td>
+<td align="left">The theme that contains the dataset.</td>
+<td align="left">THEME=“Others|Test datasets”</td>
+</tr>
+<tr class="odd">
+<td align="left">DIR</td>
+<td align="left">Directorate</td>
+<td align="left">DIR=“STD”</td>
+</tr>
+<tr class="even">
+<td align="left">DS_NAMES</td>
+<td align="left">Dataset names in the specified languages, separated by #.</td>
+<td align="left">DS_NAMES=“Gross domestic product#Produit intérieur brut”</td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left">The order of the dataset names in the different languages must be the same as the order of the languages in setting LANGUAGES.</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">DS_NAME_E</td>
+<td align="left">Dataset name in English.</td>
+<td align="left">DS_NAME_E=“Gross domestic product”</td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left">OBSOLETE! DS_NAMES should be used instead.</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">DS_NAME_F</td>
+<td align="left">Dataset name in French.</td>
+<td align="left">DS_NAME_F=“Produit intérieur brut”</td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left">OBSOLETE! DS_NAMES should be used instead.</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">REPORTING_PERIOD</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">UNIT_CASE</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">UNIT_DIMENSION</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">TOPMETA_CSV</td>
+<td align="left">The data file that contains metadata about the dataset. The metadata is organised into csv file.</td>
+<td align="left">TOPMETA_CSV=“SNA_Metadata.txt”</td>
+</tr>
+<tr class="even">
+<td align="left">TOPMETA_CSVXML</td>
+<td align="left">The data file that contains metadata about the dataset. The file is in csv format, but the metadata inside is in xml format.</td>
+<td align="left">TOPMETA_CSVXML=“SNA_Metadata_XML.txt”</td>
+</tr>
+<tr class="odd">
+<td align="left">TOPMETA_METASTORE</td>
+<td align="left">The data file that contains metadata about the dataset. The format comes from metastore.</td>
+<td align="left">TOPMETA_METASTORE=“SNA_Metadata_Metastore.txt”</td>
+</tr>
+<tr class="even">
+<td align="left">TOPMETA_DSNAMES</td>
+<td align="left">Dataset names in the specified languages, separated by #. TODO: why, if it’s stored in DS_NAMES, too?</td>
+<td align="left">TOPMETA_DSNAMES=“Gross domestic product#Produit intérieur brut”</td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left">The order of the dataset names in the different languages must be the same as the order of the languages in setting LANGUAGES.</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left">If TOPMETA_CSV, TOPMETA_CSVXML or TOPMETA_METASTORE are specified, TOPMETA_DSNAMES (or TOPMETA_DSNAME_E and TOPMETA_DSNAME_F) also need to be specified. TODO: why???</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">TOPMETA_DSNAME_E</td>
+<td align="left">Dataset name in English.</td>
+<td align="left">TOPMETA_DSNAME_E=“Gross domestic product”</td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left">OBSOLETE! TOPMETA_DSNAMES should be used instead.</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">TOPMETA_DSNAME_F</td>
+<td align="left">Dataset name in French.</td>
+<td align="left">TOPMETA_DSNAME_F=“Produit intérieur brut”</td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left">OBSOLETE! TOPMETA_DSNAMES should be used instead.</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">DATA_CSV</td>
+<td align="left">The file in csv format containing dataset data.</td>
+<td align="left">DATA_CSV=“SNA_Data.txt”</td>
+</tr>
+<tr class="odd">
+<td align="left">ATTR_CSV</td>
+<td align="left">The file in csv format containing dataset attributes.</td>
+<td align="left">ATTR_CSV=“SNA_Attrs.txt”</td>
+</tr>
+<tr class="even">
+<td align="left">REPLACE_CSV</td>
+<td align="left">The file in csv format containing dataset data to replace the existing data.</td>
+<td align="left">REPLACE_CSV=“SNA_Replace_Data.txt”</td>
+</tr>
+<tr class="odd">
+<td align="left">FLAGS_CSV</td>
+<td align="left">The file in csv format containing dataset flags.</td>
+<td align="left">FLAGS_CSV=“SNA_Flags.txt”</td>
+</tr>
+<tr class="even">
+<td align="left">DATA_FLAGS</td>
+<td align="left">Specifies if flags are defined for the dataset. Possible values: TRUE and FALSE. Default is FALSE.</td>
+<td align="left">DATA_FLAGS=“TRUE”</td>
+</tr>
+<tr class="odd">
+<td align="left">DATA_EMBARGO</td>
+<td align="left">Specifies if embargo is set on this dataset. Possible values: TRUE and FALSE. Default is FALSE.</td>
+<td align="left">DATA_EMBARGO=“TRUE”</td>
+</tr>
+<tr class="even">
+<td align="left">LOWMETA_CSV</td>
+<td align="left">The data file that contains metadata about the coordinates in the dataset. The metadata is organised into csv file.</td>
+<td align="left">LOWMETA_CSV=“SNA_LowerMetadata.txt”</td>
+</tr>
+<tr class="odd">
+<td align="left">LOWMETA_CSVXML</td>
+<td align="left">The data file that contains metadata about the coordinates in the dataset. The file is in csv format, but the metadata inside is in xml format.</td>
+<td align="left">LOWMETA_CSVXML=“SNA_LowerMetadata.txt_dpi”</td>
+</tr>
+<tr class="even">
+<td align="left">LOWMETA_METASTORE</td>
+<td align="left">The data file that contains metadata about the coordinates in the dataset. The format comes from metastore.</td>
+<td align="left">LOWMETA_METASTORE=“SNA_LowerMetadata.txt_dpi”</td>
+</tr>
+<tr class="odd">
+<td align="left">MICRODATA_INFO_COLUMNS</td>
+<td align="left">The list of microdata columns, separated by</td>
+<td align="left">.</td>
+</tr>
+<tr class="even">
+<td align="left">MICRODATA_INFO_CSV</td>
+<td align="left">The data file containing the data that goes to the micorinfo table.</td>
+<td align="left">MICRODATA_INFO_CSV=“SNA_MicroInfo_data.txt”</td>
+</tr>
+<tr class="odd">
+<td align="left">MICRODATA_TABLE_CSV</td>
+<td align="left">The data file containing the data that goes to the microdata table.</td>
+<td align="left">MICRODATA_TABLE_CSV=“SNA_MicroTable_data.txt”</td>
+</tr>
+<tr class="even">
+<td align="left">UPDATEQUERIES</td>
+<td align="left">A bit (0/1) that defines if the queries related to the dataset need to be updated with this job/action.</td>
+<td align="left">UPDATEQUERIES=1</td>
+</tr>
+<tr class="odd">
+<td align="left">PRIORITY</td>
+<td align="left">Defines the priority level of this import job/action. TODO: what levels are there? What is more important, 0 or 1000?</td>
+<td align="left">PRIORITY=1</td>
+</tr>
+<tr class="even">
+<td align="left">NBDIMS</td>
+<td align="left">Count of the dimensions.</td>
+<td align="left">NBDIMS=2</td>
+</tr>
+<tr class="odd">
+<td align="left">DIM_CODES</td>
+<td align="left">List of dimension codes.</td>
+<td align="left">DIM_CODES=“LOCATION”,“FREQUENCY”</td>
+</tr>
+<tr class="even">
+<td align="left">DIM_COMMON</td>
+<td align="left">List of common dimension codes. The count and the order of the elements must be the same as for DIM_CODES, but instead of the dimension name there should be a \* in case a dimension is not common.</td>
+<td align="left">DIM_COMMON=“LOCATION”,\*</td>
+</tr>
+<tr class="odd">
+<td align="left">DIM_NAMES</td>
+<td align="left">List of dimension names in the specified languages. The lists for the different languages are separated by #, the names belonging to the same language are separated by ,.</td>
+<td align="left">DIM_NAMES=“Country”,“Frequency”#“Pays”,“Fréquence”</td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left">The count and order of the names must be the same as for DIM_CODES.</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left">The count and order of the languages must be the same as the order of the languages in setting LANGUAGES.</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">DIM_NAMES_E</td>
+<td align="left">OBSOLETE! DIM_NAMES should be used instead.</td>
+<td align="left">DIM_NAMES_E=“Country”,“Frequency”</td>
+</tr>
+<tr class="odd">
+<td align="left">DIM_NAMES_F</td>
+<td align="left">OBSOLETE! DIM_NAMES should be used instead.</td>
+<td align="left">DIM_NAMES_F=“Pays”,“Fréquence”</td>
+</tr>
+<tr class="even">
+<td align="left">DIM_DESC</td>
+<td align="left">List of dimension descriptions in the specified languages. The lists for the different languages are separated by #, the descriptions belonging to the same language are separated by ,.</td>
+<td align="left">DIM_DESC=“CountryDesc”,“FrequencyDesc”#“PaysDesc”,“FréquenceDesc”</td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left">The count and order of the descriptions must be the same as for DIM_CODES.</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left">The count and order of the languages must be the same as the order of the languages in setting LANGUAGES.</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">DIM_DESC_E</td>
+<td align="left">OBSOLETE! DIM_DESC should be used instead.</td>
+<td align="left">DIM_DESC_E=“CountryDesc”,“FrequencyDesc”</td>
+</tr>
+<tr class="even">
+<td align="left">DIM_DESC_F</td>
+<td align="left">OBSOLETE! DIM_DESC should be used instead.</td>
+<td align="left">DIM_DESC_F=“PaysDesc”,“FréquenceDesc”</td>
+</tr>
+<tr class="odd">
+<td align="left">DIM_LONGLABELS_PATTERNS</td>
+<td align="left">The pattern that defines the way labels should be concatenated, for each dimension. If the dimension doesn’t use generated concatenated labels, its value is \<em>. Otherwise it can only contain numbers in ascending order, separated by ;. (Note: there’s a difference with DPI, because in DPI the separator character is ,.) | DIM_LONGLABELS_PATTERNS=\</em>,1;3;6</td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left">Only allowed for non-common dimensions.</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">DIM_MEMBERS_CSV</td>
+<td align="left">The data file in csv format for the dimensions. If the dimension doesn’t have file specified, its value is \<em>, otherwise it’s the filename. The file is supposed to be in the CSV_FOLDER. | DIM_MEMBERS_CSV=\</em>,“SNA_FREQUENCY.txt”</td>
+</tr>
+<tr class="even">
+<td align="left">DIM_MEMBERS_COLUMNS</td>
+<td align="left">The structure of the csv data files for the dimensions. If the dimension doesn’t have file specified, its value is \<em>. Otherwise it’s a collection of codes that refer to specific columns in the csv file. | DIM_MEMBERS_COLUMNS=\</em>,“CL”</td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left">- C: Code</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left">- L: Language - block</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left">- B: Base code</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left">- O: Order</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left">- P: Parent code</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left">- T: Long (concatenated) label - block, only allowed for non-common dimensions.</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left">The codes also define the order of the columns in the csv file.</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left">Note: there can be 2 blocks which consist of multiple columns - as many colums as many languages are specified. The order of these columns - as they belong to the languages - must be the same as the order of the languages in setting LANGUAGES.</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">DIM_MEMBERS_META_CSV</td>
+<td align="left">The data file that contains metadata about the members of the common(!) dimension. If the dimension doesn’t have file specified, its value is \<em>, otherwise it’s the filename. | DIM_MEMBERS_META_CSV=\</em>,“LOCATION_Metadata.txt”</td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left">The file is supposed to be in the CSV_FOLDER.</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left">The metadata is organised into csv file.</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left">Note: it seems at the moment it is not supported to specify CSVXML and METASTORE formats neither in CreateDotStatXml nor in DPI.</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">DIM_MEMBERS_FILTER</td>
+<td align="left">Specifies for each dimension if it has a filter. Possible values: TRUE and FALSE.</td>
+<td align="left">DIM_MEMBERS_FILTER=“FALSE”,“TRUE”</td>
+</tr>
+<tr class="even">
+<td align="left">DIM_10PCTALL</td>
+<td align="left"></td>
+<td align="left">DIM_10PCTALL=“FALSE”,“TRUE”</td>
+</tr>
+<tr class="odd">
+<td align="left">DIM_10PCTCOLUMNS</td>
+<td align="left">The structure of the core csv data files for the dimensions. If the dimension doesn’t have file specified, its value is \<em>. Otherwise it’s a collection of codes that refer to specific columns in the csv file. | DIM_10PCTCOLUMNS=\</em>,“C%”</td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left">- C: Code</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left">- %: Core Data: 1 or O</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left">- B: Base code</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left">- P: Parent code</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left">The codes also define the order of the columns in the csv file.</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">DIM_10PCTFILE</td>
+<td align="left">The data file in csv format for the core data of the dimensions. If the dimension doesn’t have file specified, its value is \<em>, otherwise it’s the filename. The file is supposed to be in the CSV_FOLDER. | DIM_MEMBERS_CSV=\</em>,“FREQUENCY_CORE.txt”</td>
+</tr>
+</tbody>
+</table>
+
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

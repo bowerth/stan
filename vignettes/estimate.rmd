@@ -1,0 +1,95 @@
+---
+title: "STAN Estimation"
+author: "Bo Werth"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{STAN Estimation}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\usepackage[utf8]{inputenc}
+---
+
+## General
+
+STAN combines time series from National Accounts by economic
+activity. The estimation methodology consists of three major
+components:
+
+ - link series using growth rates
+ - increase detail by appling shares from secondary sources to
+  aggregates of the main data source
+ - top-down adjustment to ensure consistency on all levels of the
+   industry hierarchy
+
+## Data Requirements
+
+The data needs to meet the following requirements:
+
+### Data for estimation
+ - variables in columns: `cou`, `var`, `ind`, `year`, `value`, `sou`
+   (order does not matter)
+
+### Configuration dataset (source order)
+ - blabla
+
+## Extend
+
+The `extend` function
+
+```{r, eval = TRUE}
+require(stan)
+require(stanData)
+require(ggplot2)
+## require(dygraphs)
+## require(xts)
+
+data(STANNAi0)
+data(STANNAi3)
+data(STANNAi4)
+
+data(stanDim)
+
+input <- list(cou="AUT",
+              var="VALU",
+              ## ind="CTOTAL",
+              year=c(1995:2012))
+
+df1 <- subset(DATA.STANi3,
+             cou%in%input$cou &
+             var%in%input$var &
+             ## ind%in%input$ind &
+              ind%in%c("CTOTAL") &
+              year%in%input$year)
+df1[["sou"]] <- "STANandBTDi3"
+
+df2 <- subset(DATA.STANi4,
+             cou%in%input$cou &
+             var%in%input$var &
+             ## ind%in%input$ind &
+              ind%in%c("DTOTAL") &
+              year%in%input$year)
+df2[["sou"]] <- "STANandBTDi4"
+df2$ind <- sub("DTOTAL", "CTOTAL", df2$ind)
+
+
+df2.USD <- convertCurrency(data=df2, datacur=DATA.XRATES[DATA.XRATES$var=="EXCH",])
+
+df <- rbind(df1, df2.USD)
+
+result <- stan::extend(df, namesou=c("STANandBTDi3", "STANandBTDi4"))
+result$cou <- input$cou
+result$var <- input$var
+result$ind <- "CTOTAL"
+result$sou <- "NAPATCH"
+
+result <- subset(result, select = c("cou", "var", "ind", "year", "value", "sou"))
+
+df.plot <- rbind(df, result)
+
+ggplot(data=df.plot, aes(x=year, y=value, color=sou)) + geom_line()
+
+```
+
+## Detail
+
+## Adjust

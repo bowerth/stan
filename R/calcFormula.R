@@ -35,9 +35,12 @@ calcFormula <- function(data=stop("'data' must be specified"),
                         )
 {
     attach(data)
-    for (ind in formula$ind)
-    {
+    for (ind in formula$ind) {
+      ## if (formula$formula[formula$ind==ind]=="NA") {
+      ##   try(eval(parse(text = paste0('data$', ind, ' <- NA'))), silent = TRUE)
+      ## } else {
         try(eval(parse(text = paste0('data$', ind, ' <- ', formula$formula[formula$ind==ind]))), silent = TRUE)
+      ## }
     }
     detach(data)
     data <- data[,colnames(data)%in%union(id.vars, formula$ind)]

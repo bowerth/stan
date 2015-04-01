@@ -14,23 +14,27 @@
 #' @seealso \code{\link{indAggregate}}, \code{\link{loadDim}}
 #' @export
 #' @examples
-#' hierarchy(file = paste0(PATH.COUi3, 'Aggregation_general_2digit_ISIC3.csv'))
+#' hierarchy(file=system.file("extdata", "loadDim_indi3agg.csv", package = "stan"))
 
-hierarchy <- function(file, agg.exclude, parent=FALSE, order=FALSE)
+hierarchy <- function(file=system.file("extdata", "loadDim_indi3agg.csv", package = "stan"),
+                      agg.exclude,
+                      parent=FALSE,
+                      order=FALSE)
 {
     conv.stan <- read.csv(file)
     conv.stan <- conv.stan[!conv.stan$agg%in%agg.exclude,]
     conv.stan <- conv.stan[,!colnames(conv.stan)%in%c("contents")]
     ## create sorted hierarchy
-    if (order==TRUE)
-    {
+    if (order==TRUE) {
+
         ind2d <- colnames(conv.stan)[-1]
         sorted.ind <- data.frame(agg = ind2d,
-                                 first = seq(along = ind2d)+1, # +1 because "agg" in first column,
+                                 ## first = seq(along = ind2d) + 1, # +1 because "agg" in first column,
+                                 first = seq(along = ind2d), # remove first column from search because of C01T02 factor
                                  sum = rep(1, length(ind2d)))
-        for (agg in conv.stan$agg)
-        {
-            conv.stan$first[conv.stan$agg==agg] <- match("1", conv.stan[conv.stan$agg==agg,])
+        ## agg <- "C01T02"
+        for (agg in conv.stan$agg) {
+            conv.stan$first[conv.stan$agg==agg] <- match("1", conv.stan[conv.stan$agg==agg, -1]) # remove first column from search because of C01T02 factor
             conv.stan$sum[conv.stan$agg==agg] <- sum(conv.stan[conv.stan$agg==agg, c(2:(length(conv.stan)-1))])
         }
         sorted.agg <- conv.stan[colnames(conv.stan)%in%c("agg", "first", "sum")]
@@ -38,8 +42,9 @@ hierarchy <- function(file, agg.exclude, parent=FALSE, order=FALSE)
         sorted.ind.agg <- sorted.ind.agg[order(sorted.ind.agg$first, -sorted.ind.agg$sum),]
         sorted.ind.agg$agg <- factor(sorted.ind.agg$agg, levels = sorted.ind.agg$agg)
         data.all <- sorted.ind.agg$agg
-    } else
-    {
+
+    } else {
+
         rownames(conv.stan) <- conv.stan[,"agg"]
         conv.stan <- conv.stan[,!colnames(conv.stan)%in%c("agg", "first", "sum")]
         conv.stan <- as.matrix(conv.stan)
@@ -49,26 +54,20 @@ hierarchy <- function(file, agg.exclude, parent=FALSE, order=FALSE)
         all.ind.sum <- NULL
         all.parent <- NULL
         all.parent.sum <- NULL
-        for (i in c(1:ncol(conv.stan)))
-        {
-            for (j in c(1:ncol(conv.stan)))
-            {
-                if (sum(conv.stan[,i]) > sum(conv.stan[,j]))
-                {
+        for (i in c(1:ncol(conv.stan))) {
+            for (j in c(1:ncol(conv.stan))) {
+                if (sum(conv.stan[,i]) > sum(conv.stan[,j])) {
                     diff <- conv.stan[,i] - conv.stan[,j]
-                    if (all(diff >= 0))
-                    {
+                    if (all(diff >= 0)) {
                         all.ind <- c(all.ind, c(colnames(conv.stan)[j]))
                         all.ind.sum <- c(all.ind.sum, sum(conv.stan[,j]))
                         all.parent <- c(all.parent, colnames(conv.stan)[i])
                         all.parent.sum <- c(all.parent.sum, sum(conv.stan[,i]))
                     }
                 }
-                if (sum(conv.stan[,i]) < sum(conv.stan[,j]))
-                {
+                if (sum(conv.stan[,i]) < sum(conv.stan[,j])) {
                     diff <- -conv.stan[,i] + conv.stan[,j]
-                    if (all(diff >= 0))
-                    {
+                    if (all(diff >= 0)) {
                         all.ind <- c(all.ind, c(colnames(conv.stan)[i]))
                         all.ind.sum <- c(all.ind.sum, sum(conv.stan[,i]))
                         all.parent <- c(all.parent, colnames(conv.stan)[j])
@@ -84,8 +83,7 @@ hierarchy <- function(file, agg.exclude, parent=FALSE, order=FALSE)
         ind.parent <- ind.parent[!duplicated(ind.parent),]
         ## all contained industries
         data.all <- NULL
-        for (agg in unique(colnames(conv.stan)))
-        {
+        for (agg in unique(colnames(conv.stan))) {
             data <- merge(c(rownames(conv.stan)[conv.stan[,match(agg, colnames(conv.stan))]==1]), agg, all = TRUE)
             data.all <- rbind(data.all, data)
         }
@@ -108,15 +106,12 @@ hierarchy <- function(file, agg.exclude, parent=FALSE, order=FALSE)
         data.in <- rbind(data1, data2, data3)
         ## combine to list
         data.all <- NULL
-        if (parent==TRUE)
-        {
-            for (ind in unique(data.in$ind))
-            {
+        if (parent==TRUE) {
+            for (ind in unique(data.in$ind)) {
                 ind.parent <- data.in$parent[data.in$ind==ind]
                 i = 1
                 ind.parent.parent <- NULL
-                while (i==1 | length(ind.parent.parent) > 0) # Error: object 'ind.parent.parent' not found
-                {
+                while (i==1 | length(ind.parent.parent) > 0) { # Error: object 'ind.parent.parent' not found
                     ind.parent.parent <- data.in$parent[data.in$ind==as.character(ind.parent[i])]
                     ind.parent <- union(ind.parent, ind.parent.parent)
                     i = i + 1
@@ -125,15 +120,16 @@ hierarchy <- function(file, agg.exclude, parent=FALSE, order=FALSE)
                 names(data) <- ind
                 data.all <- c(data.all, data)
             }
-        } else
-        {
-            for (pr in unique(data.in$parent))
-            {
+        } else {
+            for (pr in unique(data.in$parent)) {
                 data <- list(data.in$ind[data.in$parent==pr])
                 names(data) <- pr
                 data.all <- c(data.all, data)
             }
         }
+
     }
-    return(data.all)
+    ## return(data.all)
+    return(lapply(data.all, as.character)) #
 }
+

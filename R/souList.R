@@ -32,15 +32,17 @@ souList <- function(isic=4,
     namecou <- folder.cou[nchar(folder.cou)==3 & !folder.cou=="XXX"]
     ##
     list.all <- NULL
+    ## c <- match("BRN", namecou)
     for (c in seq(along=namecou))
     {
         cou <- namecou[c]
         cou.sources <- NULL
+        ## sou <- "NSO"
         for (sou in namesou)
         {
-            if (file.exists(paste0(path.cou, cou, "\\Rawdata\\", sou)))
+            if (file.exists(file.path(path.cou, cou, "Rawdata", sou)))
             {
-                list.folder <- list.files(paste0(path.cou, cou, "\\Rawdata\\", sou))
+                list.folder <- list.files(file.path(path.cou, cou, "Rawdata", sou))
                 ## by matching country code
                 X <- strsplit(list.folder, "_")
                 undersc <- sapply(X, '[[', 1)

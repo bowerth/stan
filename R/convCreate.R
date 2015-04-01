@@ -18,6 +18,7 @@
 #' @seealso \code{\link{indAggregate}}
 #' @export
 #' @examples
+#' see "convCreate.svg" in /vignettes/diagrams
 #' convCreate(dim=list(row=c(10,5),col=c(10)),agg.row1=c(1:10),agg.row2=c(1:2),agg.col1=c(5),horiz=FALSE,dimnames=NULL)
 
 convCreate <- function(dim=list(row=c(58,37),col=c(58)),

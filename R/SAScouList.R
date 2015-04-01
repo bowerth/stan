@@ -17,15 +17,15 @@
 SAScouList <- function(namecou=c("LVA"),
                        isic=4)
 {
-    if (isic==3) namefile=paste0(PATH.SASi3, "Lists\\STAN_cou_list.csv")
-    if (isic==4) namefile=paste0(PATH.SASi4, "Lists\\STAN_cou_list.csv")
+    if (isic==3) namefile=file.path(PATH.SASi3, "Lists", "STAN_cou_list.csv")
+    if (isic==4) namefile=file.path(PATH.SASi4, "Lists", "STAN_cou_list.csv")
     ##
     cou.list <- read.csv(namefile)
     cou.list <- cou.list[!cou.list$Cou%in%namecou,]
     for (cou in namecou)
     {
         ## cou <- namecou[1]
-        if (cou%in%STAN.COUEU) inEURO = 1 else inEURO = 0
+        if (cou%in%STAN.COU[["EURO"]]) inEURO = 1 else inEURO = 0
         cou.new <- cbind.data.frame(couPUB = (max(cou.list$couPUB) + 1),
                                     Cou = cou,
                                     LbCou_en = STAN.COUEN[STAN.COUEN$cou==cou,2],

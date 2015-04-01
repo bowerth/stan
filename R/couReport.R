@@ -34,31 +34,31 @@ couReport <- function(cou.sou=stop("'cou.sou' must be specified"),
                       create.data=TRUE,
                       create.plot=TRUE,
                       namevar.plot=NULL,
-                      file.brew=paste0(PATH.COUi4, "STAN_collect_load.brew"),
-                      file.out.prefix="\\Rawdata\\Report_",
+                      file.brew=file.path(PATH.COUi4, "STAN_collect_load.brew"),
+                      file.out.prefix="Report_",
                       date=2013)
 {
     require(brew)
     require(knitr)
     require(screening)
     require(reshape2)
-    if (isic==3)
-    {
+
+    if (isic==3) {
         path.cou <- PATH.COUi3
     }
-    if (isic==4)
-    {
+    if (isic==4) {
         path.cou <- PATH.COUi4
     }
     cou <- sapply(strsplit(cou.sou, "_"), "[[", 1)
     sou <- sapply(strsplit(cou.sou, "_"), "[[", 2)
-    ##
-    path.out <-  paste0(path.cou, cou, file.out.prefix)
-    ##
-    rhtml.file <- paste0(path.out, cou.sou, date, ".Rhtml")
+
+    path.out <-  file.path(path.cou, cou, "Rawdata")
+
+    rhtml.file <- file.path(path.out, paste0(file.out.prefix, cou.sou, date, ".Rhtml"))
+    out.file <- file.path(path.out, paste0(file.out.prefix, cou.sou, date, ".html"))
+
     brew(file.brew, rhtml.file) # This generates the actual rhtml file for different seeds
-    knit(input=rhtml.file,
-         output=paste0(path.out, cou.sou, date, ".html"))
-    out.file <- paste0(path.out, cou.sou, date, ".html")
+    knit(input=rhtml.file, output=out.file)
+
     return(out.file)
 }

@@ -13,20 +13,28 @@
 #' @seealso \code{\link{bcpWrite}}
 #' @export
 #' @examples
-#' bcpRead(table="STAN.dbo.STANPUB", server="VS-GEN-SQL-3")
+#' data <- bcpRead(table="STAN.dbo.STANPUB", server="VS-GEN-SQL-3")
+#' head(data)
 
 bcpRead <- function(table=NULL,
                     server=NULL,
-                    bcpOUT="-w -T")
+                    bcpOUT="-w -T",
+                    file.data=NULL)
 {
-    file.data <- tempfile(fileext=".txt")
-    file.format <- tempfile(fileext=".txt")
+    if (length(file.data)==0) {
+        file.data <- tempfile(fileext=".txt")
+        file.format <- tempfile(fileext=".txt")
+    }
     ## create data file
     system(paste("bcp", table, "out", file.data, "-S", server, bcpOUT))
-    data <- read.table(file.data, fileEncoding='UCS-2LE', sep='\t', quote="")
-    ## create format file to retrieve column names
-    system(paste("bcp", table, "format nul -S", server, "-f", file.format, "-w -T"))
-    names <- as.vector(t(as.matrix((read.table(file.format, sep='', skip=2)[7]))))
-    names(data) <- names
-    return(data)
+    if (length(file.data)==0) {
+        data <- read.table(file.data, fileEncoding='UCS-2LE', sep='\t', quote="")
+        ## create format file to retrieve column names
+        system(paste("bcp", table, "format nul -S", server, "-f", file.format, "-w -T"))
+        names <- as.vector(t(as.matrix((read.table(file.format, sep='', skip=2)[7]))))
+        names(data) <- names
+        return(data)
+    } else {
+        return(cat(paste0('file exported to ', file.data, '\n')))
+    }
 }

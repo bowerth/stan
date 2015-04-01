@@ -25,18 +25,16 @@ SASestim <- function(cou=stop("'cou' must be specified"),
                     period="1970-2010",
                     quiet=FALSE)
 {
-    if (isic==3)
-    {
+    if (isic==3) {
         path.sas <- PATH.SASi3
         add.zero <- c("C95")
     }
-    if (isic==4)
-    {
+    if (isic==4) {
         path.sas <- PATH.SASi4
         add.zero <- c("D99")
     }
     ##
-    prog.cou <- paste0(path.sas, "progs\\PAYS\\", cou, "\\", cou, "_estim.sas")
+    prog.cou <- file.path(path.sas, "progs", "PAYS", cou, paste0(cou, "_estim.sas"))
     fileCon <- file(prog.cou)
     if (!file.exists(prog.cou)) file.create(prog.cou)
     list.var <- gsub(", ", " ", toString(variables))
@@ -63,8 +61,8 @@ SASestim <- function(cou=stop("'cou' must be specified"),
         main <- "ANA"
         mainflag <- "*ANA"
     }
-    if (cou%in%STAN.COUEU)
-    {
+    ## if (cou%in%STAN.COUEU)
+    if (cou%in%STAN.COU[["EU"]]) {
         list.sou <- sub("NSONA", "NAMA", list.sou)
         main <- "NAMA"
         mainflag <- "*ANA"

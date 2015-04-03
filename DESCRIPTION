@@ -15,7 +15,8 @@ Authors@R: c(person(given="STAN", family="OECD", email="stan.contact@oecd.org",
 Version: 0.1
 Date: 2014-09-10
 Imports:
-    dplyr
+    dplyr,
+    XML
 Suggests:
     knitr
 VignetteBuilder: knitr

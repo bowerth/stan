@@ -56,6 +56,7 @@ packageData <- function(list=c("STAN", "BTD"),
                         nameyear=character(),
                         replace=FALSE,
                         sqlite=FALSE,
+                        ## convertcurrency=FALSE,
                         ...)
 {
 
@@ -98,7 +99,7 @@ packageData <- function(list=c("STAN", "BTD"),
             ## loadfile <- file.path(PATH.SASi3, "DATA_in", "UN", "UNSD_SNA", "DATA.UNSDEXCH.rda")
             ## use function stanData/R/transUNSDSNA.R
             DATA.UNSDEXCH <- transUNSDSNA(xrates=TRUE, download=TRUE, year.min=1970)
-            save(DATA.UNSDEXCH, file = loadfile)
+            ## save(DATA.UNSDEXCH, file = loadfile)
 
             ## subset(STAN.COUEN, cou=="CZE")
             ##
@@ -106,7 +107,7 @@ packageData <- function(list=c("STAN", "BTD"),
             ## test <- subset(DATA.UNSDEXCH, cou=="CZE")
             ## test[order(test$year),]
 
-            load(file = loadfile)
+            ## load(file = loadfile)
 
             DATA.UNSDEXCH <- subset(DATA.UNSDEXCH, cou%in%namecou & var%in%namevar)
             ## DATA.XRATES <- subset(DATA.XRATES, select = c("cou", "var", "ind", "year", "value"))
@@ -574,11 +575,21 @@ packageData <- function(list=c("STAN", "BTD"),
         }
 
         if ("EUNAMA10R2"%in%list) {
+
             ## ## source(file.path(dbpath, "GitHub", "stanData", "data-raw", "transEUNAMA.R"))
-            ## DATA.EUNAMA10R2 <- transEUNAMA10(download = FALSE, year.min = 1970)
-            ## save(DATA.EUNAMA10R2, file = file.path(path, "EUNAMA10R2.rda"))
-            ##
+            ## ## library(stanData)
+            ## ## data(STANNAi4)
+            ## ## max(DATA.EUNAMA10R2$year) # 2013
+            ## DATA.EUNAMA10R2 <- stanData::transEUNAMA10(download = TRUE, year.min = 1970)
+            ## ## h(DATA.EUNAMA10R2)
+            ## save(DATA.EUNAMA10R2, file = file.path(PATH.SASi4, "DATA_in", "NAMA10", "EUNAMA10R2.rda"))
+
+            ## env <- new.env()
+            ## load(file.path(PATH.SASi4, "DATA_in", "NAMA10", "EUNAMA10R2.rda"), envir = env)
+            ## ls(envir = env)
+
             load(file.path(PATH.SASi4, "DATA_in", "NAMA10", "EUNAMA10R2.rda"))
+
             ## DATA.XRATES[DATA.XRATES$cou=='CZE',]
             ## STAN.COUEN[STAN.COUEN$cou=='CZE',]
             ## nrow(subset(DATA.EUNAMAR2, year > 2011))
@@ -598,7 +609,9 @@ packageData <- function(list=c("STAN", "BTD"),
             ## h(subset(data, year==2012))
             ## h(DATA.XRATES)
 
-            DATA.EUNAMA10R2 <- convertCurrency(data = DATA.EUNAMA10R2, tounit = "USD")
+            ## DATA.EUNAMA10R2 <- convertCurrency(data = DATA.EUNAMA10R2, tounit = "USD")
+            ## if (convertcurrency==TRUE) DATA.EUNAMA10R2 <- convertCurrency(data = DATA.EUNAMA10R2, tounit = tounit)
+
             DATA.EUNAMA10R2 <- subset(DATA.EUNAMA10R2, cou%in%namecou & var%in%namevar & ind%in%nameind)
         }
 
@@ -662,19 +675,33 @@ packageData <- function(list=c("STAN", "BTD"),
             ## DATA.STANi4 <- queryData(connection=SQL.STAN,
             ##                         table="STANPUBi4_PRE",
             ##                         isic=isic)[,-6]
-            ## DATA.STANi4 <- DATA.STANi4[!DATA.STANi4$var%in%c("EXPO", "IMPO"),]
-            ## data <- DATA.STANi4
-            ## df.d <- dcast(DATA.STANi4, cou + ind + year ~ var, value.var = "value")
-            ## df.d.pyp <- df.d %>%
-            ##     group_by(ind, cou) %>%
-            ##         mutate(VKPY = lag(VALU) * VALK / lag(VALK),
-            ##                PKPY = lag(PROD) * PRDK / lag(PRDK),
-            ##                IKPY = lag(INTI) * INTK / lag(INTK),
-            ##                GKPY = lag(GFCF) * GFCK / lag(GFCK),
-            ##                CNPY = lag(CAPN) * CPNK / lag(CPNK),
-            ##                CGPY = lag(CAPG) * CPGK / lag(CPGK))
-            ## df.m <- melt(df.d.pyp, id.vars = c("cou", "ind", "year"), variable.name = "var", na.rm=TRUE)
-            ## DATA.STANi4 <- df.m
+
+            ## DATA.STANi4 <-
+            ##     DATA.STANi4 %>%
+            ##         dplyr::filter(!var%in%c("EXPO", "IMPO")) %>%
+            ##             tidyr::spread(key = var, value = value) %>%
+            ##                 dplyr::group_by(ind, cou) %>%
+            ##                     dplyr::mutate(VKPY = lag(VALU) * VALK / lag(VALK),
+            ##                                   PKPY = lag(PROD) * PRDK / lag(PRDK),
+            ##                                   IKPY = lag(INTI) * INTK / lag(INTK),
+            ##                                   GKPY = lag(GFCF) * GFCK / lag(GFCK),
+            ##                                   CNPY = lag(CAPN) * CPNK / lag(CPNK),
+            ##                                   CGPY = lag(CAPG) * CPGK / lag(CPGK)) %>%
+            ##                                       tidyr::gather(key = var, value = value, -cou, -ind, - year, na.rm = TRUE)
+
+            ## ## DATA.STANi4 <- DATA.STANi4[!DATA.STANi4$var%in%c("EXPO", "IMPO"),]
+            ## ## data <- DATA.STANi4
+            ## ## df.d <- reshape2::dcast(DATA.STANi4, cou + ind + year ~ var, value.var = "value")
+            ## ## df.d.pyp <- df.d %>%
+            ## ##     group_by(ind, cou) %>%
+            ## ##         mutate(VKPY = lag(VALU) * VALK / lag(VALK),
+            ## ##                PKPY = lag(PROD) * PRDK / lag(PRDK),
+            ## ##                IKPY = lag(INTI) * INTK / lag(INTK),
+            ## ##                GKPY = lag(GFCF) * GFCK / lag(GFCK),
+            ## ##                CNPY = lag(CAPN) * CPNK / lag(CPNK),
+            ## ##                CGPY = lag(CAPG) * CPGK / lag(CPGK))
+            ## ## df.m <- melt(df.d.pyp, id.vars = c("cou", "ind", "year"), variable.name = "var", na.rm=TRUE)
+            ## ## DATA.STANi4 <- df.m
             ## ## DATA.STANi4 <- subset(DATA.STANi4, !is.na(value))
             ## save(DATA.STANi4, file = file.path(PATH.SASi4, "DATA_in", "STAN_SQL", "STANi4_NAC.rda"))
 
@@ -682,8 +709,8 @@ packageData <- function(list=c("STAN", "BTD"),
             ## ## require(stanData)
             ## ## data(STANNAi0)
             load(file.path(PATH.SASi4, "DATA_in", "STAN_SQL", "STANi4_NAC.rda"))
-            DATA.STANi4 <- convertCurrency(data=DATA.STANi4, datacur=DATA.XRATES[DATA.XRATES$var=="EXCH",])
-            save(DATA.STANi4, file = file.path(PATH.SASi4, "DATA_in", "STAN_SQL", "STANi4_USD.rda"))
+            ## DATA.STANi4 <- convertCurrency(data=DATA.STANi4, datacur=DATA.XRATES[DATA.XRATES$var=="EXCH",])
+            ## save(DATA.STANi4, file = file.path(PATH.SASi4, "DATA_in", "STAN_SQL", "STANi4_USD.rda"))
             ## load(file.path(PATH.SASi4, "DATA_in", "STAN_SQL", "STANi4_USD.rda"))
             ## write.csv(DATA.STANi4, file = file.path(dbpath, "Public", "stani4.csv"))
             DATA.STANi4 <- subset(DATA.STANi4, cou%in%namecou & var%in%namevar & ind%in%nameind)
@@ -731,9 +758,12 @@ packageData <- function(list=c("STAN", "BTD"),
 
         if ("STDSNAi4"%in%list) {
 
+            ## ## require(stanData)
+            ## ## require(dplyr)
             ## ## source(file.path(dbpath, "GitHub", "stanData", "R", "transSTDSNA.R"))
             ## ## "SQL.SNA" defined in Rinitfunctions.r
             ## DATA.STDSNAi4 <- transSTDSNA(channel = SQL.SNA, isic = 4, year.min = 1970)
+            ## ## sort(unique(DATA.STDSNAi4$ind))
             ## ## ## compare with previous data
             ## ## DATA.STDSNAi4.new <- DATA.STDSNAi4
             ## ## load(file.path(PATH.SASi4, "DATA_in", "SNA", "STDSNAi4.rda"))
@@ -741,6 +771,7 @@ packageData <- function(list=c("STAN", "BTD"),
             ## ## setdiff(unique(DATA.STDSNAi4.new$cou), unique(DATA.STDSNAi4$cou))
             ## ## setdiff(unique(subset(DATA.STDSNAi4.new, cou=="USA")$var), unique(subset(DATA.STDSNAi4, cou=="USA")$var))
             ## ## DATA.STDSNAi4 <- DATA.STDSNAi4.new
+            ## ## h(subset(DATA.STDSNAi4, cou=="IRL" & var=="VALU"))
             ## ## add pyp variables
             ## df.d <- reshape2::dcast(DATA.STDSNAi4, cou + ind + year ~ var, value.var = "value")
             ## ## ## ## debug
@@ -760,18 +791,22 @@ packageData <- function(list=c("STAN", "BTD"),
             ## ##                             id.vars=id.vars.SNA)
             ## ## df.m <- melt(df.d, id.vars = c("cou", "ind", "year"), variable.name = "var", na.rm=TRUE)
             ## df.d.pyp <- df.d %>%
-            ##     group_by(ind, cou) %>%
-            ##         mutate(VKPY = lag(VALU) * VALK / lag(VALK),
+            ##     dplyr::group_by(ind, cou) %>%
+            ##         dplyr::mutate(VKPY = lag(VALU) * VALK / lag(VALK),
             ##                GKPY = lag(GFCF) * GFCK / lag(GFCK))
-            ## df.m <- melt(df.d.pyp, id.vars = c("cou", "ind", "year"), variable.name = "var", na.rm=TRUE)
+            ## df.m <- reshape2::melt(df.d.pyp, id.vars = c("cou", "ind", "year"), variable.name = "var", na.rm=TRUE)
             ## DATA.STDSNAi4 <- df.m
             ## DATA.STDSNAi4 <- subset(DATA.STDSNAi4, !is.na(value))
             ## max(DATA.STDSNAi4$year[DATA.STDSNAi4$cou=="USA"])
             ## save(DATA.STDSNAi4, file = file.path(PATH.SASi4, "DATA_in", "SNA", "STDSNAi4_NAC.rda"))
 
+
+
             ## convert to USD
             load(file.path(PATH.SASi4, "DATA_in", "SNA", "STDSNAi4_NAC.rda"))
-            DATA.STDSNAi4 <- convertCurrency(data=DATA.STDSNAi4, datacur=DATA.XRATES[DATA.XRATES$var=="EXCH",])
+            ## ls()
+            ## h(DATA.STDSNAi4) # cou, ind, year, var, value
+            ## DATA.STDSNAi4 <- convertCurrency(data=DATA.STDSNAi4, datacur=DATA.XRATES[DATA.XRATES$var=="EXCH",])
             DATA.STDSNAi4 <- subset(DATA.STDSNAi4, select = c("cou", "var", "ind", "year", "value"))
             ## save(DATA.STDSNAi4, file = file.path(PATH.SASi4, "DATA_in", "SNA", "STDSNAi4_USD.rda"))
             ## load(file.path(PATH.SASi4, "DATA_in", "SNA", "STDSNAi4_USD.rda"))

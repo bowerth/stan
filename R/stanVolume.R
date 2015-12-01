@@ -1,6 +1,6 @@
-#' cpIdxClGeom
+#' stanVolume
 #'
-#' \code{cpIdxClGeom}: calculate volume series using nominal series and Fisher chained index series
+#' \code{cpIdxClGeom}: calculate volume series using nominal series and Laspeyres or Fisher chained index series
 #'
 #' cpIdxClGeom(data, value.var, var.idx, refyear)
 #'
@@ -13,8 +13,8 @@
 #' @param refyear integer to specify the reference year of the chained index series, e.g. \code{2005}
 #'
 #' @author OECD STAN
-#' @keywords chaining
-#' @rdname indices
+#' @keywords Volume
+#' @name stanVolume
 #' @seealso \code{\link{estimate}}
 #' @export
 #' @examples
@@ -23,17 +23,20 @@
 #'                             var.cp="VALU",
 #'                             var.idx="VKOT",
 #'                             id.vars="ind",
-#'                             refyear=2005)
+#'                             refyear=2005
+#'                             )
 #' var.trans <- data.frame(var.cp  = c("VALU", "PROD", "INTI", "GFCF", "CAPN", "CAPG"),
 #'                         var.idx = c("VKOT", "PKOT", "IKOT", "GKOT", "CKOT", "CGOT"),
 #'                         var.cl  = c("VALK", "PRDK", "INTK", "GFCK", "CPNK", "CPGK"),
 #'                         var.pyp = c("VKPY", "PKPY", "IKPY", "GKPY", "CNPY", "CGPY"))
 
-cpIdxClGeom <- function(data=stop("'data' must be specified"),
-                          var.cp="VALU",
-                          var.idx="VKOT",
-                          id.vars="ind",
-                          refyear=2005) {
+cpIdxCl <- function(data=stop("'data' must be specified"),
+                    ## .data,
+                    var.cp="VALU",
+                    var.idx="VKOT",
+                    id.vars="ind",
+                    refyear=2010
+                    ) {
 
     ## see: http://stackoverflow.com/questions/21208801/group-by-multiple-columns-in-dplyr-using-string-vector-input
     id.vars2 <- lapply(id.vars, as.symbol)
@@ -41,28 +44,32 @@ cpIdxClGeom <- function(data=stop("'data' must be specified"),
     call <- substitute(data.new <- data %>%
                            group_by_(.dots = id.vars) %>%
                                mutate(l_py = lag(var.cp) * var.idx / lag(var.idx),
-                                      p_py = var.cp * lag(var.idx) / var.idx,
-                                      f1 = ifelse((!is.na(var.cp) & is.na(l_py)), 1, ((l_py / lag(var.cp)) * (var.cp / p_py)) ^.5),
+                                      ## p_py = var.cp * lag(var.idx) / var.idx,
+                                      f1 = ifelse((!is.na(var.cp) &  is.na(l_py)), 1, l_py / lag(var.cp)),
+                                      ## f1 = ifelse((!is.na(var.cp) &  is.na(l_py)), 1, ((l_py / lag(var.cp)) * (var.cp / p_py))^0.5),
+                                      ## both formulas evaluate to the same thing
                                       f2 = cumprod(f1),
                                       f3 = f2 / f2[year==var.year],
-                                      var.cl = var.cp[year==var.year] * f3
+                                      ## var.cl = var.cp[year==var.year] * f3
+                                      var.cl = ifelse(is.na(var.idx), NA, var.cp[year==var.year] * f3)
                                       )
                       ,
-                       list(id.vars = as.name(id.vars2),
+                       list(id.vars = id.vars2,
                             var.cp = as.name(var.cp),
                             var.idx = as.name(var.idx),
                             var.year = refyear))
     eval(call)
+
     return(as.vector(data.new$var.cl))
 }
 
 #' cpClPyp
 #'
-#' \code{cpVolPyp}: calculate previous year price series using nominal series and Fisher chained index series
+#' \code{cpVolPyp}: calculate previous year price series using nominal series and Laspeyres or Fisher chained volume series
 #'
 #' cpVolPyp(data, var.cp, var.cl, id.vars)
 #'
-#' @rdname indices
+#' @rdname stanVolume
 #' @export
 cpVolPyp <- function(data=stop("'data' must be specified"),
                      var.cp="VALU",
@@ -84,25 +91,27 @@ cpVolPyp <- function(data=stop("'data' must be specified"),
     return(as.vector(data.new$var.pyp))
 }
 
-#' cpIdxPypGeom
+#' cpIdxPyp
 #'
-#' \code{cpIdxPypGeom}: calculate previous year price series using nominal series and Fisher chained index series
+#' \code{cpIdxPyp}: calculate previous year price series using nominal series and Laspeyres or Fisher chained index series
 #'
-#' cpIdxPypGeom(data, var.cp, var.idx, id.vars, refyear)
+#' cpIdxPyp(data, var.cp, var.idx, id.vars, refyear)
 #'
-#' @rdname indices
+#' @rdname stanVolume
 #' @export
-cpIdxPypGeom <- function(data=stop("'data' must be specified"),
-                             var.cp="VALU",
-                             var.idx="VKOT",
-                             id.vars="ind",
-                             refyear=2005) {
+cpIdxPyp <- function(data=stop("'data' must be specified"),
+                     var.cp="VALU",
+                     var.idx="VKOT",
+                     id.vars="ind",
+                     refyear=2010
+                     ) {
     ## calculate volume series
-    data$var.cl <- stan::cpIdxClGeom(data=data,
-                                     var.cp=var.cp,
-                                     var.idx=var.idx,
-                                     id.vars=id.vars,
-                                     refyear=refyear)
+    data$var.cl <- stan::cpIdxCl(data=data,
+                                 var.cp=var.cp,
+                                 var.idx=var.idx,
+                                 id.vars=id.vars,
+                                 refyear=refyear
+                                 )
     ## calculate pyp series using calculated volume series
     data$var.pyp <- cpVolPyp(data=data,
                              var.cp=var.cp,

@@ -8,7 +8,7 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\usepackage[utf8]{inputenc}
 ---
-<!-- # rmarkdown::render(file.path(dbpath, "GitHub", "stan", "vignettes", "stani3_estimate.rmd")) -->
+<!-- # rmarkdown::render(file.path(dbpath, "GitHub", "stan", "vignettes", "stani3_estimate.Rmd")) -->
 ## General
 
 STAN combines time series from National Accounts by economic

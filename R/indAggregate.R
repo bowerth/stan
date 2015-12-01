@@ -269,16 +269,43 @@ indAggregate <- function(data=stop("'data' must be specified"),
     return(data)
 }
 
-## View(data)
+#' listMissInd
+#'
+#' \code{listMissInd}: for each missing aggregate, list missing industries. Return NULL if all industries are missing for an aggregate
+#'
+#' listMissInd(data, isic)
+#;
+#' @rdname indAggregate
+#' @export
+listMissInd <- function(data,
+                        isic,
+                        drop=FALSE
+                        ) {
 
-## indAggregate(
-##     data = DATA.STANandBTDi4
-##    ,
-##     isic = 4
-##    ,
-##     naAsZero = c("D97985", "D99")
-##    ,
-##     fill2D = TRUE
-##    ,
-##     missing.2d = c("D97T98", "D99")
-## )
+  if (isic==3) hierarchy <- STANi3.HIERARCHY
+  if (isic==4) hierarchy <- STANi4.HIERARCHY
+
+  ## list names after aggregation
+  nameind <- 
+    data %>%
+      spread(key = ind, value = value) %>%
+        stan::indAggregate(isic = isic) %>%
+          names()
+  
+  ## select missing aggregates
+  nameagg <- setdiff(names(hierarchy), nameind)
+
+  missing_ind <-
+    lapply(hierarchy[nameagg],
+           function(x) {
+             diff <- setdiff(x, nameind)
+             if (length(diff)==length(x)) return()
+             return(diff)
+           }
+           )
+
+  if (drop) missing_ind <-
+      missing_ind[sapply(missing_ind, length) > 0]
+
+  return(missing_ind)
+}

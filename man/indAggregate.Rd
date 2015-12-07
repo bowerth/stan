@@ -9,7 +9,7 @@ indAggregate(data = stop("'data' must be specified"), isic = 3,
   cumulative = FALSE, naAsZero = NULL, fill2D = FALSE,
   missing.2d = NULL, part = FALSE, print.missing = FALSE)
 
-listMissInd(data, isic)
+listMissInd(data, isic, drop = FALSE)
 }
 \arguments{
 \item{data}{a dataframe having STAN industry labels (ISIC Rev. 3 or ISIC Rev. 4) as column names.}

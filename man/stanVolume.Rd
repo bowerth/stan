@@ -36,14 +36,14 @@ cpIdxPyp(data = stop("'data' must be specified"), var.cp = "VALU",
 
 \code{cpVolPyp}: calculate previous year price series using nominal series and Laspeyres or Fisher chained volume series
 
-\code{cpIdxPypGeom}: calculate previous year price series using nominal series and Laspeyres or Fisher chained index series
+\code{cpIdxPyp}: calculate previous year price series using nominal series and Laspeyres or Fisher chained index series
 }
 \details{
 cpIdxClGeom(data, value.var, var.idx, refyear)
 
 cpVolPyp(data, var.cp, var.cl, id.vars)
 
-cpIdxPypGeom(data, var.cp, var.idx, id.vars, refyear)
+cpIdxPyp(data, var.cp, var.idx, id.vars, refyear)
 }
 \examples{
 data.stan.d <- read.csv(file = system.file(file.path("extdata", "volumeFisherPivot.csv"), package = "stan"))

@@ -51,7 +51,8 @@ cpIdxCl <- function(data=stop("'data' must be specified"),
                                       f2 = cumprod(f1),
                                       f3 = f2 / f2[year==var.year],
                                       ## var.cl = var.cp[year==var.year] * f3
-                                      var.cl = ifelse(is.na(var.idx), NA, var.cp[year==var.year] * f3)
+                                      ## https://github.com/hadley/dplyr/issues/1483
+                                      var.cl = ifelse(is.na(var.idx), NA_real_, var.cp[year==var.year] * f3)
                                       )
                       ,
                        list(id.vars = id.vars2,
@@ -113,7 +114,7 @@ cpIdxPyp <- function(data=stop("'data' must be specified"),
                                  refyear=refyear
                                  )
     ## calculate pyp series using calculated volume series
-    data$var.pyp <- cpVolPyp(data=data,
+    data$var.pyp <- stan::cpVolPyp(data=data,
                              var.cp=var.cp,
                              var.cl="var.cl",
                              id.vars=id.vars)

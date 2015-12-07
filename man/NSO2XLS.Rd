@@ -7,7 +7,7 @@
 NSO2XLS(data = NULL, cou = stop("'cou' must be specified"), sou = "NSO",
   cover = file.path(PATH.COUi4, cou, "Rawdata", paste0(cou, "_", sou,
   "_4SAS_template.xls")), file = file.path(PATH.COUi4, cou, "Rawdata",
-  paste0("R_", cou, "_", sou, "_4SAS_2013-14.xls")))
+  paste0("R_", cou, "_", sou, "_4SAS_2015-16.xls")))
 }
 \arguments{
 \item{data}{a dataframe object.}

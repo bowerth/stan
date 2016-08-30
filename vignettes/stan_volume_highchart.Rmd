@@ -1,0 +1,168 @@
+---
+title: "Chain Linking"
+author: "OECD STAN"
+date: "2015-08-13"
+# output:
+#   rmarkdown::html_vignette:
+output:
+  rmarkdown::html_fragment:
+    self_contained: false
+    lib_dir: libs
+    fig_width: 8
+    fig_height: 4.5
+# vignette: >
+#   %\VignetteIndexEntry{STAN Volume}
+#   %\VignetteEngine{knitr::rmarkdown}
+#   %\usepackage[utf8]{inputenc}
+---
+
+```{r setup, eval=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+## rmarkdown::render(file.path(dbpath, "GitHub", "stan", "vignettes", "stan_volume_highchart.Rmd"))
+
+## bowerth.github.io
+## file.copy(from=file.path(dbpath, "GitHub", "stan", "vignettes", "stan_volume_highchart.html"), to=file.path(dbpath, "GitHub", "jekyll", "bowerth.github.io", "_includes", "rmarkdown_fragment", "stan_volume_highchart.html"), overwrite=TRUE)
+
+## industry
+## file.copy(from=file.path(dbpath, "GitHub", "stan", "vignettes", "stan_volume_highchart.html"), to=file.path(dbpath, "GitHub", "jekyll", "industry", "_includes", "rmarkdown_fragment", "stan_volume_highchart.html"), overwrite=TRUE)
+
+## browseURL(file.path("file:/", Sys.getenv("HOME"), "Dropbox", "GitHub", "stan", "vignettes", "stan_volume_highchart.html"))
+
+library(dygraphs)
+library(highcharter)
+library(xts)
+library(stan)
+library(dplyr)
+
+df2xts <- function(data_df) {
+  data_xts <- data_df
+  rownames(data_xts) <- paste0(data_xts$year, '-01-01')
+  ## ordered <- c("VALU", "VKOT")
+  ## data_xts <- subset(data_xts, select=c(ordered, names(data_xts)[!names(data_xts)%in%c(ordered, "ind", "year")]))
+  data_xts <- subset(data_xts, select=names(data_xts)[!names(data_xts)%in%c("ind", "year")])
+  data_xts <- xts::as.xts(data_xts, dateFormat="Date")
+  return(data_xts)
+}
+
+## dygraph_vignette <- function(...) {
+##     dygraph(...) %>%
+##       dyLegend(width=550, show="onmouseover")
+## }
+
+highchart_vignette <- function() {
+    highchart() %>%
+    hc_yAxis(
+        list(title = list(text = "Value"), align = "left", opposite = FALSE),
+        list(title = list(text = "Index"), align = "right", opposite = TRUE)) %>%
+                hc_add_theme(hc_theme_darkunica())
+}
+
+```
+
+```{r help, eval=FALSE, echo= FALSE}
+
+?stan::stanVolume
+
+```
+## General
+
+Chain-linking is obtained by multiplying each annual link as an index by the chain accumulated up until the previous year. The chain obtained using this method is obviously an index number. Therefore, its conversion to monetary terms is performed by multiplying it by the value at current prices for a specific year, called "reference year".
+
+__Source:__ [INE](http://www.ine.es/en/daco/daco42/cne00/medic_vol_encad_b2000_en.pdf)
+
+## Objective
+
+Calculate previous year price `VKPY` and chained volume `VALK` series from current prices `VALU` and chained index `VKOT` series
+
+## Data Examples
+
+### Chained Laspeyres example: Sweden
+
+- data source: SWE Eurostat, Manufacturing Industries (C) Value-added (at basic prices)
+- reference year 2010 (for comparison with Eurostat data)
+
+```{r load_data_laspeyres, eval=TRUE, echo= FALSE}
+
+data_csv <- read.csv(file =
+                         system.file(file.path("extdata", "volumeLaspeyresPivot.csv"), package="stan")
+                     )
+y_lab <- "Billion SEK"
+names(data_csv) <- sub("NSONA_", "", names(data_csv))
+data_csv_init <- subset(data_csv, select=c("ind", "year", "VALU", "VKOT"))
+
+```
+
+```{r dygraph_init_laspeyres, eval=TRUE, echo=TRUE}
+
+data_csv_xts <- 
+    data_csv_init %>% df2xts()
+
+highchart_vignette() %>%
+    hc_title(text = "Initial Data") %>%
+        hc_add_series_xts(data_csv_xts[,"VALU"], name = "VALU") %>%
+            hc_add_series_xts(data_csv_xts[,"VKOT"], name = "VKOT", yAxis = 1)
+
+```
+
+```{r dygraph_valk_laspeyres, eval=TRUE, echo=TRUE}
+
+data_csv_valk <- data_csv_init %>%
+    mutate(VALK=stan::cpIdxCl(data=data_csv_init, var.cp="VALU", var.idx="VKOT", id.vars="ind", refyear=2010))
+
+data_csv_valk_xts <- data_csv_valk %>% df2xts()
+
+highchart_vignette() %>%
+    hc_title(text = "Intermediate Data (including VALK)") %>%
+    hc_add_series_xts(data_csv_valk_xts[,"VALU"], name = "VALU") %>%
+        hc_add_series_xts(data_csv_valk_xts[,"VALK"], name = "VALK") %>%
+            hc_add_series_xts(data_csv_valk_xts[,"VKOT"], name = "VKOT", yAxis = 1)
+
+```
+
+```{r dygraph_vkpy_laspeyres, eval=TRUE, echo=TRUE}
+
+data_csv_valk_vkpy <- 
+    data_csv_valk %>%
+        mutate(VKPY=stan::cpVolPyp(data=data_csv_valk, var.cp="VALU", var.cl="VALK", id.vars="ind"))
+
+data_csv_valk_vkpy_xts <- data_csv_valk_vkpy %>% df2xts()
+
+highchart_vignette() %>%
+    hc_title(text = "Final Data (including VKPY)") %>%
+    hc_add_series_xts(data_csv_valk_vkpy_xts[,"VALU"], name = "VALU") %>%
+        hc_add_series_xts(data_csv_valk_vkpy_xts[,"VALK"], name = "VALK") %>%
+            hc_add_series_xts(data_csv_valk_vkpy_xts[,"VKPY"], name = "VKPY") %>%
+            hc_add_series_xts(data_csv_valk_vkpy_xts[,"VKOT"], name = "VKOT", yAxis = 1)
+
+```
+
+### Additional Explanation and Formulas
+
+How do I use chain-type indexes (or chained-dollar) measures of economic activity, such as real GDP?
+
+Use real (chain-type indexes or chain-dollar) estimates when you want to show how output or spending has changed over time. The percent changes in quantity indexes exactly match the percent changes in chained dollars, so they can be used interchangeably for making comparisons. Real estimates remove the effects of price changes, which can obscure changes in output or spending in current dollars. Examples of the use of real estimates include:
+
+Source: [www.bea.gov](http://www.bea.gov/faq/index.cfm?faq_id=79)
+
+Laspeyres Formula
+:   $$ \frac{ \sum_{i} p_{it}q_{i0}}{ \sum_{i} p_{i0}q_{i0}} $$
+
+Paasche Formula
+:   $$ \frac{ \sum_{i} p_{it}q_{it}}{ \sum_{i} p_{i0}q_{it}} $$
+
+Fisher formula
+:   $$ \sqrt{\frac{ \sum_{i} p_{it}q_{i0}}{ \sum_{i} p_{i0}q_{i0}} * \frac{ \sum_{i} p_{it}q_{it}}{ \sum_{i} p_{i0}q_{it}}} $$
+
+Geometric average, combination of Paasche and Laspeyres
+
+- $p_{i0}$: price at base period
+- $p_{it}$: price at observation period
+- $q_{i0}$: quantity at base period
+- $q_{it}$: quantity at observation period
+
+Source: [www.stat.go.jp](http://www.stat.go.jp/english/data/cpi/1587.htm)
+
+See also: http://ec.europa.eu/eurostat/cache/metadata/EN/ei_qna_esms.htm#unit_measure1421916244135
+
+```{r, echo=FALSE, eval=FALSE}
+# rmarkdown::render(file.path(dbpath, "GitHub", "stan", "vignettes", "stani3_indices.rmd"))
+```

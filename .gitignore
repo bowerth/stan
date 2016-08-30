@@ -6,3 +6,6 @@
 .Rproj.user
 inst/doc
 *~
+
+# folders
+vignettes/libs

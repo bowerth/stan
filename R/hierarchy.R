@@ -19,12 +19,16 @@
 hierarchy <- function(file=system.file("extdata", "loadDim_indi3agg.csv", package = "stan"),
                       agg.exclude,
                       parent=FALSE,
-                      order=FALSE)
+                      order=FALSE,
+                      colnameprefix=NULL)
 {
-    conv.stan <- read.csv(file)
+
+  conv.stan <- read.csv(file)
+  if (!is.null(colnameprefix)) names(conv.stan) <- sub(colnameprefix, "", names(conv.stan))
     conv.stan <- conv.stan[!conv.stan$agg%in%agg.exclude,]
     conv.stan <- conv.stan[,!colnames(conv.stan)%in%c("contents")]
-    ## create sorted hierarchy
+
+  ## create sorted hierarchy
     if (order==TRUE) {
 
         ind2d <- colnames(conv.stan)[-1]
@@ -48,7 +52,8 @@ hierarchy <- function(file=system.file("extdata", "loadDim_indi3agg.csv", packag
         rownames(conv.stan) <- conv.stan[,"agg"]
         conv.stan <- conv.stan[,!colnames(conv.stan)%in%c("agg", "first", "sum")]
         conv.stan <- as.matrix(conv.stan)
-        conv.stan <- t(conv.stan)
+      conv.stan <- t(conv.stan)
+      ##rownames(conv.stan)
         ## for aggregates
         all.ind <- NULL
         all.ind.sum <- NULL
@@ -82,13 +87,14 @@ hierarchy <- function(file=system.file("extdata", "loadDim_indi3agg.csv", packag
         ind.parent <- ind.parent[order(ind.parent$rank.parent),]
         ind.parent <- ind.parent[!duplicated(ind.parent),]
         ## all contained industries
-        data.all <- NULL
+      data.all <- NULL
+      ## agg <- "1"
         for (agg in unique(colnames(conv.stan))) {
             data <- merge(c(rownames(conv.stan)[conv.stan[,match(agg, colnames(conv.stan))]==1]), agg, all = TRUE)
             data.all <- rbind(data.all, data)
         }
         ## data.all
-        names(data.all) <- c("ind", "parent")
+      names(data.all) <- c("ind", "parent")
         ## identify smallest aggregates - aggregates that are not at the same time parents of other aggregates
         ind.parent.small <- data.all[data.all$parent%in%setdiff(ind.parent$ind, ind.parent$parent),]
         ## identify industries that are contained in an aggregate other than the smallest aggregates, e.g. C05 in C01T05
